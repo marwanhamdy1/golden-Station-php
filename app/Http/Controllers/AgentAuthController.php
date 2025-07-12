@@ -7,17 +7,26 @@ use App\Models\Agent;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Validation\ValidationException;
 
 class AgentAuthController extends Controller
 {
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:agents',
-            'phone' => 'required|string|max:20',
-            'password' => 'required|string|min:6',
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:agents',
+                'phone' => 'required|string|max:20',
+                'password' => 'required|string|min:6',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $e->errors()
+            ], 422);
+        }
 
         $agent = Agent::create([
             'name' => $request->name,

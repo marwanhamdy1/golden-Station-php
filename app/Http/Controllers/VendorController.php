@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CreateVendor;
+use App\Http\Resources\VendorResource;
 
 class VendorController extends Controller
 {
@@ -123,37 +125,32 @@ class VendorController extends Controller
         return response()->json(['success' => true, 'data' => $vendors]);
     }
 
-    public function apiStore(Request $request)
+    public function apiStore(CreateVendor $request)
     {
-        $validator = Validator::make($request->all(), [
-            'owner_name' => 'required|string|max:255',
-            'commercial_name' => 'required|string|max:255',
-            'commercial_registration_number' => 'nullable|string|max:255',
-            'mobile' => 'required|string|max:20',
-            'whatsapp' => 'nullable|string|max:20',
-            'snapchat' => 'nullable|string|max:255',
-            'instagram' => 'nullable|string|max:255',
-            'email' => 'nullable|email',
-            'location_url' => 'nullable|url',
-            'city' => 'nullable|string|max:255',
-            'district' => 'nullable|string|max:255',
-            'activity_type' => 'nullable|in:wholesale,retail,both',
-            'activity_start_date' => 'nullable|date',
-            'has_commercial_registration' => 'nullable|in:yes,no,not_sure',
-            'has_online_platform' => 'nullable|boolean',
-            'previous_platform_experience' => 'nullable|string',
-            'previous_platform_issues' => 'nullable|string',
-            'has_product_photos' => 'nullable|boolean',
-            'notes' => 'nullable|string',
-        ]);
+        $data = $request->validated();
 
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        // Handle single file uploads
+        foreach ([
+            'shop_front_image',
+            'commercial_registration_image',
+            'id_image'
+        ] as $field) {
+            if ($request->hasFile($field)) {
+                $data[$field] = $request->file($field)->store('vendors', 'public');
+            }
         }
 
-        $vendor = Vendor::create($request->all());
+        // Handle multiple file uploads for other_attachments
+        if ($request->hasFile('other_attachments')) {
+            $attachments = [];
+            foreach ($request->file('other_attachments') as $file) {
+                $attachments[] = $file->store('vendors/attachments', 'public');
+            }
+            $data['other_attachments'] = $attachments;
+        }
 
-        return response()->json(['success' => true, 'data' => $vendor], 201);
+        $vendor = Vendor::create($data);
+        return new VendorResource($vendor);
     }
 
     public function apiShow(Vendor $vendor)
