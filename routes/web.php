@@ -1,19 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AgentAuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AgentController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\BranchController;
 
-// API routes can be defined here if routes/api.php does not exist
+// Dashboard route
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Welcome page
 Route::get('/', function () {
     return view('welcome');
 });
 
-// API routes
-Route::post('/api/register', [AuthController::class, 'register']);
-Route::post('/api/login', [AuthController::class, 'login']);
-Route::middleware(['auth:api'])->get('/api/profile', [AuthController::class, 'profile']);
+// Agent routes
+Route::resource('agents', AgentController::class);
 
-Route::post('/api/agent/register', [AgentAuthController::class, 'register']);
-Route::post('/api/agent/login', [AgentAuthController::class, 'login']);
-Route::middleware(['auth:agent'])->get('/api/agent/profile', [AgentAuthController::class, 'profile']);
+// Vendor routes
+Route::resource('vendors', VendorController::class);
+
+// Branch routes
+Route::resource('branches', BranchController::class);
+
+// Telescope route (only in local environment)
+if (app()->environment('local')) {
+    Route::get('/telescope', function () {
+        return redirect('/telescope/requests');
+    })->name('telescope');
+}

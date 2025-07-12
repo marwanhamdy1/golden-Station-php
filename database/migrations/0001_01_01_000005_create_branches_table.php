@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('location_url')->nullable();
             $table->string('city')->nullable();
             $table->string('district')->nullable();
-            $table->foreignId('agent_id')->constrained('agents')->onDelete('set null')->nullable();
+            $table->foreignId('agent_id')->nullable()->constrained('agents')->onDelete('set null');
             $table->timestamps();
         });
     }

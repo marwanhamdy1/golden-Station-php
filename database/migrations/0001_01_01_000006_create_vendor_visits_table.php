@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade'); // Vendor ID
             $table->foreignId('branch_id')->constrained('branches')->onDelete('cascade'); // Branch ID
-            $table->foreignId('agent_id')->constrained('agents')->onDelete('set null')->nullable(); // Agent who visited
+            $table->foreignId('agent_id')->constrained('agents')->nullable(); // Agent who visited
             $table->dateTime('visit_date'); // Visit date and time
             $table->text('notes')->nullable(); // General notes
             $table->enum('visit_status', ['visited', 'closed', 'not_found', 'refused'])->default('visited'); // Visit status: visited/closed/not found/refused
