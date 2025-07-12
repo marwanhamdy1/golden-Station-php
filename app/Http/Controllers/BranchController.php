@@ -7,6 +7,8 @@ use App\Models\Vendor;
 use App\Models\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CreateBranch;
+use App\Http\Resources\BranchResource;
 
 class BranchController extends Controller
 {
@@ -38,9 +40,10 @@ class BranchController extends Controller
             'location_url' => 'nullable|url',
             'city' => 'nullable|string|max:255',
             'district' => 'nullable|string|max:255',
-            'agent_id' => 'nullable|exists:agents,id',
+            // 'agent_id' => 'nullable|exists:agents,id',
         ]);
-
+        $agent =auth()->guard('agent')->user();
+        $request->merge(['agent_id' => $agent->id]);
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
@@ -112,27 +115,11 @@ class BranchController extends Controller
         return response()->json(['success' => true, 'data' => $branches]);
     }
 
-    public function apiStore(Request $request)
+    public function apiStore(CreateBranch $request)
     {
-        $validator = Validator::make($request->all(), [
-            'vendor_id' => 'required|exists:vendors,id',
-            'name' => 'required|string|max:255',
-            'mobile' => 'required|string|max:20',
-            'email' => 'nullable|email',
-            'address' => 'nullable|string',
-            'location_url' => 'nullable|url',
-            'city' => 'nullable|string|max:255',
-            'district' => 'nullable|string|max:255',
-            'agent_id' => 'nullable|exists:agents,id',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
-        }
-
-        $branch = Branch::create($request->all());
-
-        return response()->json(['success' => true, 'data' => $branch], 201);
+        $data = $request->validated();
+        $branch = Branch::create($data);
+        return new BranchResource($branch);
     }
 
     public function apiShow(Branch $branch)

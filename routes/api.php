@@ -6,8 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AgentAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AgentController;
-use App\Http\Controllers\VendorController;
-use App\Http\Controllers\BranchController;
+use App\Http\Controllers\Api\VendorController;
+use App\Http\Controllers\Api\BranchController;
+use App\Http\Controllers\Api\VendorVisitController;
+
 
 // User authentication routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -31,18 +33,16 @@ Route::put('/agents/{agent}', [AgentController::class, 'apiUpdate']);
 Route::delete('/agents/{agent}', [AgentController::class, 'apiDestroy']);
 
 // Vendor API routes
-Route::get('/vendors', [VendorController::class, 'apiIndex']);
-Route::post('/vendors', [VendorController::class, 'apiStore']);
-Route::get('/vendors/{vendor}', [VendorController::class, 'apiShow']);
-Route::put('/vendors/{vendor}', [VendorController::class, 'apiUpdate']);
-Route::delete('/vendors/{vendor}', [VendorController::class, 'apiDestroy']);
-
+Route::get('/vendors', [VendorController::class, 'index']);
+Route::post('/vendors', [VendorController::class, 'store'])->middleware('auth.agent');
+Route::get('/vendors/{vendor}', [VendorController::class, 'show']);
+Route::put('/vendors/{vendor}', [VendorController::class, 'update']);
+Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy']);
 // Branch API routes
-Route::get('/branches', [BranchController::class, 'apiIndex']);
-Route::post('/branches', [BranchController::class, 'apiStore']);
-Route::get('/branches/{branch}', [BranchController::class, 'apiShow']);
-Route::put('/branches/{branch}', [BranchController::class, 'apiUpdate']);
-Route::delete('/branches/{branch}', [BranchController::class, 'apiDestroy']);
+Route::apiResource('branches', BranchController::class);
+
+// VendorVisit API routes
+Route::apiResource('vendor-visits', VendorVisitController::class);
 
 // Default Laravel API route
 Route::get('/user', function (Request $request) {
