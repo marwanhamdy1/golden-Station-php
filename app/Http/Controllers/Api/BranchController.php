@@ -22,6 +22,7 @@ class BranchController extends Controller
     {
         try {
             $data = $request->validated();
+            $data['agent_id'] = auth('agent')->id();
             $branch = Branch::create($data);
 
             if (!$branch || !$branch->id) {
@@ -38,7 +39,7 @@ class BranchController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            \Log::error('Branch creation failed: ' . $e->getMessage(), ['exception' => $e]);
+            // \Log::error('Branch creation failed: ' . $e->getMessage(), ['exception' => $e]);
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while creating the branch.',
@@ -65,4 +66,4 @@ class BranchController extends Controller
         $branch->delete();
         return response()->json(['success' => true, 'message' => 'Branch deleted successfully']);
     }
-} 
+}

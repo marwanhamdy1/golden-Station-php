@@ -9,6 +9,11 @@ class VendorVisit extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'visit_date' => 'datetime',
+        'visit_end_at' => 'datetime',
+    ];
+
     protected $fillable = [
         'vendor_id',
         'branch_id',

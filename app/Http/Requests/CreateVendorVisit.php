@@ -19,7 +19,6 @@ class CreateVendorVisit extends FormRequest
         return [
             'vendor_id' => ['required', 'exists:vendors,id'],
             'branch_id' => ['required', 'exists:branches,id'],
-            'agent_id' => ['required', 'exists:agents,id'],
             'visit_date' => ['required', 'date'],
             'notes' => ['nullable', 'string', 'max:1000'],
             'visit_status' => ['nullable', 'string', Rule::in(['visited', 'closed', 'not_found', 'refused'])],

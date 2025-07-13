@@ -51,8 +51,11 @@ class AgentAuthController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
+        $agent = auth('agent')->user();
 
-        return response()->json(['token' => $token]);
+        return response()->json([
+            'user'=>$agent,
+            'token' => $token]);
     }
 
     public function profile()

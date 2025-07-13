@@ -31,8 +31,7 @@ class CreateBranch extends FormRequest
             'address' => ['nullable', 'string', 'max:500'],
             'location_url' => ['nullable', 'url', 'max:500'],
             'city' => ['required', 'string', 'max:100'],
-            'district' => ['nullable', 'string', 'max:100'],
-            'agent_id' => ['nullable', 'exists:agents,id'],
+            'district' => ['nullable', 'string', 'max:100']
         ];
     }
 
@@ -59,4 +58,4 @@ class CreateBranch extends FormRequest
             // Add more as needed
         ];
     }
-} 
+}

@@ -33,16 +33,16 @@ Route::put('/agents/{agent}', [AgentController::class, 'apiUpdate']);
 Route::delete('/agents/{agent}', [AgentController::class, 'apiDestroy']);
 
 // Vendor API routes
-Route::get('/vendors', [VendorController::class, 'index']);
+Route::get('/vendors', [VendorController::class, 'index'])->middleware('auth.agent');
 Route::post('/vendors', [VendorController::class, 'store'])->middleware('auth.agent');
 Route::get('/vendors/{vendor}', [VendorController::class, 'show'])->middleware('auth.agent');
 Route::put('/vendors/{vendor}', [VendorController::class, 'update']);
 Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy']);
 // Branch API routes
-Route::apiResource('branches', BranchController::class);
+Route::apiResource('branches', BranchController::class)->middleware('auth.agent');
 
 // VendorVisit API routes
-Route::apiResource('vendor-visits', VendorVisitController::class);
+Route::apiResource('vendor-visits', VendorVisitController::class)->middleware('auth.agent');;
 
 // Default Laravel API route
 Route::get('/user', function (Request $request) {

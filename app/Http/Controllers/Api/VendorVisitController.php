@@ -21,6 +21,7 @@ class VendorVisitController extends Controller
     {
         try {
             $data = $request->validated();
+            $data['agent_id'] = auth('agent')->id();
             // Handle file uploads
             foreach ([
                 'audio_recording',

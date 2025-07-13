@@ -76,15 +76,15 @@
                         <i class="fas fa-map-marker-alt mr-3"></i>
                         Branches
                     </a>
-                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <a href="{{ route('visits.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-calendar-check mr-3"></i>
                         Visits
                     </a>
-                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <a href="{{ route('packages.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-box mr-3"></i>
                         Packages
                     </a>
-                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <a href="{{ route('reports.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-chart-bar mr-3"></i>
                         Reports
                     </a>
@@ -94,7 +94,7 @@
                         Telescope
                     </a>
                     @endif
-                    <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <a href="{{ route('settings.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-cog mr-3"></i>
                         Settings
                     </a>
