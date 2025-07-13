@@ -426,6 +426,228 @@
 			]
 		},
 		{
+			"name": "Vendor Visits",
+			"item": [
+				{
+					"name": "Get All Vendor Visits",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/vendor-visits",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vendor-visits"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Vendor Visit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vendor_id\": 1,\n    \"branch_id\": 1,\n    \"agent_id\": 1,\n    \"visit_date\": \"2025-07-13 10:00:00\",\n    \"notes\": \"Initial visit to discuss package options\",\n    \"visit_status\": \"visited\",\n    \"vendor_rating\": \"very_interested\",\n    \"agent_notes\": \"Vendor showed great interest in premium package\",\n    \"internal_notes\": \"Follow up in 3 days\",\n    \"gps_latitude\": \"40.7128\",\n    \"gps_longitude\": \"-74.0060\",\n    \"package_id\": 1,\n    \"visit_end_at\": \"2025-07-13 11:30:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/vendor-visits",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vendor-visits"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Vendor Visit by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/vendor-visits/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vendor-visits",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Vendor Visit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vendor_id\": 1,\n    \"branch_id\": 1,\n    \"agent_id\": 1,\n    \"visit_date\": \"2025-07-13 10:00:00\",\n    \"notes\": \"Updated visit notes\",\n    \"visit_status\": \"closed\",\n    \"vendor_rating\": \"hesitant\",\n    \"agent_notes\": \"Vendor needs more time to decide\",\n    \"internal_notes\": \"Schedule follow-up call\",\n    \"gps_latitude\": \"40.7128\",\n    \"gps_longitude\": \"-74.0060\",\n    \"package_id\": 2,\n    \"visit_end_at\": \"2025-07-13 12:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/vendor-visits/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vendor-visits",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Vendor Visit",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/vendor-visits/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vendor-visits",
+								"1"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Packages",
+			"item": [
+				{
+					"name": "Get All Packages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/packages",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"packages"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Package",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Premium Package\",\n    \"description\": \"Best value package with all features\",\n    \"price\": 299.99,\n    \"product_limit\": 1000,\n    \"duration_in_days\": 365,\n    \"is_active\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/packages",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"packages"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Package by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/packages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"packages",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Package",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Premium Package\",\n    \"description\": \"Updated description\",\n    \"price\": 349.99,\n    \"product_limit\": 1500,\n    \"duration_in_days\": 365,\n    \"is_active\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/packages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"packages",
+								"1"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Package",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/packages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"packages",
+								"1"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
 			"name": "Branches",
 			"item": [
 				{

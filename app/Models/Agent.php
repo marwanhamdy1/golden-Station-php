@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Branch;
 use App\Models\VendorVisit;
 
-class Agent extends Model implements JWTSubject
+class Agent extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 

@@ -24,8 +24,7 @@ class VendorVisit extends Model
         'signature_image',
         'gps_latitude',
         'gps_longitude',
-        'selected_package',
-        'package_price',
+        'package_id',
         'visit_end_at',
     ];
 
@@ -42,5 +41,10 @@ class VendorVisit extends Model
     public function agent()
     {
         return $this->belongsTo(Agent::class);
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
     }
 }

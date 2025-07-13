@@ -17,4 +17,9 @@ class Package extends Model
         'duration_in_days',
         'is_active',
     ];
+
+    public function vendorVisits()
+    {
+        return $this->hasMany(VendorVisit::class);
+    }
 }
