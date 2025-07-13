@@ -24,7 +24,7 @@ Route::get('/dashboard/stats', [DashboardController::class, 'getStats']);
 Route::get('/dashboard/chart-data', [DashboardController::class, 'getChartData']);
 
 // Agent API routes
-Route::get('/agents', [AgentController::class, 'apiIndex']);
+Route::get('/agents', [AgentController::class, 'index']);
 Route::post('/agents', [AgentController::class, 'apiStore']);
 Route::get('/agents/{agent}', [AgentController::class, 'apiShow']);
 Route::put('/agents/{agent}', [AgentController::class, 'apiUpdate']);
