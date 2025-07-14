@@ -16,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.agent' => \App\Http\Middleware\AuthenticateAgent::class,
         ]);
+        // Register global CORS middleware
+        $middleware->append([\Illuminate\Http\Middleware\HandleCors::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
