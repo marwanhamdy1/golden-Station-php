@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class CreateVendor extends FormRequest
 {
@@ -35,9 +36,9 @@ class CreateVendor extends FormRequest
             'location_url' => ['nullable', 'url', 'max:500'],
             'city' => ['required', 'string', 'max:100'],
             'district' => ['nullable', 'string', 'max:100'],
-            'activity_type' => ['required', 'string', 'max:100'],
+            'activity_type' => ['required', 'string', Rule::in(['wholesale', 'retail', 'both'])],
             'activity_start_date' => ['nullable', 'date'],
-            'has_commercial_registration' => ['required', 'boolean'],
+            'has_commercial_registration' => ['required', 'string', Rule::in(['yes', 'no', 'not_sure'])],
             'has_online_platform' => ['required', 'boolean'],
             'previous_platform_experience' => ['nullable', 'string', 'max:500'],
             'previous_platform_issues' => ['nullable', 'string', 'max:500'],
