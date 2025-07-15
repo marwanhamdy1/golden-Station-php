@@ -9,6 +9,8 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\Api\VendorController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\VendorVisitController;
+use App\Http\Controllers\Api\PackageController as ApiPackageController;
+use App\Http\Controllers\Api\HomeController;
 
 
 // User authentication routes
@@ -43,6 +45,14 @@ Route::apiResource('branches', BranchController::class)->middleware('auth.agent'
 
 // VendorVisit API routes
 Route::apiResource('vendor-visits', VendorVisitController::class)->middleware('auth.agent');;
+
+// Package API routes
+Route::post('/packages/select', [ApiPackageController::class, 'selectPackages']);
+Route::get('/packages', [ApiPackageController::class, 'index']);
+
+// Home summary API routes
+Route::middleware(['auth:agent'])->get('/home/summary', [HomeController::class, 'summary']);
+Route::middleware(['auth:agent'])->get('/agent/details', [HomeController::class, 'agentDetails']);
 
 // Default Laravel API route
 Route::get('/user', function (Request $request) {
