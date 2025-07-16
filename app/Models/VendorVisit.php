@@ -31,6 +31,8 @@ class VendorVisit extends Model
         'gps_longitude',
         'package_id',
         'visit_end_at',
+        'met_person_name',
+        'met_person_role',
     ];
 
     public function vendor()

@@ -7,9 +7,11 @@ use App\Models\Branch;
 use App\Http\Requests\CreateBranch;
 use App\Http\Resources\BranchResource;
 use Illuminate\Http\Request;
+use App\ImageUploadTrait;
 
 class BranchController extends Controller
 {
+    use ImageUploadTrait;
     public function index()
     {
         $branches = Branch::with(['vendor', 'agent'])
@@ -24,6 +26,14 @@ class BranchController extends Controller
             $data = $request->validated();
             $data['agent_id'] = auth('agent')->id();
             $branch = Branch::create($data);
+
+            // Handle multiple branch photos
+            if ($request->hasFile('branch_photos')) {
+                foreach ($request->file('branch_photos') as $photo) {
+                    $path = $this->saveImage($photo, $photo);
+                    $branch->photos()->create(['photo' => $path]);
+                }
+            }
 
             if (!$branch || !$branch->id) {
                 return response()->json([

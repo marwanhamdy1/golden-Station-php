@@ -36,6 +36,9 @@ return new class extends Migration
             $table->string('commercial_registration_image')->nullable();
             $table->string('id_image')->nullable();
             $table->string('other_attachments')->nullable();
+            $table->text('natural_photos')->nullable(); // صور طبيعية
+            $table->text('license_photos')->nullable(); // صور الرخصة
+            $table->string('license_number')->nullable(); // رقم الرخصة
             $table->timestamps();
         });
     }

@@ -35,6 +35,9 @@ class Vendor extends Model
         'commercial_registration_image',
         'id_image',
         'other_attachments',
+        'natural_photos',
+        'license_photos',
+        'license_number',
     ];
 
     public function branches()

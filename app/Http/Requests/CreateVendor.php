@@ -49,6 +49,11 @@ class CreateVendor extends FormRequest
             'id_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:5120'],
             'other_attachments' => ['nullable', 'array'],
             'other_attachments.*' => ['file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+            'natural_photos' => ['nullable', 'array'],
+            'natural_photos.*' => ['file', 'mimes:jpg,jpeg,png', 'max:5120'],
+            'license_photos' => ['nullable', 'array'],
+            'license_photos.*' => ['file', 'mimes:jpg,jpeg,png', 'max:5120'],
+            'license_number' => ['nullable', 'string', 'max:255'],
         ];
     }
 
@@ -78,10 +83,12 @@ class CreateVendor extends FormRequest
             'has_commercial_registration.required' => 'Please specify if there is a commercial registration.',
             'has_online_platform.required' => 'Please specify if there is an online platform.',
             'has_product_photos.required' => 'Please specify if product photos are available.',
-            'shop_front_image.mimes' => 'The shop front image must be a JPG or PNG file.',
+            'shop_photo.mimes' => 'The shop photo must be a JPG or PNG file.',
             'commercial_registration_image.mimes' => 'The commercial registration image must be a JPG or PNG file.',
             'id_image.mimes' => 'The ID image must be a JPG or PNG file.',
             'other_attachments.*.mimes' => 'Each attachment must be a JPG, PNG, or PDF file.',
+            'natural_photos.*.mimes' => 'Each natural photo must be a JPG or PNG file.',
+            'license_photos.*.mimes' => 'Each license photo must be a JPG or PNG file.',
             // Add more custom messages as needed
         ];
     }

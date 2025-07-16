@@ -36,4 +36,9 @@ class Branch extends Model
     {
         return $this->hasMany(VendorVisit::class);
     }
+
+    public function photos()
+    {
+        return $this->hasMany(\App\Models\BranchPhoto::class);
+    }
 }

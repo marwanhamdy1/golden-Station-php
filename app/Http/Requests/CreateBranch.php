@@ -31,7 +31,9 @@ class CreateBranch extends FormRequest
             'address' => ['nullable', 'string', 'max:500'],
             'location_url' => ['nullable', 'url', 'max:500'],
             'city' => ['required', 'string', 'max:100'],
-            'district' => ['nullable', 'string', 'max:100']
+            'district' => ['nullable', 'string', 'max:100'],
+            'branch_photos' => ['nullable', 'array'],
+            'branch_photos.*' => ['file', 'mimes:jpg,jpeg,png', 'max:5120'],
         ];
     }
 
@@ -55,6 +57,7 @@ class CreateBranch extends FormRequest
             'mobile.required' => 'The mobile number is required.',
             'email.email' => 'Please provide a valid email address.',
             'city.required' => 'The city is required.',
+            'branch_photos.*.mimes' => 'Each branch photo must be a JPG or PNG file.',
             // Add more as needed
         ];
     }

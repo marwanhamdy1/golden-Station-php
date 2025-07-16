@@ -30,6 +30,8 @@ return new class extends Migration
             $table->enum('selected_package', ['basic', 'advanced', 'premium', 'free'])->nullable(); // Selected package
             $table->decimal('package_price', 10, 2)->nullable(); // Package price
             $table->timestamp('visit_end_at')->nullable(); // Visit end timestamp
+            $table->string('met_person_name')->nullable(); // اسم المسؤول الذي قابله
+            $table->enum('met_person_role', ['owner', 'manager', 'other'])->nullable(); // الدور: صاحب محل أو مدير أو آخر
             $table->timestamps();
         });
     }

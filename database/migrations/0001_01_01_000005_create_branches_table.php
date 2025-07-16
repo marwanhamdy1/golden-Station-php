@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('district')->nullable();
             $table->foreignId('agent_id')->nullable()->constrained('agents')->onDelete('set null');
+            $table->string('signboard_photo')->nullable(); // صورة يافطة المحل
             $table->timestamps();
         });
     }
