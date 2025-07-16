@@ -80,6 +80,33 @@
                 <p class="text-gray-700 mb-1"><span class="font-semibold">Agent Notes:</span> {{ $visit->agent_notes ?? 'N/A' }}</p>
                 <p class="text-gray-700 mb-1"><span class="font-semibold">Internal Notes:</span> {{ $visit->internal_notes ?? 'N/A' }}</p>
             </div>
+            <div class="mb-4">
+                <h3 class="font-semibold text-gray-700 mb-2">Media</h3>
+                @if($visit->audio_recording)
+                    <div class="mb-2">
+                        <label class="block text-gray-600 font-medium mb-1">Audio Recording:</label>
+                        <audio controls>
+                            <source src="{{ asset('storage/' . $visit->audio_recording) }}" type="audio/mpeg">
+                            <source src="{{ asset('storage/' . $visit->audio_recording) }}" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                @endif
+                @if($visit->video_recording)
+                    <div class="mb-2">
+                        <label class="block text-gray-600 font-medium mb-1">Video Recording:</label>
+                        <video controls width="320">
+                            <source src="{{ asset('storage/' . $visit->video_recording) }}" type="video/mp4">
+                            <source src="{{ asset('storage/' . $visit->video_recording) }}" type="video/avi">
+                            <source src="{{ asset('storage/' . $visit->video_recording) }}" type="video/mov">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                @endif
+                @if(!$visit->audio_recording && !$visit->video_recording)
+                    <span class="text-gray-400 text-sm">No audio or video available.</span>
+                @endif
+            </div>
             <div class="flex justify-end space-x-4 mt-8">
                 <a href="{{ route('visits.edit', $visit) }}" class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors flex items-center">
                     <i class="fas fa-edit mr-2"></i> Edit
