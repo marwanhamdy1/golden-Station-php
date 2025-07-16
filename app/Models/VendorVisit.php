@@ -33,6 +33,7 @@ class VendorVisit extends Model
         'visit_end_at',
         'met_person_name',
         'met_person_role',
+        'delivery_service_requested',
     ];
 
     public function vendor()

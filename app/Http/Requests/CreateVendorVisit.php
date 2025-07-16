@@ -34,6 +34,7 @@ class CreateVendorVisit extends FormRequest
             'visit_end_at' => ['nullable', 'date'],
             'met_person_name' => ['nullable', 'string', 'max:255'],
             'met_person_role' => ['nullable', 'string', Rule::in(['owner', 'manager', 'other'])],
+            'delivery_service_requested' => ['nullable', 'boolean'],
         ];
     }
 
@@ -63,6 +64,7 @@ class CreateVendorVisit extends FormRequest
             'video_recording.mimes' => 'The video must be an mp4, avi, or mov file.',
             'signature_image.mimes' => 'The signature image must be a JPG or PNG file.',
             'met_person_role.in' => 'The met person role must be one of: owner, manager, or other.',
+            'delivery_service_requested.boolean' => 'The delivery service requested field must be true or false.',
             // Add more as needed
         ];
     }
