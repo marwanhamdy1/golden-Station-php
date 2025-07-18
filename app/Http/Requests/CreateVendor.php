@@ -49,11 +49,10 @@ class CreateVendor extends FormRequest
             'id_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:5120'],
             'other_attachments' => ['nullable', 'array'],
             'other_attachments.*' => ['file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
-            'natural_photos' => ['nullable', 'array'],
-            'natural_photos.*' => ['file', 'mimes:jpg,jpeg,png', 'max:5120'],
-            'license_photos' => ['nullable', 'array'],
-            'license_photos.*' => ['file', 'mimes:jpg,jpeg,png', 'max:5120'],
+        
+            'license_photos' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:5120'],
             'license_number' => ['nullable', 'string', 'max:255'],
+            'id_number' => ['nullable', 'string', 'max:100', 'unique:vendors,id_number'],
         ];
     }
 
@@ -88,7 +87,7 @@ class CreateVendor extends FormRequest
             'id_image.mimes' => 'The ID image must be a JPG or PNG file.',
             'other_attachments.*.mimes' => 'Each attachment must be a JPG, PNG, or PDF file.',
             'natural_photos.*.mimes' => 'Each natural photo must be a JPG or PNG file.',
-            'license_photos.*.mimes' => 'Each license photo must be a JPG or PNG file.',
+            'license_photos.mimes' => 'The license photo must be a JPG, PNG, or PDF file.',
             // Add more custom messages as needed
         ];
     }

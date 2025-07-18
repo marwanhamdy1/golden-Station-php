@@ -30,7 +30,7 @@ class BranchController extends Controller
             // Handle multiple branch photos
             if ($request->hasFile('branch_photos')) {
                 foreach ($request->file('branch_photos') as $photo) {
-                    $path = $this->saveImage($photo, $photo);
+                    $path = $this->saveImage($photo, 'branches');
                     $branch->photos()->create(['photo' => $path]);
                 }
             }

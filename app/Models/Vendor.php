@@ -34,6 +34,7 @@ class Vendor extends Model
         'shop_front_image',
         'commercial_registration_image',
         'id_image',
+        'id_number',
         'other_attachments',
         'natural_photos',
         'license_photos',

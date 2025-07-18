@@ -45,6 +45,16 @@ public function store(CreateVendor $request)
             if (!empty($request->id_image)) {
                 $data['id_image'] = $this->saveImage($request->id_image, 'vendors');
             }
+            if (!empty($request->license_photos)) {
+                $data['license_photos'] = $this->saveImage($request->license_photos, 'vendors');
+            }
+            if ($request->hasFile('other_attachments')) {
+                $attachments = [];
+                foreach ($request->file('other_attachments') as $file) {
+                    $attachments[] = $this->saveImage($file, 'vendors/attachments');
+                }
+                $data['other_attachments'] = json_encode($attachments);
+            }
 
             $vendor = Vendor::create($data);
 

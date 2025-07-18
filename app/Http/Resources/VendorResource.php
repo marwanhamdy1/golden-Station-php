@@ -38,7 +38,11 @@ class VendorResource extends JsonResource
             'shop_front_image' => $this->shop_front_image,
             'commercial_registration_image' => $this->commercial_registration_image,
             'id_image' => $this->id_image,
+            'id_number' => $this->id_number,
             'other_attachments' => $this->other_attachments,
+            'natural_photos' => $this->natural_photos,
+            'license_photos' => $this->license_photos,
+            'license_number' => $this->license_number,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'branches' => $this->branches
