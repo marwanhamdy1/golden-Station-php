@@ -89,6 +89,48 @@
         @endif
     </div>
 
+    <!-- Added By Info -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Added By</h3>
+        @if($branch->added_by && $branch->added_by_role)
+            <p class="text-gray-700">
+                {{ $branch->added_by }}
+                <span class="text-xs text-gray-500">
+                    (
+                    @if(strtolower($branch->added_by_role) == 'admin' || strtolower($branch->added_by_role) == 'superadmin')
+                        Admin
+                    @elseif(strtolower($branch->added_by_role) == 'agent')
+                        Agent
+                    @else
+                        {{ ucfirst($branch->added_by_role) }}
+                    @endif
+                    )
+                </span>
+            </p>
+        @else
+            <p class="text-gray-500">Unknown</p>
+        @endif
+    </div>
+
+    <!-- Branch Photos -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Branch Photos</h3>
+        @if($branch->photos->count() > 0)
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                @foreach($branch->photos as $photo)
+                    <div class="border rounded-lg overflow-hidden">
+                        <img src="{{ asset('storage/' . $photo->photo) }}" alt="Branch Photo" class="w-full h-40 object-cover">
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="text-center py-8">
+                <i class="fas fa-image text-gray-400 text-4xl mb-4"></i>
+                <p class="text-gray-500">No photos uploaded for this branch.</p>
+            </div>
+        @endif
+    </div>
+
     <!-- Recent Visits -->
     <div class="bg-white rounded-lg shadow-md p-6">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Visits</h3>

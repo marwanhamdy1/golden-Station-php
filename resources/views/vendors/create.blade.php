@@ -11,7 +11,7 @@
         </div>
 
         <div class="bg-white rounded-lg shadow-md p-6">
-            <form action="{{ route('vendors.store') }}" method="POST">
+            <form action="{{ route('vendors.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -241,6 +241,37 @@
                             @error('notes')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vendor Images -->
+                <div class="mt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Vendor Images</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="shop_front_image" class="block text-sm font-medium text-gray-700 mb-2">Shop Front Image</label>
+                            <input type="file" name="shop_front_image" id="shop_front_image" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label for="commercial_registration_image" class="block text-sm font-medium text-gray-700 mb-2">Commercial Registration Image</label>
+                            <input type="file" name="commercial_registration_image" id="commercial_registration_image" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label for="id_image" class="block text-sm font-medium text-gray-700 mb-2">ID Image</label>
+                            <input type="file" name="id_image" id="id_image" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label for="natural_photos[]" class="block text-sm font-medium text-gray-700 mb-2">Natural Photos (Multiple)</label>
+                            <input type="file" name="natural_photos[]" id="natural_photos" class="w-full px-3 py-2 border border-gray-300 rounded-lg" multiple>
+                        </div>
+                        <div>
+                            <label for="license_photos[]" class="block text-sm font-medium text-gray-700 mb-2">License Photos (Multiple)</label>
+                            <input type="file" name="license_photos[]" id="license_photos" class="w-full px-3 py-2 border border-gray-300 rounded-lg" multiple>
+                        </div>
+                        <div>
+                            <label for="other_attachments" class="block text-sm font-medium text-gray-700 mb-2">Other Attachments</label>
+                            <input type="file" name="other_attachments" id="other_attachments" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
                         </div>
                     </div>
                 </div>

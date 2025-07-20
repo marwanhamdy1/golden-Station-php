@@ -16,4 +16,14 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /** @test */
+    public function it_switches_language_to_arabic()
+    {
+        // ضبط اللغة في config مباشرة
+        config(['app.locale' => 'ar']);
+        $dashboard = $this->get('/dashboard');
+        $dashboard->assertSee('لوحة التحكم'); // من ملف resources/lang/ar/dashboard.php
+        $dashboard->assertSee('Current locale: ar'); // من resources/views/dashboard.blade.php
+    }
 }

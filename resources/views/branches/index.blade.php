@@ -59,6 +59,9 @@
                             Assigned Agent
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Added By
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Visits
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -105,6 +108,24 @@
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                     <i class="fas fa-user-slash mr-1"></i> Unassigned
                                 </span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @if($branch->added_by && $branch->added_by_role)
+                                <span class="text-sm text-gray-900">{{ $branch->added_by }}</span>
+                                <span class="text-xs text-gray-500">
+                                    (
+                                    @if(strtolower($branch->added_by_role) == 'admin' || strtolower($branch->added_by_role) == 'superadmin')
+                                        Admin
+                                    @elseif(strtolower($branch->added_by_role) == 'agent')
+                                        Agent
+                                    @else
+                                        {{ ucfirst($branch->added_by_role) }}
+                                    @endif
+                                    )
+                                </span>
+                            @else
+                                <span class="text-gray-400">Unknown</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">

@@ -35,7 +35,7 @@ public function store(CreateVendor $request)
     {
         try {
             $data = $request->validated();
-
+            $data['agent_id'] = auth('agent')->id();
             if (!empty($request->shop_front_image)) {
                 $data['shop_front_image'] = $this->saveImage($request->shop_front_image, 'vendors');
             }

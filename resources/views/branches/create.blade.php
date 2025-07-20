@@ -11,7 +11,7 @@
         </div>
 
         <div class="bg-white rounded-lg shadow-md p-6">
-            <form action="{{ route('branches.store') }}" method="POST">
+            <form action="{{ route('branches.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -134,6 +134,11 @@
                             @enderror
                         </div>
                     </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Branch Photos</h3>
+                    <input type="file" name="photos[]" id="branch_photos" class="w-full px-3 py-2 border border-gray-300 rounded-lg" multiple>
                 </div>
 
                 <div class="mt-6 flex justify-end space-x-3">

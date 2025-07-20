@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\CreateVendor;
 use App\Http\Resources\VendorResource;
+use Illuminate\Support\Facades\Auth;
+use App\ImageUploadTrait;
 
 class VendorController extends Controller
 {
+    use ImageUploadTrait;
+
     public function index()
     {
         $vendors = Vendor::withCount(['branches', 'vendorVisits'])
@@ -54,7 +58,42 @@ class VendorController extends Controller
                 ->withInput();
         }
 
-        Vendor::create($request->all());
+        $data = $request->all();
+
+        // صور مفردة
+        foreach ([
+            'shop_front_image',
+            'commercial_registration_image',
+            'id_image',
+            'other_attachments'
+        ] as $field) {
+            if ($request->hasFile($field)) {
+                $data[$field] = $this->saveImage($request->file($field), 'vendors');
+            }
+        }
+
+        // صور متعددة (natural_photos, license_photos)
+        foreach (['natural_photos', 'license_photos'] as $multiField) {
+            if ($request->hasFile($multiField)) {
+                $paths = [];
+                foreach ($request->file($multiField) as $file) {
+                    $paths[] = $this->saveImage($file, 'vendors');
+                }
+                $data[$multiField] = json_encode($paths);
+            }
+        }
+
+        if (Auth::check()) {
+            $data['added_by'] = Auth::user()->name;
+            if (is_callable([Auth::user(), 'getRoleNames'])) {
+                $roles = Auth::user()->getRoleNames();
+                $data['added_by_role'] = $roles && $roles->count() > 0 ? $roles->first() : 'user';
+            } else {
+                $data['added_by_role'] = property_exists(Auth::user(), 'role') ? Auth::user()->role : 'user';
+            }
+        }
+
+        Vendor::create($data);
 
         return redirect()->route('vendors.index')
             ->with('success', 'Vendor created successfully!');

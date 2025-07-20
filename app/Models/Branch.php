@@ -20,6 +20,8 @@ class Branch extends Model
         'city',
         'district',
         'agent_id',
+        'added_by',
+        'added_by_role',
     ];
 
     public function vendor()

@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +25,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Schema::defaultStringLength(191);
+        // Set timezone from settings table if available
+        try {
+            $timezone = cache()->rememberForever('app_timezone', function() {
+                return DB::table('settings')->where('key', 'timezone')->value('value');
+            });
+            if ($timezone) {
+                Config::set('app.timezone', $timezone);
+                date_default_timezone_set($timezone);
+            }
+        } catch (\Exception $e) {
+            // If settings table doesn't exist yet, fallback to config/app.php
+        }
     }
 }

@@ -216,6 +216,48 @@
     </div>
     @endif
 
+    <!-- Added By Info -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Added By</h3>
+        @if($vendor->added_by && $vendor->added_by_role)
+            <p class="text-gray-700">
+                {{ $vendor->added_by }}
+                <span class="text-xs text-gray-500">
+                    (
+                    @if(strtolower($vendor->added_by_role) == 'admin' || strtolower($vendor->added_by_role) == 'superadmin')
+                        Admin
+                    @elseif(strtolower($vendor->added_by_role) == 'agent')
+                        Agent
+                    @else
+                        {{ ucfirst($vendor->added_by_role) }}
+                    @endif
+                    )
+                </span>
+            </p>
+        @else
+            <p class="text-gray-500">Unknown</p>
+        @endif
+    </div>
+
+    <!-- Vendor Images -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Vendor Images</h3>
+        @if(count($vendor->images()) > 0)
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                @foreach($vendor->images() as $image)
+                    <div class="border rounded-lg overflow-hidden">
+                        <img src="{{ asset('storage/' . $image) }}" alt="Vendor Image" class="w-full h-40 object-cover">
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="text-center py-8">
+                <i class="fas fa-image text-gray-400 text-4xl mb-4"></i>
+                <p class="text-gray-500">No images uploaded for this vendor.</p>
+            </div>
+        @endif
+    </div>
+
     <!-- Branches -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Branches ({{ $vendor->branches->count() }})</h3>

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\CreateBranch;
 use App\Http\Resources\BranchResource;
+use Illuminate\Support\Facades\Auth;
 
 class BranchController extends Controller
 {
@@ -42,15 +43,29 @@ class BranchController extends Controller
             'district' => 'nullable|string|max:255',
             // 'agent_id' => 'nullable|exists:agents,id',
         ]);
-        $agent =auth()->guard('agent')->user();
-        $request->merge(['agent_id' => $agent->id]);
+
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        Branch::create($request->all());
+        $data = $request->all();
+        // من أضاف الفرع
+        if (Auth::check()) {
+            $data['added_by'] = Auth::user()->name;
+            if (is_callable([Auth::user(), 'getRoleNames'])) {
+                $roles = Auth::user()->getRoleNames();
+                $data['added_by_role'] = $roles && $roles->count() > 0 ? $roles->first() : 'user';
+            } else {
+                $data['added_by_role'] = property_exists(Auth::user(), 'role') ? Auth::user()->role : 'user';
+            }
+        } elseif ($agent) {
+            $data['added_by'] = $agent->name;
+            $data['added_by_role'] = 'agent';
+        }
+
+        Branch::create($data);
 
         return redirect()->route('branches.index')
             ->with('success', 'Branch created successfully!');

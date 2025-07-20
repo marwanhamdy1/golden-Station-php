@@ -6,6 +6,7 @@
     <title>GoldenStation - @yield('title', 'Dashboard')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
     <script>
         tailwind.config = {
             theme: {
@@ -23,7 +24,7 @@
         }
     </script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50" x-data="{ userSlideOpen: false }">
     <!-- Navigation -->
     <nav class="bg-white shadow-lg border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,10 +43,19 @@
                             <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
                         </button>
                     </div>
+                    <!-- Language Switcher -->
                     <div class="relative">
-                        <button class="flex items-center text-gray-700 hover:text-primary focus:outline-none">
-                            <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name=Admin&background=1e40af&color=fff" alt="Profile">
-                            <span class="ml-2">Admin</span>
+                        <form action="" method="get" class="inline">
+                            <select onchange="window.location.href=this.value" class="px-2 py-1 border rounded text-sm">
+                                <option value="{{ route('lang.switch', ['locale' => 'en', 'redirect' => request()->fullUrl()]) }}" @if(app()->getLocale()=='en') selected @endif>{{ __('dashboard.english') }}</option>
+                                <option value="{{ route('lang.switch', ['locale' => 'ar', 'redirect' => request()->fullUrl()]) }}" @if(app()->getLocale()=='ar') selected @endif>{{ __('dashboard.arabic') }}</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="relative">
+                        <button @click="userSlideOpen = true" class="flex items-center text-gray-700 hover:text-primary focus:outline-none">
+                            <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name={{ auth()->user()->name ?? 'User' }}&background=1e40af&color=fff" alt="Profile">
+                            <span class="ml-2">{{ auth()->user()->name ?? 'User' }}</span>
                             <i class="fas fa-chevron-down ml-1"></i>
                         </button>
                     </div>
@@ -54,6 +64,26 @@
         </div>
     </nav>
 
+    <!-- User Slide Panel -->
+    <div x-show="userSlideOpen" class="fixed inset-0 z-50 flex justify-end" style="display: none;">
+        <div class="fixed inset-0 bg-black bg-opacity-30" @click="userSlideOpen = false"></div>
+        <div class="relative w-80 bg-white h-full shadow-xl transition-transform transform translate-x-0">
+            <button @click="userSlideOpen = false" class="absolute top-4 right-4 text-gray-500 hover:text-primary focus:outline-none">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="p-8 flex flex-col items-center mt-8">
+                <img class="h-16 w-16 rounded-full mb-4" src="https://ui-avatars.com/api/?name={{ auth()->user()->name ?? 'User' }}&background=1e40af&color=fff" alt="Profile">
+                <div class="font-bold text-lg text-primary mb-1">{{ auth()->user()->name ?? 'User' }}</div>
+                <div class="text-sm text-gray-500 mb-6">{{ auth()->user()->email ?? '' }}</div>
+                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    @csrf
+                    <button type="submit" class="w-full py-2 px-4 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 flex items-center justify-center">
+                        <i class="fas fa-sign-out-alt mr-2"></i> {{ __('dashboard.logout') }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
     <div class="flex">
@@ -63,31 +93,31 @@
                 <nav class="space-y-2">
                       <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-2 text-primary bg-blue-50 rounded-lg">
                         <i class="fas fa-tachometer-alt mr-3"></i>
-                        Dashboard
+                        {{ __('dashboard.dashboard') }}
                     </a>
                     <a href="{{ route('agents.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-users mr-3"></i>
-                        Agents
+                        {{ __('dashboard.agent') }}s
                     </a>
                     <a href="{{ route('vendors.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-store mr-3"></i>
-                        Vendors
+                        {{ __('dashboard.vendor') }}s
                     </a>
                     <a href="{{ route('branches.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-map-marker-alt mr-3"></i>
-                        Branches
+                        {{ __('dashboard.branch') }}es
                     </a>
                     <a href="{{ route('visits.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-calendar-check mr-3"></i>
-                        Visits
+                        {{ __('dashboard.visit_details') }}
                     </a>
                     <a href="{{ route('packages.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-box mr-3"></i>
-                        Packages
+                        {{ __('dashboard.package') }}s
                     </a>
                     <a href="{{ route('reports.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-chart-bar mr-3"></i>
-                        Reports
+                        {{ __('dashboard.actions') }}
                     </a>
                     @if(app()->environment('local'))
                     <a href="{{ route('telescope') }}" target="_blank" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
@@ -97,7 +127,7 @@
                     @endif
                     <a href="{{ route('settings.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-cog mr-3"></i>
-                        Settings
+                        {{ __('dashboard.settings') }}
                     </a>
                 </nav>
             </div>

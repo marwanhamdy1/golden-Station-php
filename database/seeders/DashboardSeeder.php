@@ -10,18 +10,46 @@ use App\Models\Branch;
 use App\Models\VendorVisit;
 use App\Models\Package;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class DashboardSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create sample users
-        User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@goldenstation.com',
-            'password' => Hash::make('password'),
-            'role' => 'admin'
-        ]);
+        // Create roles
+        $superadminRole = Role::firstOrCreate(['name' => 'superadmin']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $moderatorRole = Role::firstOrCreate(['name' => 'moderator']);
+
+        // Create superadmin user
+        $superadmin = User::firstOrCreate(
+            ['email' => 'superadmin@goldenstation.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $superadmin->assignRole($superadminRole);
+
+        // Create admin user
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@goldenstation.com'],
+            [
+                'name' => 'Admin User',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $admin->assignRole($adminRole);
+
+        // Create moderator user
+        $moderator = User::firstOrCreate(
+            ['email' => 'moderator@goldenstation.com'],
+            [
+                'name' => 'Moderator User',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $moderator->assignRole($moderatorRole);
 
         // Create sample agents
         $agents = [

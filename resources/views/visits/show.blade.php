@@ -52,6 +52,7 @@
                 <div>
                     <h3 class="font-semibold text-gray-700 mb-2">Visit Info</h3>
                     <p class="text-gray-700 mb-1"><span class="font-semibold">Date:</span> {{ $visit->visit_date instanceof \Carbon\Carbon ? $visit->visit_date->format('M d, Y H:i') : $visit->visit_date }}</p>
+                    <p class="text-gray-700 mb-1"><span class="font-semibold">Report Created At:</span> {{ $visit->created_at instanceof \Carbon\Carbon ? $visit->created_at->format('M d, Y H:i') : $visit->created_at }}</p>
                     @if($visit->visit_end_at)
                     <p class="text-gray-700 mb-1"><span class="font-semibold">End:</span> {{ $visit->visit_end_at instanceof \Carbon\Carbon ? $visit->visit_end_at->format('M d, Y H:i') : $visit->visit_end_at }}</p>
                     @if($visit->visit_date instanceof \Carbon\Carbon && $visit->visit_end_at instanceof \Carbon\Carbon)
