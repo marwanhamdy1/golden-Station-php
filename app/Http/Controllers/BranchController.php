@@ -60,11 +60,7 @@ class BranchController extends Controller
             } else {
                 $data['added_by_role'] = property_exists(Auth::user(), 'role') ? Auth::user()->role : 'user';
             }
-        } elseif ($agent) {
-            $data['added_by'] = $agent->name;
-            $data['added_by_role'] = 'agent';
         }
-
         Branch::create($data);
 
         return redirect()->route('branches.index')
