@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('vendor_visits', function (Blueprint $table) {
-            // Drop the enum column and recreate as string to support custom values
-            $table->dropColumn('met_person_role');
-            $table->string('met_person_role', 100)->nullable()->after('met_person_name');
+            $table->string('custom_role')->nullable()->after('met_person_role'); // Custom role as string
         });
     }
 
@@ -24,9 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('vendor_visits', function (Blueprint $table) {
-            // Revert back to enum
-            $table->dropColumn('met_person_role');
-            $table->enum('met_person_role', ['owner', 'manager', 'other'])->nullable()->after('met_person_name');
+            $table->dropColumn('custom_role');
         });
     }
 };

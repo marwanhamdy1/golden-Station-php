@@ -34,6 +34,7 @@ class CreateVendorVisit extends FormRequest
             'visit_end_at' => ['nullable', 'date'],
             'met_person_name' => ['nullable', 'string', 'max:255'],
             'met_person_role' => ['nullable', 'string', 'max:100'], // Changed to support custom values
+            'custom_role' => ['nullable', 'string', 'max:255'], // Custom role as string
             'delivery_service_requested' => ['nullable', 'boolean'],
         ];
     }
@@ -64,6 +65,7 @@ class CreateVendorVisit extends FormRequest
             'video_recording.mimes' => 'The video must be an mp4, avi, or mov file.',
             'signature_image.mimes' => 'The signature image must be a JPG or PNG file.',
             'met_person_role.max' => 'The met person role must not exceed 100 characters.',
+            'custom_role.max' => 'The custom role must not exceed 255 characters.',
             'delivery_service_requested.boolean' => 'The delivery service requested field must be true or false.',
             // Add more as needed
         ];
