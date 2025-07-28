@@ -23,6 +23,7 @@ class Vendor extends Model
         'location_url',
         'city',
         'district',
+        'street_name',
         'activity_type',
         'activity_start_date',
         'has_commercial_registration',

@@ -26,8 +26,8 @@
 <body class="bg-gray-50 min-h-screen flex items-center justify-center">
     <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg border-t-4 border-primary">
         <div class="flex flex-col items-center mb-6">
-            <i class="fas fa-gem text-4xl text-primary mb-2"></i>
-            <h1 class="text-2xl font-bold text-primary">GoldenStation Login</h1>
+            <img src="{{ asset('images/logo/logo.png') }}" alt="GoldenStation Logo" class="h-20 w-auto mb-4">
+            <h1 class="text-lg font-semibold text-primary">GoldenStation Login</h1>
             <p class="text-gray-500 mt-1">Sign in to your dashboard</p>
         </div>
         @if(session('error'))

@@ -33,7 +33,7 @@ class CreateVendorVisit extends FormRequest
             'package_id' => ['nullable', 'exists:packages,id'],
             'visit_end_at' => ['nullable', 'date'],
             'met_person_name' => ['nullable', 'string', 'max:255'],
-            'met_person_role' => ['nullable', 'string', Rule::in(['owner', 'manager', 'other'])],
+            'met_person_role' => ['nullable', 'string', 'max:100'], // Changed to support custom values
             'delivery_service_requested' => ['nullable', 'boolean'],
         ];
     }
@@ -63,7 +63,7 @@ class CreateVendorVisit extends FormRequest
             'audio_recording.mimes' => 'The audio must be an mp3 or wav file.',
             'video_recording.mimes' => 'The video must be an mp4, avi, or mov file.',
             'signature_image.mimes' => 'The signature image must be a JPG or PNG file.',
-            'met_person_role.in' => 'The met person role must be one of: owner, manager, or other.',
+            'met_person_role.max' => 'The met person role must not exceed 100 characters.',
             'delivery_service_requested.boolean' => 'The delivery service requested field must be true or false.',
             // Add more as needed
         ];

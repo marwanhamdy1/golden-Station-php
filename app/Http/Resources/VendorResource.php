@@ -27,6 +27,7 @@ class VendorResource extends JsonResource
             'location_url' => $this->location_url,
             'city' => $this->city,
             'district' => $this->district,
+            'street_name' => $this->street_name,
             'activity_type' => $this->activity_type,
             'activity_start_date' => $this->activity_start_date,
             'has_commercial_registration' => $this->has_commercial_registration,
