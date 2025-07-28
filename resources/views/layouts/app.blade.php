@@ -31,8 +31,9 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <a href="{{ route('dashboard') }}" class="text-2xl font-bold text-primary">
-                            <i class="fas fa-gem mr-2"></i>GoldenStation
+                        <a href="{{ route('dashboard') }}" class="flex items-center">
+                            <img src="{{ asset('images/logo/logo.png') }}" alt="GoldenStation Logo" class="h-20 w-auto mr-4">
+                            <span class="text-lg font-semibold text-primary">GoldenStation</span>
                         </a>
                     </div>
                 </div>

@@ -26,6 +26,17 @@ class HomeController extends Controller
         $agent = Auth::guard('agent')->user();
         $agentBranches = $agent ? Branch::where('agent_id', $agent->id)->count() : 0;
         $agentVisits = $agent ? VendorVisit::where('agent_id', $agent->id)->count() : 0;
+        
+        // Calculate monthly visits for the authenticated agent
+        $visitsMonth = 0;
+        if ($agent) {
+            $startOfMonth = Carbon::now()->startOfMonth();
+            $endOfMonth = Carbon::now();
+            $visitsMonth = VendorVisit::where('agent_id', $agent->id)
+                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                ->count();
+        }
+        
         $agentDetails = $agent ? [
             'id' => $agent->id,
             'name' => $agent->name,
@@ -55,6 +66,15 @@ class HomeController extends Controller
                 'details' => $agentDetails,
                 'branches_count' => $agentBranches,
                 'visits_count' => $agentVisits,
+                'visits_month' => $visitsMonth,
+                'monthly_visits' => [
+                    'count' => $visitsMonth,
+                    'key' => 'Monthly Visits'
+                ],
+                'total_visits' => [
+                    'count' => $agentVisits,
+                    'key' => 'Total Visits'
+                ]
             ],
         ]);
     }

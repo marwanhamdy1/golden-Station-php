@@ -17,17 +17,37 @@ class VendorController extends Controller
     {
         $query = Vendor::query();
 
-        if ($request->has('search')) {
+        // Get all searchable fields from the Vendor model
+        $searchableFields = [
+            'owner_name', 'commercial_name', 'commercial_registration_number',
+            'mobile', 'whatsapp', 'snapchat', 'instagram', 'email',
+            'location_url', 'city', 'district', 'activity_type',
+            'has_commercial_registration', 'has_online_platform',
+            'has_product_photos', 'notes', 'id_number', 'license_number'
+        ];
+
+        // Handle dynamic field-specific searches
+        foreach ($searchableFields as $field) {
+            if ($request->has($field) && !empty($request->input($field))) {
+                $value = $request->input($field);
+                $query->where($field, 'like', "%{$value}%");
+            }
+        }
+
+        // Handle general search across multiple fields
+        if ($request->has('search') && !empty($request->input('search'))) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
-                $q->where('owner_name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('mobile', 'like', "%{$search}%")
-                  ->orWhere('whatsapp', 'like', "%{$search}%");
+            $query->where(function($q) use ($search, $searchableFields) {
+                foreach ($searchableFields as $field) {
+                    $q->orWhere($field, 'like', "%{$search}%");
+                }
             });
         }
 
-        $vendors = $query->get();
+        // Handle pagination
+        $perPage = $request->input('per_page', 15);
+        $vendors = $query->paginate($perPage);
+
         return VendorResource::collection($vendors);
     }
 
