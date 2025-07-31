@@ -17,7 +17,7 @@ class VisitController extends Controller
     public function index()
     {
         $visits = VendorVisit::with(['vendor', 'agent', 'package'])
-            ->orderBy('visit_date', 'desc')
+            ->orderBy('created_at', 'desc')
             ->paginate(15);
         return view('visits.index', compact('visits'));
     }
@@ -90,11 +90,23 @@ class VisitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(VendorVisit $visit)
-    {
-        $visit->load(['vendor', 'agent', 'package', 'branch']);
-        return view('visits.show', compact('visit'));
-    }
+   public function show(VendorVisit $visit)
+{
+    $visit->load(['vendor', 'agent', 'package', 'branch']);
+
+    // حساب عدد مرات زيارة هذا المندوب لنفس التاجر
+    $agentVendorVisitsCount = VendorVisit::where('agent_id', $visit->agent_id)
+        ->where('vendor_id', $visit->vendor_id)
+        ->count();
+
+    // جلب جميع الزيارات لهذا التاجر مع ترتيبها بالتاريخ
+    $allVendorVisits = VendorVisit::with(['agent', 'package', 'branch'])
+        ->where('vendor_id', $visit->vendor_id)
+        ->orderBy('visit_date', 'desc')
+        ->get();
+
+    return view('visits.show', compact('visit', 'agentVendorVisitsCount', 'allVendorVisits'));
+}
 
     /**
      * Show the form for editing the specified resource.

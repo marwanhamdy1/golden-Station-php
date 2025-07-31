@@ -55,6 +55,7 @@
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Visit Details
+                            <span title="Sorted by latest first">&#8595;</span> <!-- Down arrow for newest first -->
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Vendor
@@ -67,6 +68,10 @@
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Package
+                        </th>
+                        <!-- New column for agent's visit count for this vendor -->
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Agent Visits for Vendor
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Actions
@@ -195,6 +200,11 @@
                             @else
                             <span class="text-gray-400 text-sm">No Package</span>
                             @endif
+                        </td>
+
+                        <!-- Agent Visits for Vendor -->
+                        <td class="px-6 py-4">
+                            {{ $visitCountsArr[$visit->agent_id][$visit->vendor_id] ?? 1 }}
                         </td>
 
                         <!-- Actions -->
