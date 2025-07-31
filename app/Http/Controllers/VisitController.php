@@ -14,13 +14,63 @@ class VisitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $visits = VendorVisit::with(['vendor', 'agent', 'package'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
-        return view('visits.index', compact('visits'));
+   public function index()
+{
+    $visits = VendorVisit::with(['vendor', 'agent', 'package', 'branch'])
+        ->orderBy('created_at', 'desc')
+        ->paginate(15);
+
+    // Statistics for the dashboard cards
+    $totalVisits = VendorVisit::count();
+    $successfulVisits = VendorVisit::where('visit_status', 'visited')->count();
+    $activeAgents = VendorVisit::distinct('agent_id')->count('agent_id');
+    $visitsWithPackages = VendorVisit::whereNotNull('package_id')->count();
+
+    // Get all agents for the filter dropdown
+    $allAgents = Agent::orderBy('name')->get();
+
+    // Calculate visit counts for each agent-vendor combination
+    $visitCountsArr = [];
+    $agentVendorVisits = VendorVisit::select('agent_id', 'vendor_id')
+        ->get()
+        ->groupBy('agent_id');
+
+    foreach ($agentVendorVisits as $agentId => $agentVisits) {
+        $visitCountsArr[$agentId] = [];
+        $vendorGroups = $agentVisits->groupBy('vendor_id');
+        foreach ($vendorGroups as $vendorId => $vendorVisits) {
+            $visitCountsArr[$agentId][$vendorId] = $vendorVisits->count();
+        }
     }
+
+    // Calculate total visit counts per vendor
+    $vendorVisitCounts = VendorVisit::select('vendor_id')
+        ->get()
+        ->groupBy('vendor_id')
+        ->map(function ($visits) {
+            return $visits->count();
+        });
+
+    // Calculate total visit counts per agent
+    $agentVisitCounts = VendorVisit::select('agent_id')
+        ->get()
+        ->groupBy('agent_id')
+        ->map(function ($visits) {
+            return $visits->count();
+        });
+
+    return view('visits.index', compact(
+        'visits',
+        'totalVisits',
+        'successfulVisits',
+        'activeAgents',
+        'visitsWithPackages',
+        'allAgents',
+        'visitCountsArr',
+        'vendorVisitCounts',
+        'agentVisitCounts'
+    ));
+}
 
     /**
      * Show the form for creating a new resource.

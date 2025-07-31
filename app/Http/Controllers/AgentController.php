@@ -51,13 +51,63 @@ class AgentController extends Controller
             ->with('success', 'Agent created successfully!');
     }
 
-    public function show(Agent $agent)
+    public function show(Agent $agent, Request $request)
     {
-        $agent->load(['vendorVisits' => function($query) {
-            $query->latest()->limit(10);
-        }, 'branches']);
+        // Get current tab from request (default to 'overview')
+        $activeTab = $request->get('tab', 'overview');
 
-        return view('agents.show', compact('agent'));
+        // Load basic agent data with counts
+        $agent->loadCount(['vendorVisits', 'branches']);
+
+        // Initialize variables
+        $vendorVisits = collect();
+        $branches = collect();
+        $statistics = [];
+
+        // Calculate agent statistics
+        $statistics = [
+            'total_visits' => $agent->vendor_visits_count,
+            'total_branches' => $agent->branches_count,
+            'recent_visits' => $agent->vendorVisits()->where('created_at', '>=', now()->subDays(7))->count(),
+            'this_month_visits' => $agent->vendorVisits()->whereMonth('created_at', now()->month)->count(),
+        ];
+
+        // Load data based on active tab with pagination
+        switch ($activeTab) {
+            case 'visits':
+                $vendorVisits = $agent->vendorVisits()
+                    ->with(['vendor', 'branch'])
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(15, ['*'], 'visits_page');
+                break;
+
+            case 'branches':
+                $branches = $agent->branches()
+                    ->withCount('vendorVisits')
+                    ->with('vendor')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(15, ['*'], 'branches_page');
+                break;
+
+            case 'overview':
+            default:
+                // For overview, get limited recent data
+                $vendorVisits = $agent->vendorVisits()
+                    ->with(['vendor', 'branch'])
+                    ->orderBy('created_at', 'desc')
+                    ->limit(5)
+                    ->get();
+
+                $branches = $agent->branches()
+                    ->withCount('vendorVisits')
+                    ->with('vendor')
+                    ->orderBy('created_at', 'desc')
+                    ->limit(5)
+                    ->get();
+                break;
+        }
+
+        return view('agents.show', compact('agent', 'vendorVisits', 'branches', 'statistics', 'activeTab'));
     }
 
     public function edit(Agent $agent)
@@ -94,7 +144,7 @@ class AgentController extends Controller
 
         $agent->update($data);
 
-        return redirect()->route('agents.index')
+        return redirect()->route('agents.show', $agent)
             ->with('success', 'Agent updated successfully!');
     }
 
@@ -140,7 +190,7 @@ class AgentController extends Controller
 
     public function apiShow(Agent $agent)
     {
-        $agent->load(['vendorVisits', 'branches']);
+        $agent->load(['vendorVisits.vendor', 'vendorVisits.branch', 'branches.vendor']);
         return response()->json(['success' => true, 'data' => $agent]);
     }
 

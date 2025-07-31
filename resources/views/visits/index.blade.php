@@ -6,7 +6,7 @@
     <div class="flex justify-between items-center mb-8">
         <div>
             <h1 class="text-3xl font-bold text-gray-900">Vendor Visits</h1>
-            <p class="text-gray-600 mt-2">Track and manage all vendor visits</p>
+            <p class="text-gray-600 mt-2">Track and manage all vendor visits ({{ $visits->total() }} total visits)</p>
         </div>
         <a href="{{ route('visits.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center transition-colors">
             <i class="fas fa-plus mr-2"></i>
@@ -14,9 +14,70 @@
         </a>
     </div>
 
+    <!-- Statistics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-calendar-check text-blue-600"></i>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Total Visits</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ $totalVisits ?? $visits->total() }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check-circle text-green-600"></i>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Successful Visits</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ $successfulVisits ?? 0 }}</p>
+                    <p class="text-xs text-green-600">{{ $successfulVisits ? round(($successfulVisits / ($totalVisits ?: 1)) * 100, 1) : 0 }}% success rate</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-users text-purple-600"></i>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">Active Agents</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ $activeAgents ?? 0 }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-box text-yellow-600"></i>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-500">With Packages</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ $visitsWithPackages ?? 0 }}</p>
+                    <p class="text-xs text-yellow-600">{{ $visitsWithPackages ? round(($visitsWithPackages / ($totalVisits ?: 1)) * 100, 1) : 0 }}% package rate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Search and Filters -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
                 <input type="text" id="search" placeholder="Search visits..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             </div>
@@ -39,6 +100,14 @@
                 </select>
             </div>
             <div>
+                <select id="agent-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">All Agents</option>
+                    @foreach($allAgents ?? [] as $agent)
+                    <option value="{{ $agent->id }}">{{ $agent->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
                 <button onclick="exportVisits()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center justify-center">
                     <i class="fas fa-download mr-2"></i>
                     Export
@@ -55,7 +124,7 @@
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Visit Details
-                            <span title="Sorted by latest first">&#8595;</span> <!-- Down arrow for newest first -->
+                            <span title="Sorted by latest first">&#8595;</span>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Vendor
@@ -67,11 +136,13 @@
                             Status & Rating
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Package
+                            Package & Value
                         </th>
-                        <!-- New column for agent's visit count for this vendor -->
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Agent Visits for Vendor
+                            Visit Count
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Additional Info
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Actions
@@ -80,7 +151,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($visits as $visit)
-                    <tr class="hover:bg-gray-50">
+                    <tr class="hover:bg-gray-50" data-agent-id="{{ $visit->agent_id }}">
                         <!-- Visit Details -->
                         <td class="px-6 py-4">
                             <div class="flex items-center">
@@ -103,6 +174,9 @@
                                         @endif
                                     </div>
                                     @endif
+                                    <div class="text-xs text-gray-400">
+                                        {{ $visit->branch->name ?? 'No Branch' }}
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -125,6 +199,11 @@
                                     <div class="text-xs text-gray-400">
                                         {{ $visit->vendor->city ?? 'N/A' }}
                                     </div>
+                                    @if(isset($vendorVisitCounts[$visit->vendor_id]))
+                                    <div class="text-xs text-blue-600 font-medium">
+                                        {{ $vendorVisitCounts[$visit->vendor_id] }} total visits
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </td>
@@ -145,6 +224,11 @@
                                     <div class="text-sm text-gray-500">
                                         Agent #{{ str_pad($visit->agent->id, 3, '0', STR_PAD_LEFT) }}
                                     </div>
+                                    @if(isset($agentVisitCounts[$visit->agent_id]))
+                                    <div class="text-xs text-green-600 font-medium">
+                                        {{ $agentVisitCounts[$visit->agent_id] }} total visits
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             @else
@@ -188,7 +272,7 @@
                             </div>
                         </td>
 
-                        <!-- Package -->
+                        <!-- Package & Value -->
                         <td class="px-6 py-4">
                             @if($visit->package)
                             <div class="text-sm text-gray-900">
@@ -197,14 +281,75 @@
                             <div class="text-sm text-gray-500">
                                 SAR {{ number_format($visit->package->price, 2) }}
                             </div>
+                            <div class="text-xs text-gray-400">
+                                {{ $visit->package->duration_in_days ?? 'N/A' }} days
+                            </div>
                             @else
                             <span class="text-gray-400 text-sm">No Package</span>
                             @endif
                         </td>
 
-                        <!-- Agent Visits for Vendor -->
+                        <!-- Visit Count -->
                         <td class="px-6 py-4">
-                            {{ $visitCountsArr[$visit->agent_id][$visit->vendor_id] ?? 1 }}
+                            <div class="text-center">
+                                <div class="text-lg font-bold text-blue-600">
+                                    {{ $visitCountsArr[$visit->agent_id][$visit->vendor_id] ?? 1 }}
+                                </div>
+                                <div class="text-xs text-gray-500">
+                                    agent visits
+                                </div>
+                                <div class="text-xs text-gray-500">
+                                    to vendor
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- Additional Info -->
+                        <td class="px-6 py-4">
+                            <div class="space-y-1">
+                                @if($visit->met_person_name)
+                                <div class="text-xs text-gray-600">
+                                    <i class="fas fa-user mr-1"></i>
+                                    {{ $visit->met_person_name }}
+                                </div>
+                                @endif
+
+                                @if($visit->delivery_service_requested)
+                                <div class="text-xs text-purple-600">
+                                    <i class="fas fa-truck mr-1"></i>
+                                    Delivery Requested
+                                </div>
+                                @endif
+
+                                @if($visit->gps_latitude && $visit->gps_longitude)
+                                <div class="text-xs text-gray-500">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>
+                                    GPS Available
+                                </div>
+                                @endif
+
+                                @if($visit->audio_recording || $visit->video_recording || $visit->signature_image)
+                                <div class="text-xs text-gray-500">
+                                    @if($visit->audio_recording)
+                                    <i class="fas fa-microphone mr-1 text-green-500"></i>
+                                    @endif
+                                    @if($visit->video_recording)
+                                    <i class="fas fa-video mr-1 text-blue-500"></i>
+                                    @endif
+                                    @if($visit->signature_image)
+                                    <i class="fas fa-signature mr-1 text-purple-500"></i>
+                                    @endif
+                                    Media Available
+                                </div>
+                                @endif
+
+                                @if($visit->notes || $visit->agent_notes || $visit->internal_notes)
+                                <div class="text-xs text-gray-500">
+                                    <i class="fas fa-sticky-note mr-1 text-yellow-500"></i>
+                                    Has Notes
+                                </div>
+                                @endif
+                            </div>
                         </td>
 
                         <!-- Actions -->
@@ -230,7 +375,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-12 text-center">
+                        <td colspan="8" class="px-6 py-12 text-center">
                             <div class="text-center">
                                 <i class="fas fa-calendar-times text-6xl text-gray-300 mb-4"></i>
                                 <h3 class="text-xl font-semibold text-gray-600 mb-2">No Visits Found</h3>
@@ -254,6 +399,37 @@
         {{ $visits->links() }}
     </div>
     @endif
+
+    <!-- Summary Statistics Footer -->
+    <div class="mt-8 bg-gray-50 rounded-lg p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Current Page Summary</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-center">
+            <div>
+                <div class="text-2xl font-bold text-blue-600">{{ $visits->count() }}</div>
+                <div class="text-sm text-gray-600">This Page</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-green-600">{{ $visits->where('visit_status', 'visited')->count() }}</div>
+                <div class="text-sm text-gray-600">Visited</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-yellow-600">{{ $visits->whereNotNull('package_id')->count() }}</div>
+                <div class="text-sm text-gray-600">With Package</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-purple-600">{{ $visits->where('delivery_service_requested', true)->count() }}</div>
+                <div class="text-sm text-gray-600">Delivery Req.</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-indigo-600">{{ $visits->whereNotNull('audio_recording')->count() + $visits->whereNotNull('video_recording')->count() }}</div>
+                <div class="text-sm text-gray-600">With Media</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-gray-600">{{ $visits->where('vendor_rating', 'very_interested')->count() }}</div>
+                <div class="text-sm text-gray-600">Very Interested</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Delete Confirmation Modal -->
@@ -340,22 +516,30 @@ document.getElementById('rating-filter').addEventListener('change', function(e) 
     filterVisits();
 });
 
+// Agent filter
+document.getElementById('agent-filter').addEventListener('change', function(e) {
+    filterVisits();
+});
+
 function filterVisits() {
     const statusFilter = document.getElementById('status-filter').value;
     const ratingFilter = document.getElementById('rating-filter').value;
+    const agentFilter = document.getElementById('agent-filter').value;
     const rows = document.querySelectorAll('tbody tr');
 
     rows.forEach(row => {
         const statusCell = row.querySelector('td:nth-child(4) span:first-child');
         const ratingCell = row.querySelector('td:nth-child(4) span:last-child');
+        const agentId = row.getAttribute('data-agent-id');
 
         const status = statusCell ? statusCell.textContent.toLowerCase().replace(/\s+/g, '_') : '';
         const rating = ratingCell ? ratingCell.textContent.toLowerCase().replace(/\s+/g, '_') : '';
 
         const statusMatch = !statusFilter || status.includes(statusFilter);
         const ratingMatch = !ratingFilter || rating.includes(ratingFilter);
+        const agentMatch = !agentFilter || agentId === agentFilter;
 
-        if (statusMatch && ratingMatch) {
+        if (statusMatch && ratingMatch && agentMatch) {
             row.style.display = '';
         } else {
             row.style.display = 'none';
