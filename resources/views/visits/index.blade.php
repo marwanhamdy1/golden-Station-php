@@ -108,10 +108,10 @@
                 </select>
             </div>
             <div>
-                <button onclick="exportVisits()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center justify-center">
+                {{-- <button onclick="exportVisits()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center justify-center">
                     <i class="fas fa-download mr-2"></i>
                     Export
-                </button>
+                </button> --}}
             </div>
         </div>
     </div>

@@ -145,10 +145,10 @@
             <div class="bg-green-100 p-3 rounded-full mr-4">
                 <i class="fas fa-download text-green-600"></i>
             </div>
-            <div>
+            {{-- <div>
                 <h4 class="font-medium text-gray-900">Export Data</h4>
                 <p class="text-sm text-gray-600">Download agent report</p>
-            </div>
+            </div> --}}
         </a>
 
         <a href="#" onclick="sendMessage({{ $agent->id }})"
