@@ -4,13 +4,13 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Header -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Agent Details</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('agents.agent_details') }}</h1>
         <div class="flex space-x-3">
             <a href="{{ route('agents.edit', $agent) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center transition duration-200">
-                <i class="fas fa-edit mr-2"></i> Edit Agent
+                <i class="fas fa-edit mr-2"></i> {{ __('agents.edit_agent') }}
             </a>
             <a href="{{ route('agents.index') }}" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg flex items-center transition duration-200">
-                <i class="fas fa-arrow-left mr-2"></i> Back to Agents
+                <i class="fas fa-arrow-left mr-2"></i> {{ __('agents.back_to_agents') }}
             </a>
         </div>
     </div>
@@ -31,8 +31,8 @@
                      alt="{{ $agent->name }}">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-900 mb-1">{{ $agent->name }}</h2>
-                    <p class="text-gray-600 text-lg">Agent #{{ str_pad($agent->id, 3, '0', STR_PAD_LEFT) }}</p>
-                    <p class="text-sm text-gray-500">Member since {{ $agent->created_at->format('M d, Y') }}</p>
+                    <p class="text-gray-600 text-lg">{{ __('Agent') }} #{{ str_pad($agent->id, 3, '0', STR_PAD_LEFT) }}</p>
+                    <p class="text-sm text-gray-500">{{ __('agents.member_since') }} {{ $agent->created_at->format('M d, Y') }}</p>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
             <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-lg">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-blue-100 text-sm">Total Visits</p>
+                        <p class="text-blue-100 text-sm">{{ __('agents.total_visits') }}</p>
                         <p class="text-2xl font-bold">{{ number_format($statistics['total_visits']) }}</p>
                     </div>
                     <i class="fas fa-calendar-check text-blue-200 text-2xl"></i>
@@ -52,7 +52,7 @@
             <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-lg">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-green-100 text-sm">Total Branches</p>
+                        <p class="text-green-100 text-sm">{{ __('agents.total_branches') }}</p>
                         <p class="text-2xl font-bold">{{ number_format($statistics['total_branches']) }}</p>
                     </div>
                     <i class="fas fa-building text-green-200 text-2xl"></i>
@@ -62,7 +62,7 @@
             <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-lg">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-purple-100 text-sm">This Week</p>
+                        <p class="text-purple-100 text-sm">{{ __('agents.this_week') }}</p>
                         <p class="text-2xl font-bold">{{ number_format($statistics['recent_visits']) }}</p>
                     </div>
                     <i class="fas fa-clock text-purple-200 text-2xl"></i>
@@ -72,7 +72,7 @@
             <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-4 rounded-lg">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-orange-100 text-sm">This Month</p>
+                        <p class="text-orange-100 text-sm">{{ __('agents.this_month') }}</p>
                         <p class="text-2xl font-bold">{{ number_format($statistics['this_month_visits']) }}</p>
                     </div>
                     <i class="fas fa-chart-line text-orange-200 text-2xl"></i>
@@ -85,7 +85,7 @@
             <div class="bg-gray-50 p-4 rounded-lg">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                     <i class="fas fa-address-card mr-2 text-blue-600"></i>
-                    Contact Information
+                    {{ __('agents.contact_information') }}
                 </h3>
                 <div class="space-y-3">
                     <div class="flex items-center">
@@ -102,13 +102,13 @@
             <div class="bg-gray-50 p-4 rounded-lg">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                     <i class="fas fa-map-marker-alt mr-2 text-red-600"></i>
-                    Location Information
+                    {{ __('agents.location_information') }}
                 </h3>
                 <div class="space-y-3">
                     @if($agent->last_latitude && $agent->last_longitude)
                         <div class="flex items-center">
                             <i class="fas fa-map-marker-alt text-red-500 mr-3 w-5"></i>
-                            <span class="text-gray-700">Active Location</span>
+                            <span class="text-gray-700">{{ __('agents.active_location') }}</span>
                         </div>
                         <div class="ml-8 text-sm text-gray-600 font-mono">
                             {{ number_format($agent->last_latitude, 6) }}, {{ number_format($agent->last_longitude, 6) }}
@@ -118,13 +118,13 @@
                                target="_blank"
                                class="text-blue-600 hover:text-blue-800 text-sm flex items-center">
                                 <i class="fas fa-external-link-alt mr-1"></i>
-                                View on Map
+                                {{ __('agents.view_on_map') }}
                             </a>
                         </div>
                     @else
                         <div class="flex items-center">
                             <i class="fas fa-map-marker-alt text-gray-400 mr-3 w-5"></i>
-                            <span class="text-gray-500">No location data available</span>
+                            <span class="text-gray-500">{{ __('agents.no_location_data') }}</span>
                         </div>
                     @endif
                 </div>
@@ -140,17 +140,17 @@
                 <a href="{{ route('agents.show', ['agent' => $agent, 'tab' => 'overview']) }}"
                    class="py-4 px-1 border-b-2 font-medium text-sm {{ $activeTab === 'overview' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                     <i class="fas fa-chart-pie mr-2"></i>
-                    Overview
+                    {{ __('agents.overview') }}
                 </a>
                 <a href="{{ route('agents.show', ['agent' => $agent, 'tab' => 'visits']) }}"
                    class="py-4 px-1 border-b-2 font-medium text-sm {{ $activeTab === 'visits' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                     <i class="fas fa-calendar-alt mr-2"></i>
-                    Vendor Visits ({{ number_format($statistics['total_visits']) }})
+                    {{ __('agents.vendor_visits') }} ({{ number_format($statistics['total_visits']) }})
                 </a>
                 <a href="{{ route('agents.show', ['agent' => $agent, 'tab' => 'branches']) }}"
                    class="py-4 px-1 border-b-2 font-medium text-sm {{ $activeTab === 'branches' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                     <i class="fas fa-building mr-2"></i>
-                    Branches ({{ number_format($statistics['total_branches']) }})
+                    {{ __('agents.branches') }} ({{ number_format($statistics['total_branches']) }})
                 </a>
             </nav>
         </div>

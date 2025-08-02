@@ -21,7 +21,7 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'confirm_delete' => 'Are you sure you want to delete this agent?',
-    
+
     // Create/Edit page
     'create_agent' => 'Create New Agent',
     'edit_agent' => 'Edit Agent',
@@ -35,7 +35,7 @@ return [
     'enter_name' => 'Enter agent\'s full name',
     'enter_email' => 'Enter email address',
     'enter_phone' => 'Enter phone number',
-    
+
     // Show page
     'agent_details' => 'Agent Details',
     'assigned_vendors' => 'Assigned Vendors',
@@ -46,15 +46,114 @@ return [
     'total_visits' => 'Total Visits',
     'recent_activity' => 'Recent Activity',
     'no_recent_activity' => 'No recent activity',
-    
+
     // Messages
     'agent_created' => 'Agent created successfully',
     'agent_updated' => 'Agent updated successfully',
     'agent_deleted' => 'Agent deleted successfully',
-    
+
     // Buttons
     'save' => 'Save',
     'update' => 'Update',
     'cancel' => 'Cancel',
     'back' => 'Back',
+     // General
+    'agent_details' => 'Agent Details',
+    'edit_agent' => 'Edit Agent',
+    'back_to_agents' => 'Back to Agents',
+    'member_since' => 'Member since',
+    'view_all' => 'View All',
+    'view_details' => 'View Details',
+    'export' => 'Export',
+    'refresh' => 'Refresh',
+    'actions' => 'Actions',
+    'status' => 'Status',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
+    'completed' => 'Completed',
+    'pending' => 'Pending',
+    'cancelled' => 'Cancelled',
+    'no_visits' => 'No visits',
+    'never' => 'Never',
+    'unknown_vendor' => 'Unknown Vendor',
+    'unknown_branch' => 'Unknown Branch',
+    'no_address' => 'No address',
+
+    // Statistics
+    'total_visits' => 'Total Visits',
+    'total_branches' => 'Total Branches',
+    'this_week' => 'This Week',
+    'this_month' => 'This Month',
+    'recent_visits' => 'Recent Visits',
+
+    // Contact Information
+    'contact_information' => 'Contact Information',
+    'location_information' => 'Location Information',
+    'active_location' => 'Active Location',
+    'view_on_map' => 'View on Map',
+    'no_location_data' => 'No location data available',
+
+    // Tabs
+    'overview' => 'Overview',
+    'vendor_visits' => 'Vendor Visits',
+    'branches' => 'Branches',
+
+    // Branches Section
+    'vendor' => 'Vendor',
+    'all_vendors' => 'All Vendors',
+    'activity' => 'Activity',
+    'all_branches' => 'All Branches',
+    'active_with_visits' => 'Active (with visits)',
+    'inactive_no_visits' => 'Inactive (no visits)',
+    'assign_branch' => 'Assign Branch',
+    'assign_new_branch' => 'Assign New Branch',
+    'remove_branch' => 'Remove Branch',
+    'edit_branch' => 'Edit Branch',
+    'view' => 'View',
+    'visit' => 'Visit',
+    'last_visit' => 'Last visit',
+    'no_branches_assigned' => 'No branches assigned',
+    'agent_no_branches' => 'This agent doesn\'t have any branches assigned yet.',
+    'assign_first_branch' => 'Assign First Branch',
+    'remove_branch_confirm' => 'Are you sure you want to remove this branch assignment?',
+
+    // Visits Section
+    'filter_by' => 'Filter by',
+    'all_time' => 'All Time',
+    'today' => 'Today',
+    'week' => 'This Week',
+    'month' => 'This Month',
+    'quarter' => 'This Quarter',
+    'all_status' => 'All Status',
+    'vendor_details' => 'Vendor Details',
+    'branch' => 'Branch',
+    'visit_date_time' => 'Visit Date & Time',
+    'duration' => 'Duration',
+    'mins' => 'mins',
+    'no_visits_found' => 'No visits found',
+    'agent_no_visits' => 'This agent hasn\'t made any vendor visits yet.',
+    'schedule_visit' => 'Schedule Visit',
+    'delete_visit_confirm' => 'Are you sure you want to delete this visit?',
+
+    // Overview Section
+    'branch_overview' => 'Branch Overview',
+    'visits' => 'visits',
+    'added' => 'Added',
+    'quick_actions' => 'Quick Actions',
+    'update_agent_info' => 'Update agent information',
+    'export_data' => 'Export Data',
+    'download_agent_report' => 'Download agent report',
+    'send_message' => 'Send Message',
+    'contact_agent' => 'Contact this agent',
+
+    // JavaScript Messages
+    'assign_branch_coming_soon' => 'Assign new branch functionality coming soon!',
+    'edit_branch_functionality' => 'Edit branch functionality',
+    'remove_branch_functionality' => 'Remove branch functionality',
+    'view_branch_details' => 'View branch details functionality',
+    'schedule_branch_visit' => 'Schedule visit for branch functionality',
+    'export_branches_coming_soon' => 'Export branches functionality coming soon!',
+    'export_functionality_coming_soon' => 'Export functionality coming soon!',
+    'messaging_functionality_coming_soon' => 'Messaging functionality coming soon!',
+    'export_visits_coming_soon' => 'Export visits functionality coming soon!',
 ];

@@ -21,7 +21,7 @@ return [
     'edit' => 'تعديل',
     'delete' => 'حذف',
     'confirm_delete' => 'هل أنت متأكد من حذف هذا المندوب؟',
-    
+
     // Create/Edit page
     'create_agent' => 'إنشاء مندوب جديد',
     'edit_agent' => 'تعديل المندوب',
@@ -35,7 +35,7 @@ return [
     'enter_name' => 'أدخل اسم المندوب الكامل',
     'enter_email' => 'أدخل البريد الإلكتروني',
     'enter_phone' => 'أدخل رقم الهاتف',
-    
+
     // Show page
     'agent_details' => 'تفاصيل المندوب',
     'assigned_vendors' => 'التجار المعينين',
@@ -46,15 +46,114 @@ return [
     'total_visits' => 'إجمالي الزيارات',
     'recent_activity' => 'النشاط الأخير',
     'no_recent_activity' => 'لا يوجد نشاط حديث',
-    
+
     // Messages
     'agent_created' => 'تم إنشاء المندوب بنجاح',
     'agent_updated' => 'تم تحديث المندوب بنجاح',
     'agent_deleted' => 'تم حذف المندوب بنجاح',
-    
+
     // Buttons
     'save' => 'حفظ',
     'update' => 'تحديث',
     'cancel' => 'إلغاء',
     'back' => 'رجوع',
+     // General
+    'agent_details' => 'تفاصيل الوكيل',
+    'edit_agent' => 'تعديل الوكيل',
+    'back_to_agents' => 'العودة إلى الوكلاء',
+    'member_since' => 'عضو منذ',
+    'view_all' => 'عرض الكل',
+    'view_details' => 'عرض التفاصيل',
+    'export' => 'تصدير',
+    'refresh' => 'تحديث',
+    'actions' => 'الإجراءات',
+    'status' => 'الحالة',
+    'active' => 'نشط',
+    'inactive' => 'غير نشط',
+    'completed' => 'مكتمل',
+    'pending' => 'في الانتظار',
+    'cancelled' => 'ملغي',
+    'no_visits' => 'لا توجد زيارات',
+    'never' => 'أبداً',
+    'unknown_vendor' => 'مورد غير معروف',
+    'unknown_branch' => 'فرع غير معروف',
+    'no_address' => 'لا يوجد عنوان',
+
+    // Statistics
+    'total_visits' => 'إجمالي الزيارات',
+    'total_branches' => 'إجمالي الفروع',
+    'this_week' => 'هذا الأسبوع',
+    'this_month' => 'هذا الشهر',
+    'recent_visits' => 'الزيارات الأخيرة',
+
+    // Contact Information
+    'contact_information' => 'معلومات الاتصال',
+    'location_information' => 'معلومات الموقع',
+    'active_location' => 'الموقع النشط',
+    'view_on_map' => 'عرض على الخريطة',
+    'no_location_data' => 'لا تتوفر بيانات موقع',
+
+    // Tabs
+    'overview' => 'نظرة عامة',
+    'vendor_visits' => 'زيارات الموردين',
+    'branches' => 'الفروع',
+
+    // Branches Section
+    'vendor' => 'المورد',
+    'all_vendors' => 'جميع الموردين',
+    'activity' => 'النشاط',
+    'all_branches' => 'جميع الفروع',
+    'active_with_visits' => 'نشط (مع زيارات)',
+    'inactive_no_visits' => 'غير نشط (بدون زيارات)',
+    'assign_branch' => 'تعيين فرع',
+    'assign_new_branch' => 'تعيين فرع جديد',
+    'remove_branch' => 'إزالة الفرع',
+    'edit_branch' => 'تعديل الفرع',
+    'view' => 'عرض',
+    'visit' => 'زيارة',
+    'last_visit' => 'آخر زيارة',
+    'no_branches_assigned' => 'لا توجد فروع معينة',
+    'agent_no_branches' => 'لم يتم تعيين أي فروع لهذا الوكيل بعد.',
+    'assign_first_branch' => 'تعيين أول فرع',
+    'remove_branch_confirm' => 'هل أنت متأكد من أنك تريد إزالة تعيين هذا الفرع؟',
+
+    // Visits Section
+    'filter_by' => 'فلترة حسب',
+    'all_time' => 'كل الأوقات',
+    'today' => 'اليوم',
+    'week' => 'هذا الأسبوع',
+    'month' => 'هذا الشهر',
+    'quarter' => 'هذا الربع',
+    'all_status' => 'جميع الحالات',
+    'vendor_details' => 'تفاصيل المورد',
+    'branch' => 'الفرع',
+    'visit_date_time' => 'تاريخ ووقت الزيارة',
+    'duration' => 'المدة',
+    'mins' => 'دقيقة',
+    'no_visits_found' => 'لم يتم العثور على زيارات',
+    'agent_no_visits' => 'لم يقم هذا الوكيل بأي زيارات موردين بعد.',
+    'schedule_visit' => 'جدولة زيارة',
+    'delete_visit_confirm' => 'هل أنت متأكد من أنك تريد حذف هذه الزيارة؟',
+
+    // Overview Section
+    'branch_overview' => 'نظرة عامة على الفروع',
+    'visits' => 'زيارات',
+    'added' => 'تم الإضافة',
+    'quick_actions' => 'إجراءات سريعة',
+    'update_agent_info' => 'تحديث معلومات الوكيل',
+    'export_data' => 'تصدير البيانات',
+    'download_agent_report' => 'تحميل تقرير الوكيل',
+    'send_message' => 'إرسال رسالة',
+    'contact_agent' => 'التواصل مع هذا الوكيل',
+
+    // JavaScript Messages
+    'assign_branch_coming_soon' => 'وظيفة تعيين فرع جديد قادمة قريباً!',
+    'edit_branch_functionality' => 'وظيفة تعديل الفرع',
+    'remove_branch_functionality' => 'وظيفة إزالة الفرع',
+    'view_branch_details' => 'وظيفة عرض تفاصيل الفرع',
+    'schedule_branch_visit' => 'وظيفة جدولة زيارة للفرع',
+    'export_branches_coming_soon' => 'وظيفة تصدير الفروع قادمة قريباً!',
+    'export_functionality_coming_soon' => 'وظيفة التصدير قادمة قريباً!',
+    'messaging_functionality_coming_soon' => 'وظيفة المراسلة قادمة قريباً!',
+    'export_visits_coming_soon' => 'وظيفة تصدير الزيارات قادمة قريباً!',
 ];

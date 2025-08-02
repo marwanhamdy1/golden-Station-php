@@ -6,36 +6,25 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
             <div class="flex items-center space-x-4">
                 <div class="flex items-center">
-                    <label for="date_filter" class="text-sm font-medium text-gray-700 mr-2">Filter by:</label>
+                    <label for="date_filter" class="text-sm font-medium text-gray-700 mr-2">{{ __('agents.filter_by') }}:</label>
                     <select id="date_filter" class="border-gray-300 rounded-md shadow-sm text-sm">
-                        <option value="all">All Time</option>
-                        <option value="today">Today</option>
-                        <option value="week">This Week</option>
-                        <option value="month">This Month</option>
-                        <option value="quarter">This Quarter</option>
+                        <option value="all">{{ __('agents.all_time') }}</option>
+                        <option value="today">{{ __('agents.today') }}</option>
+                        <option value="week">{{ __('agents.week') }}</option>
+                        <option value="month">{{ __('agents.month') }}</option>
+                        <option value="quarter">{{ __('agents.quarter') }}</option>
                     </select>
                 </div>
                 <div class="flex items-center">
-                    <label for="status_filter" class="text-sm font-medium text-gray-700 mr-2">Status:</label>
+                    <label for="status_filter" class="text-sm font-medium text-gray-700 mr-2">{{ __('agents.status') }}:</label>
                     <select id="status_filter" class="border-gray-300 rounded-md shadow-sm text-sm">
-                        <option value="all">All Status</option>
-                        <option value="completed">Completed</option>
-                        <option value="pending">Pending</option>
-                        <option value="cancelled">Cancelled</option>
+                        <option value="all">{{ __('agents.all_status') }}</option>
+                        <option value="completed">{{ __('agents.completed') }}</option>
+                        <option value="pending">{{ __('agents.pending') }}</option>
+                        <option value="cancelled">{{ __('agents.cancelled') }}</option>
                     </select>
                 </div>
             </div>
-
-            {{-- <div class="flex items-center space-x-2">
-                <button onclick="exportVisits()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm flex items-center">
-                    <i class="fas fa-download mr-2"></i>
-                    Export
-                </button>
-                <button onclick="refreshVisits()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm flex items-center">
-                    <i class="fas fa-sync-alt mr-2"></i>
-                    Refresh
-                </button>
-            </div> --}}
         </div>
     </div>
 
@@ -49,35 +38,35 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex items-center">
                                     <i class="fas fa-store mr-2"></i>
-                                    Vendor Details
+                                    {{ __('agents.vendor_details') }}
                                 </div>
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex items-center">
                                     <i class="fas fa-building mr-2"></i>
-                                    Branch
+                                    {{ __('agents.branch') }}
                                 </div>
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex items-center">
                                     <i class="fas fa-calendar mr-2"></i>
-                                    Visit Date & Time
+                                    {{ __('agents.visit_date_time') }}
                                 </div>
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex items-center">
                                     <i class="fas fa-clock mr-2"></i>
-                                    Duration
+                                    {{ __('agents.duration') }}
                                 </div>
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <div class="flex items-center">
                                     <i class="fas fa-flag mr-2"></i>
-                                    Status
+                                    {{ __('agents.status') }}
                                 </div>
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Actions
+                                {{ __('agents.actions') }}
                             </th>
                         </tr>
                     </thead>
@@ -94,7 +83,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900 hover:text-blue-600">
-                                            {{ $visit->vendor->name ?? 'Unknown Vendor' }}
+                                            {{ $visit->vendor->name ?? __('agents.unknown_vendor') }}
                                         </div>
                                         <div class="text-sm text-gray-500">
                                             ID: #{{ $visit->vendor->id ?? 'N/A' }}
@@ -107,7 +96,7 @@
                                     <a href="{{ route('branches.show', $visit->branch->id ?? '#') }}"
                                        class="hover:text-blue-600 hover:underline"
                                        onclick="event.stopPropagation()">
-                                        {{ $visit->branch->name ?? 'Unknown Branch' }}
+                                        {{ $visit->branch->name ?? __('agents.unknown_branch') }}
                                     </a>
                                 </div>
                                 <div class="text-sm text-gray-500">
@@ -115,7 +104,7 @@
                                         <i class="fas fa-map-marker-alt mr-1"></i>
                                         {{ Str::limit($visit->branch->address, 30) }}
                                     @else
-                                        <span class="text-gray-400">No address</span>
+                                        <span class="text-gray-400">{{ __('agents.no_address') }}</span>
                                     @endif
                                 </div>
                             </td>
@@ -133,7 +122,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900">
                                     @if(isset($visit->duration))
-                                        {{ $visit->duration }} mins
+                                        {{ $visit->duration }} {{ __('agents.mins') }}
                                     @else
                                         <span class="text-gray-400">N/A</span>
                                     @endif
@@ -142,26 +131,26 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                     <i class="fas fa-check mr-1"></i>
-                                    Completed
+                                    {{ __('agents.completed') }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex items-center space-x-2">
                                     <a href="{{ route('visits.show', $visit->id) }}"
                                        class="text-blue-600 hover:text-blue-900 transition duration-200"
-                                       title="View Details"
+                                       title="{{ __('agents.view_details') }}"
                                        onclick="event.stopPropagation()">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <a href="{{ route('visits.edit', $visit->id) }}"
                                        class="text-indigo-600 hover:text-indigo-900 transition duration-200"
-                                       title="Edit Visit"
+                                       title="{{ __('agents.edit_agent') }}"
                                        onclick="event.stopPropagation()">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <button onclick="deleteVisit({{ $visit->id }}); event.stopPropagation();"
                                             class="text-red-600 hover:text-red-900 transition duration-200"
-                                            title="Delete Visit">
+                                            title="{{ __('Delete Visit') }}">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -186,11 +175,11 @@
             <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 mb-4">
                 <i class="fas fa-calendar-times text-gray-400 text-xl"></i>
             </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">No visits found</h3>
-            <p class="text-gray-500 mb-6">This agent hasn't made any vendor visits yet.</p>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('agents.no_visits_found') }}</h3>
+            <p class="text-gray-500 mb-6">{{ __('agents.agent_no_visits') }}</p>
             <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
                 <i class="fas fa-plus mr-2"></i>
-                Schedule Visit
+                {{ __('agents.schedule_visit') }}
             </button>
         </div>
     @endif
@@ -199,18 +188,15 @@
 @push('scripts')
 <script>
 function viewVisitDetails(visitId) {
-    // Redirect to visit show page
     window.location.href = '/visits/' + visitId;
 }
 
 function editVisit(visitId) {
-    // Redirect to visit edit page
     window.location.href = '/visits/' + visitId + '/edit';
 }
 
 function deleteVisit(visitId) {
-    if (confirm('Are you sure you want to delete this visit?')) {
-        // Create and submit delete form
+    if (confirm('{{ __('agents.delete_visit_confirm') }}')) {
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = '/visits/' + visitId;
@@ -233,23 +219,19 @@ function deleteVisit(visitId) {
 }
 
 function exportVisits() {
-    // Implementation for exporting visits
-    alert('Export visits functionality coming soon!');
+    alert('{{ __('agents.export_visits_coming_soon') }}');
 }
 
 function refreshVisits() {
-    // Implementation for refreshing visits
     location.reload();
 }
 
 // Filter functionality
 document.getElementById('date_filter').addEventListener('change', function() {
-    // Implementation for date filtering
     console.log('Date filter changed:', this.value);
 });
 
 document.getElementById('status_filter').addEventListener('change', function() {
-    // Implementation for status filtering
     console.log('Status filter changed:', this.value);
 });
 </script>
