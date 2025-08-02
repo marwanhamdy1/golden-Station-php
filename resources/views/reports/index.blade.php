@@ -4,8 +4,8 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Reports & Analytics</h1>
-        <p class="text-gray-600 mt-2">Comprehensive insights into your business performance</p>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('reports.reports_dashboard') }}</h1>
+        <p class="text-gray-600 mt-2">{{ __('reports.generate_reports') }}</p>
     </div>
 
     <!-- Statistics Cards -->
@@ -16,7 +16,7 @@
                     <i class="fas fa-calendar-check text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Visits</p>
+                    <p class="text-sm font-medium text-gray-600">{{ __('reports.total_visits') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['totalVisits'] }}</p>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <i class="fas fa-store text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Vendors</p>
+                    <p class="text-sm font-medium text-gray-600">{{ __('reports.total_vendors') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['totalVendors'] }}</p>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <i class="fas fa-users text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Agents</p>
+                    <p class="text-sm font-medium text-gray-600">{{ __('reports.active_agents') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['totalAgents'] }}</p>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     <i class="fas fa-box text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Packages</p>
+                    <p class="text-sm font-medium text-gray-600">{{ __('reports.total_packages') }}</p>
                     <p class="text-2xl font-bold text-gray-900">{{ $stats['totalPackages'] }}</p>
                 </div>
             </div>
@@ -65,8 +65,8 @@
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Monthly Visits</h3>
-                    <p class="text-sm text-gray-500">Visit trends throughout the year</p>
+                    <h3 class="text-lg font-semibold text-gray-900">{{ __('reports.monthly_visits') }}</h3>
+                    <p class="text-sm text-gray-500">{{ __('reports.visits_trend') }}</p>
                 </div>
             </div>
             <div class="relative" style="height: 300px;">
@@ -78,8 +78,8 @@
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Visit Status Distribution</h3>
-                    <p class="text-sm text-gray-500">Breakdown by visit status</p>
+                    <h3 class="text-lg font-semibold text-gray-900">{{ __('reports.visits_by_status') }}</h3>
+                    <p class="text-sm text-gray-500">{{ __('reports.status_distribution') }}</p>
                 </div>
             </div>
             <div class="relative" style="height: 300px;">
@@ -94,11 +94,11 @@
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Top Performing Agents</h3>
-                    <p class="text-sm text-gray-500">Agents with highest visit counts</p>
+                    <h3 class="text-lg font-semibold text-gray-900">{{ __('reports.top_performing_agents') }}</h3>
+                    <p class="text-sm text-gray-500">{{ __('reports.agents_highest_visits') }}</p>
                 </div>
                 <a href="{{ route('agents.index') }}" class="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                    View All <i class="fas fa-arrow-right ml-1"></i>
+                    {{ __('reports.view_all') }} <i class="fas fa-arrow-right ml-1"></i>
                 </a>
             </div>
 
@@ -115,11 +115,11 @@
                                  alt="{{ $agent->name }}">
                             <div class="ml-4 flex-1">
                                 <h4 class="text-sm font-semibold text-gray-900">{{ $agent->name }}</h4>
-                                <p class="text-xs text-gray-500">Agent #{{ str_pad($agent->id, 3, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-xs text-gray-500">{{ __('reports.agent_number', ['number' => str_pad($agent->id, 3, '0', STR_PAD_LEFT)]) }}</p>
                             </div>
                             <div class="text-right">
                                 <p class="text-lg font-bold text-blue-600">{{ $agent->vendor_visits_count }}</p>
-                                <p class="text-xs text-gray-500">visits</p>
+                                <p class="text-xs text-gray-500">{{ __('reports.visits') }}</p>
                             </div>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
             @else
                 <div class="text-center py-8">
                     <i class="fas fa-users text-4xl text-gray-300 mb-4"></i>
-                    <p class="text-gray-500">No agent data available</p>
+                    <p class="text-gray-500">{{ __('reports.no_agent_data') }}</p>
                 </div>
             @endif
         </div>
@@ -137,8 +137,8 @@
         <div class="bg-white rounded-lg shadow-md p-6">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">Vendor Ratings</h3>
-                    <p class="text-sm text-gray-500">Distribution of vendor interest levels</p>
+                    <h3 class="text-lg font-semibold text-gray-900">{{ __('reports.vendor_ratings') }}</h3>
+                    <p class="text-sm text-gray-500">{{ __('reports.vendor_interest_distribution') }}</p>
                 </div>
             </div>
 
@@ -158,12 +158,12 @@
                             @endphp
                             <span class="w-3 h-3 rounded-full bg-current {{ $color }} mr-3"></span>
                             <span class="text-sm font-medium text-gray-700">
-                                {{ ucfirst(str_replace('_', ' ', $rating->vendor_rating)) }}
+                                {{ __('reports.' . $rating->vendor_rating) }}
                             </span>
                         </div>
                         <div class="text-right">
                             <p class="text-lg font-bold text-gray-900">{{ $rating->count }}</p>
-                            <p class="text-xs text-gray-500">vendors</p>
+                            <p class="text-xs text-gray-500">{{ __('reports.vendors') }}</p>
                         </div>
                     </div>
                     @endforeach
@@ -171,7 +171,7 @@
             @else
                 <div class="text-center py-8">
                     <i class="fas fa-chart-pie text-4xl text-gray-300 mb-4"></i>
-                    <p class="text-gray-500">No rating data available</p>
+                    <p class="text-gray-500">{{ __('reports.no_rating_data') }}</p>
                 </div>
             @endif
         </div>
@@ -185,9 +185,22 @@ const monthlyVisitsCtx = document.getElementById('monthlyVisitsChart').getContex
 new Chart(monthlyVisitsCtx, {
     type: 'line',
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: [
+            '{{ __("reports.jan") }}',
+            '{{ __("reports.feb") }}',
+            '{{ __("reports.mar") }}',
+            '{{ __("reports.apr") }}',
+            '{{ __("reports.may") }}',
+            '{{ __("reports.jun") }}',
+            '{{ __("reports.jul") }}',
+            '{{ __("reports.aug") }}',
+            '{{ __("reports.sep") }}',
+            '{{ __("reports.oct") }}',
+            '{{ __("reports.nov") }}',
+            '{{ __("reports.dec") }}'
+        ],
         datasets: [{
-            label: 'Visits',
+            label: '{{ __("reports.visits") }}',
             data: @json(array_values($monthlyVisits)),
             borderColor: 'rgb(59, 130, 246)',
             backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -219,7 +232,7 @@ const visitStatusCtx = document.getElementById('visitStatusChart').getContext('2
 new Chart(visitStatusCtx, {
     type: 'doughnut',
     data: {
-        labels: @json($visitStats->pluck('visit_status')->map(function($status) { return ucfirst(str_replace('_', ' ', $status)); })),
+        labels: @json($visitStats->pluck('visit_status')->map(function($status) { return __('reports.' . $status); })),
         datasets: [{
             data: @json($visitStats->pluck('count')),
             backgroundColor: [

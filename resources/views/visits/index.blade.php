@@ -5,12 +5,12 @@
     <!-- Header -->
     <div class="flex justify-between items-center mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">Vendor Visits</h1>
-            <p class="text-gray-600 mt-2">Track and manage all vendor visits ({{ $visits->total() }} total visits)</p>
+            <h1 class="text-3xl font-bold text-gray-900">{{ __('visits.vendor_visits') }}</h1>
+            <p class="text-gray-600 mt-2">{{ __('visits.total_visits_count', ['count' => $visits->total()]) }}</p>
         </div>
         <a href="{{ route('visits.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center transition-colors">
             <i class="fas fa-plus mr-2"></i>
-            Add New Visit
+            {{ __('visits.add_new_visit') }}
         </a>
     </div>
 
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Total Visits</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('visits.total_visits') }}</p>
                     <p class="text-2xl font-semibold text-gray-900">{{ $totalVisits ?? $visits->total() }}</p>
                 </div>
             </div>
@@ -38,9 +38,9 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Successful Visits</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('visits.successful_visits') }}</p>
                     <p class="text-2xl font-semibold text-gray-900">{{ $successfulVisits ?? 0 }}</p>
-                    <p class="text-xs text-green-600">{{ $successfulVisits ? round(($successfulVisits / ($totalVisits ?: 1)) * 100, 1) : 0 }}% success rate</p>
+                    <p class="text-xs text-green-600">{{ __('visits.success_rate', ['rate' => $successfulVisits ? round(($successfulVisits / ($totalVisits ?: 1)) * 100, 1) : 0]) }}</p>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Active Agents</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('visits.active_agents') }}</p>
                     <p class="text-2xl font-semibold text-gray-900">{{ $activeAgents ?? 0 }}</p>
                 </div>
             </div>
@@ -67,9 +67,9 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">With Packages</p>
+                    <p class="text-sm font-medium text-gray-500">{{ __('visits.with_packages') }}</p>
                     <p class="text-2xl font-semibold text-gray-900">{{ $visitsWithPackages ?? 0 }}</p>
-                    <p class="text-xs text-yellow-600">{{ $visitsWithPackages ? round(($visitsWithPackages / ($totalVisits ?: 1)) * 100, 1) : 0 }}% package rate</p>
+                    <p class="text-xs text-yellow-600">{{ __('visits.package_rate', ['rate' => $visitsWithPackages ? round(($visitsWithPackages / ($totalVisits ?: 1)) * 100, 1) : 0]) }}</p>
                 </div>
             </div>
         </div>
@@ -79,29 +79,29 @@
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
-                <input type="text" id="search" placeholder="Search visits..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <input type="text" id="search" placeholder="{{ __('visits.search_visits') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             </div>
             <div>
                 <select id="status-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="">All Status</option>
-                    <option value="visited">Visited</option>
-                    <option value="closed">Closed</option>
-                    <option value="not_found">Not Found</option>
-                    <option value="refused">Refused</option>
+                    <option value="">{{ __('visits.all_status') }}</option>
+                    <option value="visited">{{ __('visits.visited') }}</option>
+                    <option value="closed">{{ __('visits.closed') }}</option>
+                    <option value="not_found">{{ __('visits.not_found') }}</option>
+                    <option value="refused">{{ __('visits.refused') }}</option>
                 </select>
             </div>
             <div>
                 <select id="rating-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="">All Ratings</option>
-                    <option value="very_interested">Very Interested</option>
-                    <option value="hesitant">Hesitant</option>
-                    <option value="refused">Refused</option>
-                    <option value="inappropriate">Inappropriate</option>
+                    <option value="">{{ __('visits.all_ratings') }}</option>
+                    <option value="very_interested">{{ __('visits.very_interested') }}</option>
+                    <option value="hesitant">{{ __('visits.hesitant') }}</option>
+                    <option value="refused">{{ __('visits.refused') }}</option>
+                    <option value="inappropriate">{{ __('visits.inappropriate') }}</option>
                 </select>
             </div>
             <div>
                 <select id="agent-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="">All Agents</option>
+                    <option value="">{{ __('visits.all_agents') }}</option>
                     @foreach($allAgents ?? [] as $agent)
                     <option value="{{ $agent->id }}">{{ $agent->name }}</option>
                     @endforeach
@@ -110,7 +110,7 @@
             <div>
                 {{-- <button onclick="exportVisits()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center justify-center">
                     <i class="fas fa-download mr-2"></i>
-                    Export
+                    {{ __('visits.export') }}
                 </button> --}}
             </div>
         </div>
@@ -123,29 +123,29 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Visit Details
+                            {{ __('visits.visit_details') }}
                             <span title="Sorted by latest first">&#8595;</span>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Vendor
+                            {{ __('visits.vendor') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Agent
+                            {{ __('visits.agent') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status & Rating
+                            {{ __('visits.status_rating') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Package & Value
+                            {{ __('visits.package_value') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Visit Count
+                            {{ __('visits.visit_count') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Additional Info
+                            {{ __('visits.additional_info') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            {{ __('visits.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">
-                                        Visit #{{ str_pad($visit->id, 4, '0', STR_PAD_LEFT) }}
+                                        {{ __('visits.visit_number', ['number' => str_pad($visit->id, 4, '0', STR_PAD_LEFT)]) }}
                                     </div>
                                     <div class="text-sm text-gray-500">
                                         {{ $visit->visit_date instanceof \Carbon\Carbon ? $visit->visit_date->format('M d, Y H:i') : $visit->visit_date }}
@@ -170,12 +170,12 @@
                                     @if($visit->visit_end_at)
                                     <div class="text-xs text-gray-400">
                                         @if($visit->visit_date instanceof \Carbon\Carbon && $visit->visit_end_at instanceof \Carbon\Carbon)
-                                            Duration: {{ $visit->visit_date->diffInMinutes($visit->visit_end_at) }} min
+                                            {{ __('visits.duration', ['minutes' => $visit->visit_date->diffInMinutes($visit->visit_end_at)]) }}
                                         @endif
                                     </div>
                                     @endif
                                     <div class="text-xs text-gray-400">
-                                        {{ $visit->branch->name ?? 'No Branch' }}
+                                        {{ $visit->branch->name ?? __('visits.no_branch') }}
                                     </div>
                                 </div>
                             </div>
@@ -201,7 +201,7 @@
                                     </div>
                                     @if(isset($vendorVisitCounts[$visit->vendor_id]))
                                     <div class="text-xs text-blue-600 font-medium">
-                                        {{ $vendorVisitCounts[$visit->vendor_id] }} total visits
+                                        {{ __('visits.total_visits_to_vendor', ['count' => $vendorVisitCounts[$visit->vendor_id]]) }}
                                     </div>
                                     @endif
                                 </div>
@@ -222,17 +222,17 @@
                                         {{ $visit->agent->name }}
                                     </div>
                                     <div class="text-sm text-gray-500">
-                                        Agent #{{ str_pad($visit->agent->id, 3, '0', STR_PAD_LEFT) }}
+                                        {{ __('visits.agent_number', ['number' => str_pad($visit->agent->id, 3, '0', STR_PAD_LEFT)]) }}
                                     </div>
                                     @if(isset($agentVisitCounts[$visit->agent_id]))
                                     <div class="text-xs text-green-600 font-medium">
-                                        {{ $agentVisitCounts[$visit->agent_id] }} total visits
+                                        {{ __('visits.agent_total_visits', ['count' => $agentVisitCounts[$visit->agent_id]]) }}
                                     </div>
                                     @endif
                                 </div>
                             </div>
                             @else
-                            <span class="text-gray-400 text-sm">No Agent</span>
+                            <span class="text-gray-400 text-sm">{{ __('visits.no_agent') }}</span>
                             @endif
                         </td>
 
@@ -250,7 +250,7 @@
                                         $statusColor = $statusColors[$visit->visit_status] ?? 'bg-gray-100 text-gray-800';
                                     @endphp
                                     <span class="px-2 py-1 text-xs font-medium rounded-full {{ $statusColor }}">
-                                        {{ ucfirst(str_replace('_', ' ', $visit->visit_status)) }}
+                                        {{ __('visits.' . $visit->visit_status) }}
                                     </span>
                                 </div>
                                 @if($visit->vendor_rating)
@@ -265,7 +265,7 @@
                                         $ratingColor = $ratingColors[$visit->vendor_rating] ?? 'bg-gray-100 text-gray-800';
                                     @endphp
                                     <span class="px-2 py-1 text-xs font-medium rounded-full {{ $ratingColor }}">
-                                        {{ ucfirst(str_replace('_', ' ', $visit->vendor_rating)) }}
+                                        {{ __('visits.' . $visit->vendor_rating) }}
                                     </span>
                                 </div>
                                 @endif
@@ -282,10 +282,10 @@
                                 SAR {{ number_format($visit->package->price, 2) }}
                             </div>
                             <div class="text-xs text-gray-400">
-                                {{ $visit->package->duration_in_days ?? 'N/A' }} days
+                                {{ __('visits.days', ['count' => $visit->package->duration_in_days ?? 'N/A']) }}
                             </div>
                             @else
-                            <span class="text-gray-400 text-sm">No Package</span>
+                            <span class="text-gray-400 text-sm">{{ __('visits.no_package') }}</span>
                             @endif
                         </td>
 
@@ -296,10 +296,10 @@
                                     {{ $visitCountsArr[$visit->agent_id][$visit->vendor_id] ?? 1 }}
                                 </div>
                                 <div class="text-xs text-gray-500">
-                                    agent visits
+                                    {{ __('visits.agent_visits') }}
                                 </div>
                                 <div class="text-xs text-gray-500">
-                                    to vendor
+                                    {{ __('visits.to_vendor') }}
                                 </div>
                             </div>
                         </td>
@@ -317,14 +317,14 @@
                                 @if($visit->delivery_service_requested)
                                 <div class="text-xs text-purple-600">
                                     <i class="fas fa-truck mr-1"></i>
-                                    Delivery Requested
+                                    {{ __('visits.delivery_requested') }}
                                 </div>
                                 @endif
 
                                 @if($visit->gps_latitude && $visit->gps_longitude)
                                 <div class="text-xs text-gray-500">
                                     <i class="fas fa-map-marker-alt mr-1"></i>
-                                    GPS Available
+                                    {{ __('visits.gps_available') }}
                                 </div>
                                 @endif
 
@@ -339,14 +339,14 @@
                                     @if($visit->signature_image)
                                     <i class="fas fa-signature mr-1 text-purple-500"></i>
                                     @endif
-                                    Media Available
+                                    {{ __('visits.media_available') }}
                                 </div>
                                 @endif
 
                                 @if($visit->notes || $visit->agent_notes || $visit->internal_notes)
                                 <div class="text-xs text-gray-500">
                                     <i class="fas fa-sticky-note mr-1 text-yellow-500"></i>
-                                    Has Notes
+                                    {{ __('visits.has_notes') }}
                                 </div>
                                 @endif
                             </div>
@@ -357,17 +357,17 @@
                             <div class="flex space-x-2">
                                 <a href="{{ route('visits.show', $visit) }}"
                                    class="text-blue-600 hover:text-blue-700 p-2 rounded-lg hover:bg-blue-50 transition-colors"
-                                   title="View Details">
+                                   title="{{ __('visits.view_details') }}">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a href="{{ route('visits.edit', $visit) }}"
                                    class="text-yellow-600 hover:text-yellow-700 p-2 rounded-lg hover:bg-yellow-50 transition-colors"
-                                   title="Edit Visit">
+                                   title="{{ __('visits.edit_visit') }}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <button onclick="deleteVisit({{ $visit->id }})"
                                         class="text-red-600 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-colors"
-                                        title="Delete Visit">
+                                        title="{{ __('visits.delete') }}">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -378,11 +378,11 @@
                         <td colspan="8" class="px-6 py-12 text-center">
                             <div class="text-center">
                                 <i class="fas fa-calendar-times text-6xl text-gray-300 mb-4"></i>
-                                <h3 class="text-xl font-semibold text-gray-600 mb-2">No Visits Found</h3>
-                                <p class="text-gray-500 mb-6">Get started by creating your first vendor visit</p>
+                                <h3 class="text-xl font-semibold text-gray-600 mb-2">{{ __('visits.no_visits_found') }}</h3>
+                                <p class="text-gray-500 mb-6">{{ __('visits.get_started') }}</p>
                                 <a href="{{ route('visits.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg inline-flex items-center">
                                     <i class="fas fa-plus mr-2"></i>
-                                    Create Visit
+                                    {{ __('visits.create_visit') }}
                                 </a>
                             </div>
                         </td>
@@ -402,31 +402,31 @@
 
     <!-- Summary Statistics Footer -->
     <div class="mt-8 bg-gray-50 rounded-lg p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Current Page Summary</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('visits.current_page_summary') }}</h3>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-center">
             <div>
                 <div class="text-2xl font-bold text-blue-600">{{ $visits->count() }}</div>
-                <div class="text-sm text-gray-600">This Page</div>
+                <div class="text-sm text-gray-600">{{ __('visits.this_page') }}</div>
             </div>
             <div>
                 <div class="text-2xl font-bold text-green-600">{{ $visits->where('visit_status', 'visited')->count() }}</div>
-                <div class="text-sm text-gray-600">Visited</div>
+                <div class="text-sm text-gray-600">{{ __('visits.visited_count') }}</div>
             </div>
             <div>
                 <div class="text-2xl font-bold text-yellow-600">{{ $visits->whereNotNull('package_id')->count() }}</div>
-                <div class="text-sm text-gray-600">With Package</div>
+                <div class="text-sm text-gray-600">{{ __('visits.with_package') }}</div>
             </div>
             <div>
                 <div class="text-2xl font-bold text-purple-600">{{ $visits->where('delivery_service_requested', true)->count() }}</div>
-                <div class="text-sm text-gray-600">Delivery Req.</div>
+                <div class="text-sm text-gray-600">{{ __('visits.delivery_req') }}</div>
             </div>
             <div>
                 <div class="text-2xl font-bold text-indigo-600">{{ $visits->whereNotNull('audio_recording')->count() + $visits->whereNotNull('video_recording')->count() }}</div>
-                <div class="text-sm text-gray-600">With Media</div>
+                <div class="text-sm text-gray-600">{{ __('visits.with_media') }}</div>
             </div>
             <div>
                 <div class="text-2xl font-bold text-gray-600">{{ $visits->where('vendor_rating', 'very_interested')->count() }}</div>
-                <div class="text-sm text-gray-600">Very Interested</div>
+                <div class="text-sm text-gray-600">{{ __('visits.very_interested_count') }}</div>
             </div>
         </div>
     </div>
@@ -437,15 +437,15 @@
     <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
         <div class="flex items-center mb-4">
             <i class="fas fa-exclamation-triangle text-red-500 text-2xl mr-3"></i>
-            <h3 class="text-lg font-semibold text-gray-900">Delete Visit</h3>
+            <h3 class="text-lg font-semibold text-gray-900">{{ __('visits.delete_visit') }}</h3>
         </div>
-        <p class="text-gray-600 mb-6">Are you sure you want to delete this visit? This action cannot be undone.</p>
+        <p class="text-gray-600 mb-6">{{ __('visits.delete_confirmation') }}</p>
         <div class="flex justify-end space-x-3">
             <button onclick="closeDeleteModal()" class="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg">
-                Cancel
+                {{ __('visits.cancel') }}
             </button>
             <button id="confirmDelete" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg">
-                Delete
+                {{ __('visits.delete') }}
             </button>
         </div>
     </div>
@@ -480,12 +480,12 @@ document.getElementById('confirmDelete').addEventListener('click', function() {
             if (data.success) {
                 location.reload();
             } else {
-                alert('Error deleting visit');
+                alert('{{ __('visits.visit_deleted_error') }}');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error deleting visit');
+            alert('{{ __('visits.visit_deleted_error') }}');
         });
     }
     closeDeleteModal();

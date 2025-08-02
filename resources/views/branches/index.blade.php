@@ -3,9 +3,9 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Branches Management</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('branches.branches_list') }}</h1>
         <a href="{{ route('branches.create') }}" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg flex items-center">
-            <i class="fas fa-plus mr-2"></i> Add New Branch
+            <i class="fas fa-plus mr-2"></i> {{ __('branches.add_branch') }}
         </a>
     </div>
 
@@ -19,19 +19,19 @@
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <div class="flex flex-wrap gap-4">
             <div class="flex-1 min-w-64">
-                <input type="text" id="search" placeholder="Search branches..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                <input type="text" id="search" placeholder="{{ __('branches.search_branches') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
             </div>
             <div class="flex gap-2">
                 <select id="filter-city" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-                    <option value="">All Cities</option>
-                    <option value="Riyadh">Riyadh</option>
-                    <option value="Jeddah">Jeddah</option>
-                    <option value="Dammam">Dammam</option>
+                    <option value="">{{ __('branches.all_cities') }}</option>
+                    <option value="Riyadh">{{ __('branches.riyadh') }}</option>
+                    <option value="Jeddah">{{ __('branches.jeddah') }}</option>
+                    <option value="Dammam">{{ __('branches.dammam') }}</option>
                 </select>
                 <select id="filter-agent" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-                    <option value="">All Agents</option>
-                    <option value="assigned">Assigned</option>
-                    <option value="unassigned">Unassigned</option>
+                    <option value="">{{ __('branches.all_agents') }}</option>
+                    <option value="assigned">{{ __('branches.assigned') }}</option>
+                    <option value="unassigned">{{ __('branches.unassigned') }}</option>
                 </select>
             </div>
         </div>
@@ -44,28 +44,28 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Branch
+                            {{ __('branches.branch') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Vendor
+                            {{ __('branches.vendor_name') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Contact
+                            {{ __('branches.contact_info') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Location
+                            {{ __('branches.location') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Assigned Agent
+                            {{ __('branches.agent') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Added By
+                            {{ __('branches.added_by') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Visits
+                            {{ __('branches.visits_history') }}
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            {{ __('branches.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">{{ $branch->name }}</div>
-                                    <div class="text-sm text-gray-500">Branch #{{ str_pad($branch->id, 3, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-sm text-gray-500">{{ __('branches.branch') }} #{{ str_pad($branch->id, 3, '0', STR_PAD_LEFT) }}</div>
                                 </div>
                             </div>
                         </td>
@@ -89,11 +89,11 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">{{ $branch->mobile }}</div>
-                            <div class="text-sm text-gray-500">{{ $branch->email ?: 'No email' }}</div>
+                            <div class="text-sm text-gray-500">{{ $branch->email ?: __('branches.no_email') }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">{{ $branch->city ?: 'N/A' }}</div>
-                            <div class="text-sm text-gray-500">{{ $branch->district ?: 'N/A' }}</div>
+                            <div class="text-sm text-gray-900">{{ $branch->city ?: __('branches.unknown') }}</div>
+                            <div class="text-sm text-gray-500">{{ $branch->district ?: __('branches.unknown') }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($branch->agent)
@@ -101,12 +101,12 @@
                                     <img class="h-6 w-6 rounded-full mr-2" src="https://ui-avatars.com/api/?name={{ urlencode($branch->agent->name) }}&background=1e40af&color=fff" alt="{{ $branch->agent->name }}">
                                     <div>
                                         <div class="text-sm text-gray-900">{{ $branch->agent->name }}</div>
-                                        <div class="text-sm text-gray-500">Agent #{{ str_pad($branch->agent->id, 3, '0', STR_PAD_LEFT) }}</div>
+                                        <div class="text-sm text-gray-500">{{ __('branches.agent') }} #{{ str_pad($branch->agent->id, 3, '0', STR_PAD_LEFT) }}</div>
                                     </div>
                                 </div>
                             @else
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                    <i class="fas fa-user-slash mr-1"></i> Unassigned
+                                    <i class="fas fa-user-slash mr-1"></i> {{ __('branches.unassigned') }}
                                 </span>
                             @endif
                         </td>
@@ -116,21 +116,21 @@
                                 <span class="text-xs text-gray-500">
                                     (
                                     @if(strtolower($branch->added_by_role) == 'admin' || strtolower($branch->added_by_role) == 'superadmin')
-                                        Admin
+                                        {{ __('branches.admin') }}
                                     @elseif(strtolower($branch->added_by_role) == 'agent')
-                                        Agent
+                                        {{ __('branches.agent') }}
                                     @else
                                         {{ ucfirst($branch->added_by_role) }}
                                     @endif
                                     )
                                 </span>
                             @else
-                                <span class="text-gray-400">Unknown</span>
+                                <span class="text-gray-400">{{ __('branches.unknown') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">{{ $branch->vendor_visits_count }}</div>
-                            <div class="text-sm text-gray-500">visits</div>
+                            <div class="text-sm text-gray-500">{{ __('branches.visits_history') }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
@@ -140,7 +140,7 @@
                                 <a href="{{ route('branches.edit', $branch) }}" class="text-indigo-600 hover:text-indigo-900">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('branches.destroy', $branch) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this branch?')">
+                                <form action="{{ route('branches.destroy', $branch) }}" method="POST" class="inline" onsubmit="return confirm('{{ __('branches.confirm_delete') }}')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-900">

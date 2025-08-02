@@ -3,41 +3,41 @@
 @section('content')
 @php
     $isSuperadmin = auth()->check() && auth()->user()->hasRole('superadmin');
-    $userRole = auth()->check() ? auth()->user()->roles->pluck('name')->implode(', ') : 'Guest';
+    $userRole = auth()->check() ? auth()->user()->roles->pluck('name')->implode(', ') : __('settings.guest');
     $currentTimezone = \App\Models\Setting::where('key', 'timezone')->value('value') ?? config('app.timezone');
 @endphp
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">System Settings</h1>
-            <p class="text-gray-600 mt-2">Configure your application settings and preferences</p>
-            <span class="inline-block mt-2 px-3 py-1 bg-gray-200 text-gray-800 text-xs rounded-full">Your Role: {{ $userRole }}</span>
+            <h1 class="text-3xl font-bold text-gray-900">{{ __('settings.system_settings') }}</h1>
+            <p class="text-gray-600 mt-2">{{ __('settings.settings_description') }}</p>
+            <span class="inline-block mt-2 px-3 py-1 bg-gray-200 text-gray-800 text-xs rounded-full">{{ __('settings.your_role') }}: {{ $userRole }}</span>
         </div>
 
         <!-- Admin Functions Overview -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-xl font-semibold text-primary mb-4">Admin Functions</h2>
+            <h2 class="text-xl font-semibold text-primary mb-4">{{ __('settings.admin_functions') }}</h2>
             <ul class="list-disc list-inside text-gray-700 space-y-2">
                 @if($isSuperadmin)
                     <li>
                         <a href="{{ route('settings.users') }}" class="text-blue-600 hover:underline font-medium">
-                            User Management
-                        </a> - Add, edit, delete users and assign roles
+                            {{ __('settings.user_management') }}
+                        </a> - {{ __('settings.user_management_desc') }}
                     </li>
                 @else
                     <li>
-                        <span class="text-gray-400 font-medium cursor-not-allowed" title="Superadmin only">User Management</span> - <span class="text-xs">(Superadmin only)</span>
+                        <span class="text-gray-400 font-medium cursor-not-allowed" title="{{ __('settings.superadmin_only') }}">{{ __('settings.user_management') }}</span> - <span class="text-xs">({{ __('settings.superadmin_only') }})</span>
                     </li>
                 @endif
                 <li>
-                    <span class="text-gray-400 font-medium">Role Management</span> - <span class="text-xs">(Coming soon)</span>
+                    <span class="text-gray-400 font-medium">{{ __('settings.role_management') }}</span> - <span class="text-xs">({{ __('settings.coming_soon') }})</span>
                 </li>
                 <li>
-                    <span class="text-gray-400 font-medium">Permission Management</span> - <span class="text-xs">(Coming soon)</span>
+                    <span class="text-gray-400 font-medium">{{ __('settings.permission_management') }}</span> - <span class="text-xs">({{ __('settings.coming_soon') }})</span>
                 </li>
                 <li>
-                    <span class="text-gray-400 font-medium">Laravel Config Control</span> - <span class="text-xs">(Superadmin only, coming soon)</span>
+                    <span class="text-gray-400 font-medium">{{ __('settings.laravel_config_control') }}</span> - <span class="text-xs">({{ __('settings.superadmin_only_coming_soon') }})</span>
                 </li>
             </ul>
         </div>
@@ -49,8 +49,8 @@
                     <i class="fas fa-clock text-xl"></i>
                 </div>
                 <div>
-                    <h2 class="text-xl font-semibold text-gray-900">Server Timezone</h2>
-                    <p class="text-gray-600">Set the default timezone for timestamps (e.g., KSA, EGP, UTC)</p>
+                    <h2 class="text-xl font-semibold text-gray-900">{{ __('settings.server_timezone') }}</h2>
+                    <p class="text-gray-600">{{ __('settings.timezone_description') }}</p>
                 </div>
             </div>
             @if(session('success'))
@@ -59,17 +59,15 @@
             <form method="POST" action="{{ route('settings.timezone') }}" class="flex items-center space-x-4">
                 @csrf
                 <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" name="timezone" @if(!$isSuperadmin) disabled @endif>
-                    <option value="Asia/Riyadh" {{ $currentTimezone == 'Asia/Riyadh' ? 'selected' : '' }}>KSA (Asia/Riyadh)</option>
-                    <option value="Africa/Cairo" {{ $currentTimezone == 'Africa/Cairo' ? 'selected' : '' }}>EGP (Africa/Cairo)</option>
-                    <option value="UTC" {{ $currentTimezone == 'UTC' ? 'selected' : '' }}>UTC</option>
+                    <option value="Asia/Riyadh" {{ $currentTimezone == 'Asia/Riyadh' ? 'selected' : '' }}>{{ __('settings.ksa_timezone') }}</option>
+                    <option value="Africa/Cairo" {{ $currentTimezone == 'Africa/Cairo' ? 'selected' : '' }}>{{ __('settings.egypt_timezone') }}</option>
+                    <option value="UTC" {{ $currentTimezone == 'UTC' ? 'selected' : '' }}>{{ __('settings.utc_timezone') }}</option>
                 </select>
-                <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm @if(!$isSuperadmin) opacity-50 cursor-not-allowed @endif" @if(!$isSuperadmin) disabled @endif>Save</button>
-                <span class="text-xs text-gray-500">Current: <span class="font-semibold">{{ $currentTimezone }}</span></span>
+                <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm @if(!$isSuperadmin) opacity-50 cursor-not-allowed @endif" @if(!$isSuperadmin) disabled @endif>{{ __('settings.save') }}</button>
+                <span class="text-xs text-gray-500">{{ __('settings.current') }}: <span class="font-semibold">{{ $currentTimezone }}</span></span>
             </form>
-            <div class="text-xs text-gray-400 mt-2">(Timezone control coming soon. Contact superadmin to change.)</div>
+            <div class="text-xs text-gray-400 mt-2">({{ __('settings.timezone_control_coming_soon') }})</div>
         </div>
-
-
     </div>
 </div>
 @endsection
