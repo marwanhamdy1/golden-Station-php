@@ -48,17 +48,17 @@ class CreateBranch extends FormRequest
         );
     }
 
-    public function messages(): array
-    {
-        return [
-            'vendor_id.required' => 'The vendor is required.',
-            'vendor_id.exists' => 'The selected vendor does not exist.',
-            'name.required' => 'The branch name is required.',
-            'mobile.required' => 'The mobile number is required.',
-            'email.email' => 'Please provide a valid email address.',
-            'city.required' => 'The city is required.',
-            'branch_photos.*.mimes' => 'Each branch photo must be a JPG or PNG file.',
-            // Add more as needed
-        ];
-    }
+   public function messages(): array
+{
+    return [
+        'vendor_id.required' => 'المتجر مطلوب.',
+        'vendor_id.exists' => 'المتجر المحدد غير موجود.',
+        'name.required' => 'اسم الفرع مطلوب.',
+        'mobile.required' => 'رقم الجوال مطلوب.',
+        'email.email' => 'يرجى إدخال بريد إلكتروني صالح.',
+        'city.required' => 'المدينة مطلوبة.',
+        'branch_photos.*.mimes' => 'يجب أن تكون كل صورة للفرع من نوع JPG أو PNG.',
+        // أضف المزيد إذا لزم الأمر
+    ];
+}
 }

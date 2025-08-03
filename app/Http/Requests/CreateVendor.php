@@ -61,7 +61,7 @@ class CreateVendor extends FormRequest
         throw new HttpResponseException(
             response()->json([
                 'success' => false,
-                'message' => 'Validation errors',
+                'message' => 'راجع الحقول ',
                 'errors' => $validator->errors()
             ], 422)
         );
@@ -70,28 +70,28 @@ class CreateVendor extends FormRequest
     public function messages(): array
     {
         return [
-            'owner_name.required' => 'The owner name is required.',
-            'commercial_name.required' => 'The commercial name is required.',
-            'mobile.required' => 'The mobile number is required.',
-            'mobile.unique' => 'This mobile number is already registered.',
-            'mobile.max' => 'Mobile number must not exceed 25 characters.',
-            'whatsapp.max' => 'WhatsApp number must not exceed 25 characters.',
-            'email.required' => 'The email address is required.',
-            'email.email' => 'Please provide a valid email address.',
-            'email.unique' => 'This email address is already registered.',
-            'city.required' => 'The city is required.',
-            'street_name.max' => 'Street name must not exceed 255 characters.',
-            'activity_type.max' => 'Activity type must not exceed 100 characters.',
-            'has_commercial_registration.max' => 'Commercial registration status must not exceed 50 characters.',
-            'previous_platform_experience.max' => 'Previous platform experience must not exceed 1000 characters.',
-            'previous_platform_issues.max' => 'Previous platform issues must not exceed 1000 characters.',
-            'notes.max' => 'Notes must not exceed 2000 characters.',
-            'shop_front_image.mimes' => 'The shop photo must be a JPG or PNG file.',
-            'commercial_registration_image.mimes' => 'The commercial registration image must be a JPG or PNG file.',
-            'id_image.mimes' => 'The ID image must be a JPG or PNG file.',
-            'other_attachments.*.mimes' => 'Each attachment must be a JPG, PNG, or PDF file.',
-            'license_photos.mimes' => 'The license photo must be a JPG or PNG file.',
-            'id_number.unique' => 'This ID number is already registered.',
-        ];
+    'owner_name.required' => 'اسم المالك مطلوب.',
+    'commercial_name.required' => 'الاسم التجاري مطلوب.',
+    'mobile.required' => 'رقم الجوال مطلوب.',
+    'mobile.unique' => 'رقم الجوال مسجل مسبقاً.',
+    'mobile.max' => 'يجب ألا يتجاوز رقم الجوال 25 حرفاً.',
+    'whatsapp.max' => 'يجب ألا يتجاوز رقم الواتساب 25 حرفاً.',
+    'email.required' => 'البريد الإلكتروني مطلوب.',
+    'email.email' => 'يرجى إدخال بريد إلكتروني صحيح.',
+    'email.unique' => 'البريد الإلكتروني مسجل مسبقاً.',
+    'city.required' => 'المدينة مطلوبة.',
+    'street_name.max' => 'يجب ألا يتجاوز اسم الشارع 255 حرفاً.',
+    'activity_type.max' => 'يجب ألا يتجاوز نوع النشاط 100 حرف.',
+    'has_commercial_registration.max' => 'يجب ألا يتجاوز حالة السجل التجاري 50 حرفاً.',
+    'previous_platform_experience.max' => 'يجب ألا يتجاوز وصف تجربة المنصات السابقة 1000 حرف.',
+    'previous_platform_issues.max' => 'يجب ألا يتجاوز وصف مشاكل المنصات السابقة 1000 حرف.',
+    'notes.max' => 'يجب ألا تتجاوز الملاحظات 2000 حرف.',
+    'shop_front_image.mimes' => 'يجب أن تكون صورة المحل من نوع JPG أو PNG.',
+    'commercial_registration_image.mimes' => 'يجب أن تكون صورة السجل التجاري من نوع JPG أو PNG.',
+    'id_image.mimes' => 'يجب أن تكون صورة الهوية من نوع JPG أو PNG.',
+    'other_attachments.*.mimes' => 'يجب أن يكون كل مرفق من نوع JPG أو PNG أو PDF.',
+    'license_photos.mimes' => 'يجب أن تكون صورة الرخصة من نوع JPG أو PNG.',
+    'id_number.unique' => 'رقم الهوية مسجل مسبقاً.',
+];
     }
 }
