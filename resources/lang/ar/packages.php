@@ -63,4 +63,13 @@ return [
     'save' => 'حفظ',
     'update' => 'تحديث',
     'back' => 'رجوع',
+    
+    // JavaScript messages
+    'js_format_price' => 'تنسيق تلقائي لإدخال السعر وضمان الأرقام الإنجليزية فقط',
+    'js_ensure_english_numbers' => 'ضمان الأرقام الإنجليزية للحقول الرقمية',
+    'js_character_counter' => 'عداد الأحرف للوصف',
+    'js_prevent_arabic_keyboard' => 'منع إدخال لوحة المفاتيح العربية للحقول الرقمية',
+    'inactive_packages_note' => 'الباقات غير المفعلة لن تكون متاحة للاختيار',
+    'yes' => 'نعم',
+    'no' => 'لا',
 ];

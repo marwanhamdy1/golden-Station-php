@@ -63,4 +63,13 @@ return [
     'save' => 'Save',
     'update' => 'Update',
     'back' => 'Back',
+    
+    // JavaScript messages
+    'js_format_price' => 'Auto-format price input and ensure English numbers only',
+    'js_ensure_english_numbers' => 'Ensure English numbers for numeric fields',
+    'js_character_counter' => 'Character counter for description',
+    'js_prevent_arabic_keyboard' => 'Prevent Arabic keyboard input for numeric fields',
+    'inactive_packages_note' => 'Inactive packages won\'t be available for selection',
+    'yes' => 'Yes',
+    'no' => 'No',
 ];

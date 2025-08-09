@@ -78,12 +78,12 @@
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
                                         <img class="h-10 w-10 rounded-full bg-gray-300"
-                                             src="https://ui-avatars.com/api/?name={{ urlencode($visit->vendor->name ?? 'Unknown') }}&background=6b7280&color=fff&size=40"
-                                             alt="{{ $visit->vendor->name ?? 'Unknown' }}">
+                                             src="https://ui-avatars.com/api/?name={{ urlencode($visit->vendor->owner_name ?? 'Unknown') }}&background=6b7280&color=fff&size=40"
+                                             alt="{{ $visit->vendor->owner_name ?? 'Unknown' }}">
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900 hover:text-blue-600">
-                                            {{ $visit->vendor->name ?? __('agents.unknown_vendor') }}
+                                            {{ $visit->vendor->owner_name ?? __('agents.unknown_vendor') }}
                                         </div>
                                         <div class="text-sm text-gray-500">
                                             ID: #{{ $visit->vendor->id ?? 'N/A' }}

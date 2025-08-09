@@ -9,11 +9,11 @@
                 <i class="fas fa-arrow-left"></i>
             </a>
             <h1 class="text-3xl font-bold text-gray-900">
-                {{ app()->getLocale() == 'ar' ? 'إنشاء باقة جديدة' : 'Create New Package' }}
+                {{ __('packages.create_package') }}
             </h1>
         </div>
         <p class="text-gray-600">
-            {{ app()->getLocale() == 'ar' ? 'أضف باقة خدمة جديدة إلى عروضك' : 'Add a new service package to your offerings' }}
+            {{ __('packages.manage_packages_description') }}
         </p>
     </div>
 
@@ -26,7 +26,7 @@
                 <!-- Package Name -->
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                        {{ app()->getLocale() == 'ar' ? 'اسم الباقة' : 'Package Name' }} <span class="text-red-500">*</span>
+                        {{ __('packages.package_name') }} <span class="text-red-500">*</span>
                     </label>
                     <input type="text"
                            id="name"
@@ -42,7 +42,7 @@
                 <!-- Description -->
                 <div class="mb-6">
                     <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
-                        {{ app()->getLocale() == 'ar' ? 'الوصف' : 'Description' }}
+                        {{ __('packages.package_description') }}
                     </label>
                     <textarea id="description"
                               name="description"
@@ -59,7 +59,7 @@
                     <!-- Price -->
                     <div>
                         <label for="price" class="block text-sm font-medium text-gray-700 mb-2">
-                            Price (SAR) <span class="text-red-500">*</span>
+                            {{ __('packages.price') }} <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
                             <span class="absolute left-3 top-3 text-gray-500">SAR</span>
@@ -83,7 +83,7 @@
                     <!-- Product Limit -->
                     <div>
                         <label for="product_limit" class="block text-sm font-medium text-gray-700 mb-2">
-                            {{ app()->getLocale() == 'ar' ? 'حد المنتجات' : 'Product Limit' }}
+                            {{ __('packages.product_limit') }}
                         </label>
                         <input type="number"
                                id="product_limit"
@@ -104,7 +104,7 @@
                 <!-- Duration -->
                 <div class="mb-6">
                     <label for="duration_in_days" class="block text-sm font-medium text-gray-700 mb-2">
-                        {{ app()->getLocale() == 'ar' ? 'المدة (بالأيام)' : 'Duration (Days)' }}
+                        {{ __('packages.duration_in_days') }}
                     </label>
                     <input type="number"
                            id="duration_in_days"
@@ -130,7 +130,7 @@
                                {{ old('is_active', true) ? 'checked' : '' }}
                                class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                         <span class="ml-2 text-sm text-gray-700">
-                            {{ app()->getLocale() == 'ar' ? 'باقة مفعلة' : 'Active Package' }}
+                            {{ __('packages.is_active') }}
                         </span>
                     </label>
                     <p class="text-gray-500 text-sm mt-1">
@@ -142,11 +142,11 @@
                 <div class="flex justify-end space-x-4">
                     <a href="{{ route('packages.index') }}"
                        class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                        {{ app()->getLocale() == 'ar' ? 'إلغاء' : 'Cancel' }}
+                        {{ __('packages.cancel') }}
                     </a>
                     <button type="submit"
                             class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                        {{ app()->getLocale() == 'ar' ? 'إنشاء الباقة' : 'Create Package' }}
+                        {{ __('packages.create_package') }}
                     </button>
                 </div>
             </form>
@@ -155,7 +155,7 @@
 </div>
 
 <script>
-// Auto-format price input and ensure English numbers only
+// {{ __('packages.js_format_price') }}
 document.getElementById('price').addEventListener('input', function(e) {
     let value = e.target.value;
 
@@ -192,7 +192,7 @@ document.getElementById('price').addEventListener('blur', function(e) {
     }
 });
 
-// Ensure English numbers for numeric fields
+// {{ __('packages.js_ensure_english_numbers') }}
 function enforceEnglishNumbers(inputId) {
     document.getElementById(inputId).addEventListener('input', function(e) {
         let value = e.target.value;
@@ -213,7 +213,7 @@ function enforceEnglishNumbers(inputId) {
 enforceEnglishNumbers('product_limit');
 enforceEnglishNumbers('duration_in_days');
 
-// Character counter for description
+// {{ __('packages.js_character_counter') }}
 document.getElementById('description').addEventListener('input', function(e) {
     const maxLength = 1000;
     const currentLength = e.target.value.length;
@@ -225,7 +225,7 @@ document.getElementById('description').addEventListener('input', function(e) {
     }
 });
 
-// Prevent Arabic keyboard input for numeric fields
+// {{ __('packages.js_prevent_arabic_keyboard') }}
 function preventArabicKeyboard(inputId) {
     document.getElementById(inputId).addEventListener('keydown', function(e) {
         // Allow backspace, delete, tab, escape, enter

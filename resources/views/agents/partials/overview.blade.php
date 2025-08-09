@@ -21,7 +21,7 @@
                      onclick="window.location.href='{{ route('visits.show', $visit->id) }}'">
                     <div class="flex justify-between items-start">
                         <div class="flex-1">
-                            <h4 class="font-medium text-gray-900 hover:text-blue-600">{{ $visit->vendor->name ?? __('agents.unknown_vendor') }}</h4>
+                            <h4 class="font-medium text-gray-900 hover:text-blue-600">{{ $visit->vendor->owner_name ?? __('agents.unknown_vendor') }}</h4>
                             <p class="text-sm text-gray-600 mt-1">
                                 <i class="fas fa-building mr-1"></i>
                                 <a href="{{ route('branches.show', $visit->branch->id ?? '#') }}"
