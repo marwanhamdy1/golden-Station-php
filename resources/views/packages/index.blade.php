@@ -20,7 +20,7 @@
             <div class="flex-1">
                 <input type="text" id="search" placeholder="{{ __('packages.search_packages') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             </div>
-            <div class="flex gap-2">
+            <!-- <div class="flex gap-2">
                 <select id="status-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     <option value="">{{ __('packages.all_status') }}</option>
                     <option value="1">{{ __('packages.active') }}</option>
@@ -30,7 +30,7 @@
                     <i class="fas fa-download mr-2"></i>
                     {{ __('packages.export') }}
                 </button> --}}
-            </div>
+            </div> -->
         </div>
     </div>
 

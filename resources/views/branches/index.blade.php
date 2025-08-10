@@ -15,24 +15,18 @@
         </div>
     @endif
 
-    <!-- Search and Filter -->
+    <!-- Search -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div class="flex flex-wrap gap-4">
-            <div class="flex-1 min-w-64">
-                <input type="text" id="search" placeholder="{{ __('branches.search_branches') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
-            </div>
-            <div class="flex gap-2">
-                <select id="filter-city" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-                    <option value="">{{ __('branches.all_cities') }}</option>
-                    <option value="Riyadh">{{ __('branches.riyadh') }}</option>
-                    <option value="Jeddah">{{ __('branches.jeddah') }}</option>
-                    <option value="Dammam">{{ __('branches.dammam') }}</option>
-                </select>
-                <select id="filter-agent" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500">
-                    <option value="">{{ __('branches.all_agents') }}</option>
-                    <option value="assigned">{{ __('branches.assigned') }}</option>
-                    <option value="unassigned">{{ __('branches.unassigned') }}</option>
-                </select>
+        <div class="w-full md:w-1/2">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                </div>
+                <input type="text" 
+                       id="search" 
+                       placeholder="البحث" 
+                       class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                       autocomplete="off">
             </div>
         </div>
     </div>
@@ -79,7 +73,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">{{ $branch->name }}</div>
-                                    <div class="text-sm text-gray-500">{{ __('branches.branch') }} #{{ str_pad($branch->id, 3, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-sm text-gray-500">{{ __('branches.branch') }} #{{ $branch->id }}</div>
                                 </div>
                             </div>
                         </td>
@@ -101,7 +95,7 @@
                                     <img class="h-6 w-6 rounded-full mr-2" src="https://ui-avatars.com/api/?name={{ urlencode($branch->agent->name) }}&background=1e40af&color=fff" alt="{{ $branch->agent->name }}">
                                     <div>
                                         <div class="text-sm text-gray-900">{{ $branch->agent->name }}</div>
-                                        <div class="text-sm text-gray-500">{{ __('branches.agent') }} #{{ str_pad($branch->agent->id, 3, '0', STR_PAD_LEFT) }}</div>
+                                        <div class="text-sm text-gray-500">{{ __('branches.agent') }} #{{ $branch->agent->id }}</div>
                                     </div>
                                 </div>
                             @else
@@ -165,45 +159,44 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search');
-    const filterCity = document.getElementById('filter-city');
-    const filterAgent = document.getElementById('filter-agent');
-    const tableBody = document.getElementById('branches-table-body');
-    const rows = tableBody.querySelectorAll('tr');
+    const rows = document.querySelectorAll('#branches-table-body tr');
 
-    function filterTable() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const cityFilter = filterCity.value;
-        const agentFilter = filterAgent.value;
+    function filterBranches() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        
+        if (!searchTerm) {
+            // If search is empty, show all rows
+            rows.forEach(row => row.style.display = '');
+            return;
+        }
 
         rows.forEach(row => {
-            const branchName = row.querySelector('td:first-child').textContent.toLowerCase();
-            const vendorName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-            const contact = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
-            const location = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
-            const agentCell = row.querySelector('td:nth-child(5)');
-
-            let showRow = branchName.includes(searchTerm) || vendorName.includes(searchTerm) || contact.includes(searchTerm);
-
-            if (cityFilter) {
-                showRow = showRow && location.includes(cityFilter.toLowerCase());
+            const rowText = row.textContent.toLowerCase();
+            if (rowText.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
             }
-
-            if (agentFilter) {
-                const hasAgent = agentCell.querySelector('img') !== null;
-                if (agentFilter === 'assigned') {
-                    showRow = showRow && hasAgent;
-                } else if (agentFilter === 'unassigned') {
-                    showRow = showRow && !hasAgent;
-                }
-            }
-
-            row.style.display = showRow ? '' : 'none';
         });
     }
 
-    searchInput.addEventListener('input', filterTable);
-    filterCity.addEventListener('change', filterTable);
-    filterAgent.addEventListener('change', filterTable);
+    // Debounce function for better performance
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    searchInput.addEventListener('input', debounce(filterBranches, 300));
+    
+    // Focus search input on page load
+    searchInput.focus();
 });
 </script>
 @endsection

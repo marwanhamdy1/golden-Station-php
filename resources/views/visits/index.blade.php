@@ -151,7 +151,10 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($visits as $visit)
-                    <tr class="hover:bg-gray-50" data-agent-id="{{ $visit->agent_id }}">
+                    <tr class="hover:bg-gray-50" 
+                        data-agent-id="{{ $visit->agent_id }}" 
+                        data-status="{{ strtolower($visit->visit_status) }}" 
+                        data-rating="{{ $visit->vendor_rating ? strtolower($visit->vendor_rating) : '' }}">
                         <!-- Visit Details -->
                         <td class="px-6 py-4">
                             <div class="flex items-center">
@@ -162,7 +165,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">
-                                        {{ __('visits.visit_number', ['number' => str_pad($visit->id, 4, '0', STR_PAD_LEFT)]) }}
+                                        {{ __('visits.visit_number', ['number' => $visit->id]) }}
                                     </div>
                                     <div class="text-sm text-gray-500">
                                         {{ $visit->visit_date instanceof \Carbon\Carbon ? $visit->visit_date->format('M d, Y H:i') : $visit->visit_date }}
@@ -480,72 +483,75 @@ document.getElementById('confirmDelete').addEventListener('click', function() {
             if (data.success) {
                 location.reload();
             } else {
-                alert('{{ __('visits.visit_deleted_error') }}');
+                alert('{{ __("visits.visit_deleted_error") }}');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('{{ __('visits.visit_deleted_error') }}');
+            alert('{{ __("visits.visit_deleted_error") }}');
         });
     }
     closeDeleteModal();
 });
 
-// Search functionality
-document.getElementById('search').addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase();
-    const rows = document.querySelectorAll('tbody tr');
+// Debounce function for better performance
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
-    rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        if (text.includes(searchTerm)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    });
-});
-
-// Status filter
-document.getElementById('status-filter').addEventListener('change', function(e) {
-    filterVisits();
-});
-
-// Rating filter
-document.getElementById('rating-filter').addEventListener('change', function(e) {
-    filterVisits();
-});
-
-// Agent filter
-document.getElementById('agent-filter').addEventListener('change', function(e) {
-    filterVisits();
-});
-
+// Search and filter functionality
 function filterVisits() {
+    const searchTerm = document.getElementById('search').value.toLowerCase();
     const statusFilter = document.getElementById('status-filter').value;
     const ratingFilter = document.getElementById('rating-filter').value;
     const agentFilter = document.getElementById('agent-filter').value;
+    
     const rows = document.querySelectorAll('tbody tr');
 
     rows.forEach(row => {
-        const statusCell = row.querySelector('td:nth-child(4) span:first-child');
-        const ratingCell = row.querySelector('td:nth-child(4) span:last-child');
-        const agentId = row.getAttribute('data-agent-id');
+        const rowText = row.textContent.toLowerCase();
+        const status = row.getAttribute('data-status') || '';
+        const rating = row.getAttribute('data-rating') || '';
+        const agentId = row.getAttribute('data-agent-id') || '';
 
-        const status = statusCell ? statusCell.textContent.toLowerCase().replace(/\s+/g, '_') : '';
-        const rating = ratingCell ? ratingCell.textContent.toLowerCase().replace(/\s+/g, '_') : '';
-
-        const statusMatch = !statusFilter || status.includes(statusFilter);
-        const ratingMatch = !ratingFilter || rating.includes(ratingFilter);
+        // Check search term match
+        const searchMatch = !searchTerm || rowText.includes(searchTerm);
+        // Check status match (exact match for status)
+        const statusMatch = !statusFilter || status === statusFilter.toLowerCase();
+        // Check rating match (exact match for rating)
+        const ratingMatch = !ratingFilter || rating === ratingFilter.toLowerCase();
+        // Check agent match
         const agentMatch = !agentFilter || agentId === agentFilter;
 
-        if (statusMatch && ratingMatch && agentMatch) {
+        // Show/hide row based on all conditions
+        if (searchMatch && statusMatch && ratingMatch && agentMatch) {
             row.style.display = '';
         } else {
             row.style.display = 'none';
         }
     });
 }
+
+// Add event listeners with debouncing
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('input', debounce(filterVisits, 300));
+
+document.getElementById('status-filter').addEventListener('change', filterVisits);
+document.getElementById('rating-filter').addEventListener('change', filterVisits);
+document.getElementById('agent-filter').addEventListener('change', filterVisits);
+
+// Focus search input on page load
+document.addEventListener('DOMContentLoaded', function() {
+    searchInput.focus();
+});
 
 function exportVisits() {
     window.location.href = '/visits/export';

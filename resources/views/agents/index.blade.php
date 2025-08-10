@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">{{ $agent->name }}</div>
-                                    <div class="text-sm text-gray-500">{{ __('agents.agent_number', ['number' => str_pad($agent->id, 3, '0', STR_PAD_LEFT)]) }}</div>
+                                    <div class="text-sm text-gray-500">{{ __('agents.agent_number', ['number' => $agent->id]) }}</div>
                                 </div>
                             </div>
                         </td>
