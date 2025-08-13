@@ -84,14 +84,9 @@
                     <!-- City -->
                     <div>
                         <label for="city" class="block text-sm font-medium text-gray-700 mb-2">{{ __('vendors.city') }}</label>
-                        <select name="city" id="city" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent @error('city') border-red-500 @enderror">
-                            <option value="">{{ __('vendors.select_city') }}</option>
-                            <option value="Riyadh" {{ old('city') == 'Riyadh' ? 'selected' : '' }}>{{ __('vendors.riyadh') }}</option>
-                            <option value="Jeddah" {{ old('city') == 'Jeddah' ? 'selected' : '' }}>{{ __('vendors.jeddah') }}</option>
-                            <option value="Dammam" {{ old('city') == 'Dammam' ? 'selected' : '' }}>{{ __('vendors.dammam') }}</option>
-                            <option value="Mecca" {{ old('city') == 'Mecca' ? 'selected' : '' }}>{{ __('vendors.mecca') }}</option>
-                            <option value="Medina" {{ old('city') == 'Medina' ? 'selected' : '' }}>{{ __('vendors.medina') }}</option>
-                        </select>
+                        <input type="text" name="city" id="city" value="{{ old('city') }}"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent @error('city') border-red-500 @enderror"
+                               placeholder="{{ __('vendors.enter_city') }}">
                         @error('city')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror

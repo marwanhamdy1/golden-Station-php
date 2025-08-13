@@ -3,13 +3,13 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Vendor Details</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('vendors.vendor_details') }}</h1>
         <div class="flex space-x-3">
             <a href="{{ route('vendors.edit', $vendor) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center">
-                <i class="fas fa-edit mr-2"></i> Edit Vendor
+                <i class="fas fa-edit mr-2"></i> {{ __('vendors.edit_vendor') }}
             </a>
             <a href="{{ route('vendors.index') }}" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> Back to Vendors
+                <i class="fas fa-arrow-left mr-2"></i> {{ __('vendors.back_to_vendors') }}
             </a>
         </div>
     </div>
@@ -28,97 +28,97 @@
             </div>
             <div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $vendor->commercial_name }}</h2>
-                <p class="text-gray-600">Owner: {{ $vendor->owner_name }}</p>
-                <p class="text-sm text-gray-500">Vendor #{{ str_pad($vendor->id, 3, '0', STR_PAD_LEFT) }} | Created: {{ $vendor->created_at->format('M d, Y') }}</p>
+                <p class="text-gray-600">{{ __('vendors.owner') }}: {{ $vendor->owner_name }}</p>
+                <p class="text-sm text-gray-500">{{ __('vendors.vendor_id') }} #{{ str_pad($vendor->id, 3, '0', STR_PAD_LEFT) }} | {{ __('vendors.created') }}: {{ $vendor->created_at->format('M d, Y') }}</p>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Commercial Information -->
             <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Commercial Information</h3>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.commercial_information') }}</h3>
                 <div class="space-y-3">
                     <div class="flex items-center">
                         <i class="fas fa-user text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Owner:</strong> {{ $vendor->owner_name }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.owner') }}:</strong> {{ $vendor->owner_name }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-building text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Commercial Name:</strong> {{ $vendor->commercial_name }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.commercial_name') }}:</strong> {{ $vendor->commercial_name }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-id-card text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>CR Number:</strong> {{ $vendor->commercial_registration_number ?: 'Not provided' }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.cr_number') }}:</strong> {{ $vendor->commercial_registration_number ?: __('vendors.not_provided') }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-calendar text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Activity Start:</strong> {{ $vendor->activity_start_date ? $vendor->activity_start_date : 'Not specified' }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.activity_start') }}:</strong> {{ $vendor->activity_start_date ? $vendor->activity_start_date : __('vendors.not_specified') }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-tag text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Activity Type:</strong> {{ $vendor->activity_type ? ucfirst($vendor->activity_type) : 'Not specified' }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.activity_type') }}:</strong> {{ $vendor->activity_type ? __('vendors.' . $vendor->activity_type) : __('vendors.not_specified') }}</span>
                     </div>
                 </div>
             </div>
 
             <!-- Contact Information -->
             <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Contact Information</h3>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.contact_information') }}</h3>
                 <div class="space-y-3">
                     <div class="flex items-center">
                         <i class="fas fa-phone text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Mobile:</strong> {{ $vendor->mobile }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.mobile') }}:</strong> {{ $vendor->mobile }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fab fa-whatsapp text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>WhatsApp:</strong> {{ $vendor->whatsapp ?: 'Not provided' }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.whatsapp') }}:</strong> {{ $vendor->whatsapp ?: __('vendors.not_provided') }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-envelope text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Email:</strong> {{ $vendor->email ?: 'Not provided' }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.email') }}:</strong> {{ $vendor->email ?: __('vendors.not_provided') }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-map-marker-alt text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>City:</strong> {{ $vendor->city ?: 'Not specified' }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.city') }}:</strong> {{ $vendor->city ?: __('vendors.not_specified') }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-map text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>District:</strong> {{ $vendor->district ?: 'Not specified' }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.district') }}:</strong> {{ $vendor->district ?: __('vendors.not_specified') }}</span>
                     </div>
                 </div>
             </div>
 
             <!-- Social Media & Online Presence -->
             <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Social Media & Online</h3>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.social_media_online') }}</h3>
                 <div class="space-y-3">
                     <div class="flex items-center">
                         <i class="fab fa-snapchat text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Snapchat:</strong> {{ $vendor->snapchat ?: 'Not provided' }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.snapchat') }}:</strong> {{ $vendor->snapchat ?: __('vendors.not_provided') }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fab fa-instagram text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Instagram:</strong> {{ $vendor->instagram ?: 'Not provided' }}</span>
+                        <span class="text-gray-700"><strong>{{ __('vendors.instagram') }}:</strong> {{ $vendor->instagram ?: __('vendors.not_provided') }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-globe text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Location URL:</strong>
+                        <span class="text-gray-700"><strong>{{ __('vendors.location_url') }}:</strong>
                             @if($vendor->location_url)
-                                <a href="{{ $vendor->location_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">View Location</a>
+                                <a href="{{ $vendor->location_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">{{ __('vendors.view_location') }}</a>
                             @else
-                                Not provided
+                                {{ __('vendors.not_provided') }}
                             @endif
                         </span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-laptop text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700"><strong>Has Online Platform:</strong>
+                        <span class="text-gray-700"><strong>{{ __('vendors.has_online_platform') }}:</strong>
                             @if($vendor->has_online_platform)
-                                <span class="text-green-600">Yes</span>
+                                <span class="text-green-600">{{ __('vendors.yes') }}</span>
                             @elseif($vendor->has_online_platform === false)
-                                <span class="text-red-600">No</span>
+                                <span class="text-red-600">{{ __('vendors.no') }}</span>
                             @else
-                                <span class="text-gray-500">Not specified</span>
+                                <span class="text-gray-500">{{ __('vendors.not_specified') }}</span>
                             @endif
                         </span>
                     </div>
@@ -129,58 +129,58 @@
 
     <!-- Business Status & Documents -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Business Status & Documents</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.business_status_documents') }}</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="text-center p-4 border rounded-lg">
                 <i class="fas fa-certificate text-2xl mb-2 {{ $vendor->has_commercial_registration === 'yes' ? 'text-green-600' : ($vendor->has_commercial_registration === 'no' ? 'text-red-600' : 'text-gray-400') }}"></i>
-                <h4 class="font-medium text-gray-900">Commercial Registration</h4>
+                <h4 class="font-medium text-gray-900">{{ __('vendors.commercial_registration') }}</h4>
                 <p class="text-sm text-gray-600">
                     @if($vendor->has_commercial_registration === 'yes')
-                        <span class="text-green-600">Yes</span>
+                        <span class="text-green-600">{{ __('vendors.yes') }}</span>
                     @elseif($vendor->has_commercial_registration === 'no')
-                        <span class="text-red-600">No</span>
+                        <span class="text-red-600">{{ __('vendors.no') }}</span>
                     @elseif($vendor->has_commercial_registration === 'not_sure')
-                        <span class="text-yellow-600">Not Sure</span>
+                        <span class="text-yellow-600">{{ __('vendors.not_sure') }}</span>
                     @else
-                        <span class="text-gray-500">Not specified</span>
+                        <span class="text-gray-500">{{ __('vendors.not_specified') }}</span>
                     @endif
                 </p>
             </div>
 
             <div class="text-center p-4 border rounded-lg">
                 <i class="fas fa-images text-2xl mb-2 {{ $vendor->has_product_photos ? 'text-green-600' : 'text-gray-400' }}"></i>
-                <h4 class="font-medium text-gray-900">Product Photos</h4>
+                <h4 class="font-medium text-gray-900">{{ __('vendors.product_photos') }}</h4>
                 <p class="text-sm text-gray-600">
                     @if($vendor->has_product_photos)
-                        <span class="text-green-600">Available</span>
+                        <span class="text-green-600">{{ __('vendors.available') }}</span>
                     @elseif($vendor->has_product_photos === false)
-                        <span class="text-red-600">Not Available</span>
+                        <span class="text-red-600">{{ __('vendors.not_available') }}</span>
                     @else
-                        <span class="text-gray-500">Not specified</span>
+                        <span class="text-gray-500">{{ __('vendors.not_specified') }}</span>
                     @endif
                 </p>
             </div>
 
             <div class="text-center p-4 border rounded-lg">
                 <i class="fas fa-store text-2xl mb-2 text-blue-600"></i>
-                <h4 class="font-medium text-gray-900">Shop Front Image</h4>
+                <h4 class="font-medium text-gray-900">{{ __('vendors.shop_front_image') }}</h4>
                 <p class="text-sm text-gray-600">
                     @if($vendor->shop_front_image)
-                        <span class="text-green-600">Uploaded</span>
+                        <span class="text-green-600">{{ __('vendors.uploaded') }}</span>
                     @else
-                        <span class="text-gray-500">Not uploaded</span>
+                        <span class="text-gray-500">{{ __('vendors.not_uploaded') }}</span>
                     @endif
                 </p>
             </div>
 
             <div class="text-center p-4 border rounded-lg">
                 <i class="fas fa-id-card text-2xl mb-2 text-blue-600"></i>
-                <h4 class="font-medium text-gray-900">ID Image</h4>
+                <h4 class="font-medium text-gray-900">{{ __('vendors.id_image') }}</h4>
                 <p class="text-sm text-gray-600">
                     @if($vendor->id_image)
-                        <span class="text-green-600">Uploaded</span>
+                        <span class="text-green-600">{{ __('vendors.uploaded') }}</span>
                     @else
-                        <span class="text-gray-500">Not uploaded</span>
+                        <span class="text-gray-500">{{ __('vendors.not_uploaded') }}</span>
                     @endif
                 </p>
             </div>
@@ -189,18 +189,18 @@
 
     <!-- Platform Experience Information -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Platform Experience</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.platform_experience') }}</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <h4 class="text-md font-medium text-gray-900 mb-2">Previous Platform Experience</h4>
+                <h4 class="text-md font-medium text-gray-900 mb-2">{{ __('vendors.previous_platform_experience') }}</h4>
                 <div class="bg-gray-50 p-4 rounded-lg">
-                    <p class="text-gray-700">{{ $vendor->previous_platform_experience ?: 'No previous experience recorded' }}</p>
+                    <p class="text-gray-700">{{ $vendor->previous_platform_experience ?: __('vendors.no_previous_experience') }}</p>
                 </div>
             </div>
             <div>
-                <h4 class="text-md font-medium text-gray-900 mb-2">Previous Platform Issues</h4>
+                <h4 class="text-md font-medium text-gray-900 mb-2">{{ __('vendors.previous_platform_issues') }}</h4>
                 <div class="bg-gray-50 p-4 rounded-lg">
-                    <p class="text-gray-700">{{ $vendor->previous_platform_issues ?: 'No issues recorded' }}</p>
+                    <p class="text-gray-700">{{ $vendor->previous_platform_issues ?: __('vendors.no_previous_issues') }}</p>
                 </div>
             </div>
         </div>
@@ -209,7 +209,7 @@
     <!-- Additional Information -->
     @if($vendor->notes)
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Additional Notes</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.additional_notes') }}</h3>
         <div class="bg-gray-50 p-4 rounded-lg">
             <p class="text-gray-700">{{ $vendor->notes }}</p>
         </div>
@@ -218,16 +218,16 @@
 
     <!-- Added By Info -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Added By</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.added_by') }}</h3>
         @if($vendor->added_by && $vendor->added_by_role)
             <p class="text-gray-700">
                 {{ $vendor->added_by }}
                 <span class="text-xs text-gray-500">
                     (
                     @if(strtolower($vendor->added_by_role) == 'admin' || strtolower($vendor->added_by_role) == 'superadmin')
-                        Admin
+                        {{ __('vendors.admin') }}
                     @elseif(strtolower($vendor->added_by_role) == 'agent')
-                        Agent
+                        {{ __('vendors.agent') }}
                     @else
                         {{ ucfirst($vendor->added_by_role) }}
                     @endif
@@ -235,13 +235,13 @@
                 </span>
             </p>
         @else
-            <p class="text-gray-500">Unknown</p>
+            <p class="text-gray-500">{{ __('vendors.unknown') }}</p>
         @endif
     </div>
 
     <!-- Vendor Images -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Vendor Images</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.vendor_images') }}</h3>
         @if(count($vendor->images()) > 0)
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 @foreach($vendor->images() as $image)
@@ -253,14 +253,14 @@
         @else
             <div class="text-center py-8">
                 <i class="fas fa-image text-gray-400 text-4xl mb-4"></i>
-                <p class="text-gray-500">No images uploaded for this vendor.</p>
+                <p class="text-gray-500">{{ __('vendors.no_images_uploaded') }}</p>
             </div>
         @endif
     </div>
 
     <!-- Branches -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Branches ({{ $vendor->branches->count() }})</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.branches') }} ({{ $vendor->branches->count() }})</h3>
 
         @if($vendor->branches->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -281,24 +281,24 @@
         @else
             <div class="text-center py-8">
                 <i class="fas fa-map-marker-alt text-gray-400 text-4xl mb-4"></i>
-                <p class="text-gray-500">No branches registered yet</p>
+                <p class="text-gray-500">{{ __('vendors.no_branches_registered') }}</p>
             </div>
         @endif
     </div>
 
     <!-- Recent Visits -->
     <div class="bg-white rounded-lg shadow-md p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Visits ({{ $vendor->vendorVisits->count() }})</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.recent_visits') }} ({{ $vendor->vendorVisits->count() }})</h3>
 
         @if($vendor->vendorVisits->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Branch</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Visit Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('vendors.agent') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('vendors.branch') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('vendors.visit_date') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('vendors.status') }}</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">

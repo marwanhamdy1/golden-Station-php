@@ -30,13 +30,17 @@
                 </select>
                 <select id="filter-city" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
                     <option value="">{{ __('vendors.all_cities') }}</option>
-                    <option value="Riyadh">{{ __('vendors.riyadh') }}</option>
-                    <option value="Jeddah">{{ __('vendors.jeddah') }}</option>
-                    <option value="Dammam">{{ __('vendors.dammam') }}</option>
+                    @forelse($cities as $city)
+                        <option value="{{ $city }}">{{ $city }}</option>
+                    @empty
+                        <option value="" disabled>{{ __('vendors.no_cities_available') }}</option>
+                    @endforelse
                 </select>
             </div>
         </div>
     </div>
+
+
 
     <!-- Vendors Table -->
     <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -186,30 +190,87 @@ document.addEventListener('DOMContentLoaded', function() {
         const activityFilter = filterActivity.value;
         const cityFilter = filterCity.value;
 
+        console.log('Filtering with:', { searchTerm, activityFilter, cityFilter });
+
+        let visibleCount = 0;
+        
         rows.forEach(row => {
-            const commercialName = row.querySelector('td:first-child').textContent.toLowerCase();
-            const ownerName = row.querySelector('td:first-child div:nth-child(2)').textContent.toLowerCase();
-            const contact = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-            const location = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
-            const activity = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+            // Column 1: Vendor info (commercial name + owner name)
+            const commercialNameElement = row.querySelector('td:nth-child(1) div:nth-child(2) div:nth-child(1)');
+            const ownerNameElement = row.querySelector('td:nth-child(1) div:nth-child(2) div:nth-child(2)');
+            
+            // Column 2: Contact info (mobile + email)
+            const contactElement = row.querySelector('td:nth-child(2)');
+            
+            // Column 3: Location (city + district)
+            const cityElement = row.querySelector('td:nth-child(3) div:nth-child(1)');
+            
+            // Column 4: Activity type
+            const activityElement = row.querySelector('td:nth-child(4)');
+
+            // Get text content safely
+            const commercialName = commercialNameElement ? commercialNameElement.textContent.toLowerCase() : '';
+            const ownerName = ownerNameElement ? ownerNameElement.textContent.toLowerCase() : '';
+            const contact = contactElement ? contactElement.textContent.toLowerCase() : '';
+            const cityText = cityElement ? cityElement.textContent.trim() : '';
+            const activity = activityElement ? activityElement.textContent.trim() : '';
+
+            console.log('Row data:', { 
+                commercialName, 
+                ownerName, 
+                cityText, 
+                activity,
+                activityRaw: activityElement ? activityElement.textContent : 'NULL'
+            });
 
             let showRow = commercialName.includes(searchTerm) || ownerName.includes(searchTerm) || contact.includes(searchTerm);
 
-            if (activityFilter) {
-                showRow = showRow && activity.includes(activityFilter);
+            if (activityFilter && activityFilter !== '') {
+                // For activity filter, we need to map the English filter value to Arabic text
+                const activityMapping = {
+                    'wholesale': 'جملة',
+                    'retail': 'تجزئة',
+                    'both': 'كلاهما'
+                };
+                
+                const activityFilterLower = activityFilter.toLowerCase();
+                const expectedArabicText = activityMapping[activityFilterLower] || activityFilterLower;
+                
+                // Check if the activity text contains the expected Arabic text
+                showRow = showRow && activity.includes(expectedArabicText);
+                
+                console.log('Activity filtering:', { 
+                    activityFilter: activityFilterLower, 
+                    expectedArabicText: expectedArabicText,
+                    activity: activity, 
+                    matches: activity.includes(expectedArabicText) 
+                });
             }
 
-            if (cityFilter) {
-                showRow = showRow && location.includes(cityFilter.toLowerCase());
+            if (cityFilter && cityFilter !== '') {
+                const cityFilterLower = cityFilter.toLowerCase();
+                const cityTextLower = cityText.toLowerCase();
+                showRow = showRow && cityTextLower === cityFilterLower;
+                
+                console.log('City filtering:', { 
+                    cityFilter: cityFilterLower, 
+                    cityText: cityTextLower, 
+                    matches: cityTextLower === cityFilterLower 
+                });
             }
 
             row.style.display = showRow ? '' : 'none';
+            if (showRow) visibleCount++;
         });
+        
+        console.log(`Filtering complete. ${visibleCount} rows visible out of ${rows.length} total rows.`);
     }
 
     searchInput.addEventListener('input', filterTable);
     filterActivity.addEventListener('change', filterTable);
     filterCity.addEventListener('change', filterTable);
+    
+
 });
 </script>
 @endsection

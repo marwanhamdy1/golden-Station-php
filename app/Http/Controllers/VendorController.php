@@ -20,7 +20,16 @@ class VendorController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('vendors.index', compact('vendors'));
+        // Get unique cities for the filter dropdown
+        $cities = Vendor::whereNotNull('city')
+            ->where('city', '!=', '')
+            ->where('city', '!=', 'null')
+            ->distinct()
+            ->pluck('city')
+            ->sort()
+            ->values();
+
+        return view('vendors.index', compact('vendors', 'cities'));
     }
 
     public function create()
