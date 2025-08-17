@@ -12,7 +12,7 @@
 
         <div class="bg-white rounded-lg shadow-md p-8 mb-8">
             <div class="mb-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-2">Visit #{{ str_pad($visit->id, 4, '0', STR_PAD_LEFT) }}</h2>
+                <h2 class="text-xl font-semibold text-gray-900 mb-2">Visit #{{ $visit->id }}</h2>
                 <div class="flex flex-wrap gap-2">
                     <span class="px-3 py-1 rounded-full text-xs font-medium {{ $visit->visit_status === 'visited' ? 'bg-green-100 text-green-800' : ($visit->visit_status === 'closed' ? 'bg-blue-100 text-blue-800' : ($visit->visit_status === 'not_found' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800')) }}">
                         {{ __('visits.'.$visit->visit_status) }}
@@ -50,7 +50,7 @@
                         <img class="h-12 w-12 rounded-full mr-3" src="https://ui-avatars.com/api/?name={{ urlencode($visit->agent->name) }}&background=059669&color=fff" alt="Agent">
                         <div>
                             <div class="text-gray-900 font-medium">{{ $visit->agent->name }}</div>
-                            <div class="text-gray-500 text-sm">{{ __('visits.agent') }} #{{ str_pad($visit->agent->id, 3, '0', STR_PAD_LEFT) }}</div>
+                            <div class="text-gray-500 text-sm">{{ __('visits.agent') }} #{{ $visit->agent->id }}</div>
                             <div class="text-xs text-gray-400">{{ __('visits.total_visits_to_vendor') }}: {{ $agentVendorVisitsCount }}</div>
                         </div>
                     </div>
@@ -64,10 +64,10 @@
             <div class="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
                     <h3 class="font-semibold text-gray-700 mb-3">{{ __('visits.visit_information') }}</h3>
-                    <p class="text-gray-700 mb-2"><span class="font-semibold">{{ __('visits.date') }}:</span> {{ $visit->visit_date instanceof \Carbon\Carbon ? $visit->visit_date->format('M d, Y H:i') : $visit->visit_date }}</p>
-                    <p class="text-gray-700 mb-2"><span class="font-semibold">{{ __('visits.report_created') }}:</span> {{ $visit->created_at instanceof \Carbon\Carbon ? $visit->created_at->format('M d, Y H:i') : $visit->created_at }}</p>
+                    <p class="text-gray-700 mb-2"><span class="font-semibold">{{ __('visits.date') }}:</span> {{ $visit->visit_date instanceof \Carbon\Carbon ? $visit->visit_date->format('M d, Y g:i A') : $visit->visit_date }}</p>
+                    <p class="text-gray-700 mb-2"><span class="font-semibold">{{ __('visits.report_created') }}:</span> {{ $visit->created_at instanceof \Carbon\Carbon ? $visit->created_at->format('M d, Y g:i A') : $visit->created_at }}</p>
                     @if($visit->visit_end_at)
-                    <p class="text-gray-700 mb-2"><span class="font-semibold">{{ __('visits.end_time') }}:</span> {{ $visit->visit_end_at instanceof \Carbon\Carbon ? $visit->visit_end_at->format('M d, Y H:i') : $visit->visit_end_at }}</p>
+                    <p class="text-gray-700 mb-2"><span class="font-semibold">{{ __('visits.end_time') }}:</span> {{ $visit->visit_end_at instanceof \Carbon\Carbon ? $visit->visit_end_at->format('M d, Y g:i A') : $visit->visit_end_at }}</p>
                     @if($visit->visit_date instanceof \Carbon\Carbon && $visit->visit_end_at instanceof \Carbon\Carbon)
                     <p class="text-gray-700 mb-2"><span class="font-semibold">{{ __('visits.duration') }}:</span> {{ $visit->visit_date->diffInMinutes($visit->visit_end_at) }} {{ __('visits.minutes') }}</p>
                     @endif
@@ -80,6 +80,18 @@
                     <p class="text-gray-700 mb-2"><span class="font-semibold">{{ __('visits.gps_coordinates') }}:</span></p>
                     <p class="text-sm text-gray-600 mb-2">{{ __('visits.lat') }}: {{ $visit->gps_latitude ?? __('visits.na') }}</p>
                     <p class="text-sm text-gray-600 mb-3">{{ __('visits.lng') }}: {{ $visit->gps_longitude ?? __('visits.na') }}</p>
+                    
+                    @if($visit->google_maps_url)
+                        <a href="{{ $visit->google_maps_url }}" target="_blank" class="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            {{ __('visits.view_on_google_maps') }}
+                        </a>
+                    @elseif($visit->gps_latitude && $visit->gps_longitude)
+                        <a href="https://www.google.com/maps?q={{ $visit->gps_latitude }},{{ $visit->gps_longitude }}" target="_blank" class="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            {{ __('visits.view_on_google_maps') }}
+                        </a>
+                    @endif
 
                     @if($visit->met_person_name)
                     <p class="text-gray-700 mb-2"><span class="font-semibold">{{ __('visits.met_person') }}:</span> {{ $visit->met_person_name }}</p>
@@ -224,7 +236,7 @@
                                         @if($historyVisit->id === $visit->id)
                                         <i class="fas fa-eye text-blue-600 mr-2"></i>
                                         @endif
-                                        <span class="text-sm font-medium text-gray-900">#{{ str_pad($historyVisit->id, 4, '0', STR_PAD_LEFT) }}</span>
+                                        <span class="text-sm font-medium text-gray-900">#{{ $historyVisit->id }}</span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -232,7 +244,7 @@
                                     <img class="h-8 w-8 rounded-full mr-3" src="https://ui-avatars.com/api/?name={{ urlencode($historyVisit->agent->name ?? __('visits.unknown')) }}&background=059669&color=fff" alt="Agent">
                                     <div>
                                         <div class="text-sm font-medium text-gray-900">{{ $historyVisit->agent->name ?? __('visits.na') }}</div>
-                                        <div class="text-sm text-gray-500">{{ __('visits.agent') }} #{{ str_pad($historyVisit->agent->id ?? 0, 3, '0', STR_PAD_LEFT) }}</div>
+                                        <div class="text-sm text-gray-500">{{ __('visits.agent') }} #{{ $historyVisit->agent->id ?? 0 }}</div>
                                     </div>
                                 </div>
                                 </td>

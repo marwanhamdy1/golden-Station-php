@@ -112,11 +112,11 @@ class VisitController extends Controller
         }
 
         try {
-            $visit = VendorVisit::create([
+            $visitData = [
                 'vendor_id' => $request->vendor_id,
                 'branch_id' => $request->branch_id,
                 'agent_id' => $request->agent_id,
-                'visit_date' => $request->visit_date,
+                'visit_date' => $request->visit_date ?: now(),
                 'notes' => $request->notes,
                 'visit_status' => $request->visit_status ?? 'visited',
                 'vendor_rating' => $request->vendor_rating,
@@ -126,7 +126,19 @@ class VisitController extends Controller
                 'gps_longitude' => $request->gps_longitude,
                 'package_id' => $request->package_id,
                 'visit_end_at' => $request->visit_end_at,
-            ]);
+            ];
+            
+            // Generate Google Maps URL if GPS coordinates are provided
+            if ($request->gps_latitude && $request->gps_longitude) {
+                $visitData['google_maps_url'] = "https://www.google.com/maps?q={$request->gps_latitude},{$request->gps_longitude}";
+            }
+            
+            // If no visit_date provided, use current timestamp
+            if (!$request->visit_date) {
+                $visitData['visit_date'] = now();
+            }
+            
+            $visit = VendorVisit::create($visitData);
 
             return redirect()->route('visits.index')
                 ->with('success', 'Visit created successfully!');

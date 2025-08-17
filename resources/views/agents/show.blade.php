@@ -31,7 +31,7 @@
                      alt="{{ $agent->name }}">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-900 mb-1">{{ $agent->name }}</h2>
-                    <p class="text-gray-600 text-lg">{{ __('Agent') }} #{{ str_pad($agent->id, 3, '0', STR_PAD_LEFT) }}</p>
+                    <p class="text-gray-600 text-lg">{{ __('Agent') }} #{{ $agent->id }}</p>
                     <p class="text-sm text-gray-500">{{ __('agents.member_since') }} {{ $agent->created_at->format('M d, Y') }}</p>
                 </div>
             </div>

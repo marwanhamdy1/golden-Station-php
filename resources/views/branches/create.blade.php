@@ -71,7 +71,7 @@
                             <option value="">{{ __('branches.select_agent') }}</option>
                             @foreach($agents as $agent)
                                 <option value="{{ $agent->id }}" {{ old('agent_id') == $agent->id ? 'selected' : '' }}>
-                                    {{ $agent->name }} ({{ __('branches.agent') }} #{{ str_pad($agent->id, 3, '0', STR_PAD_LEFT) }})
+                                    {{ $agent->name }} ({{ __('branches.agent') }} #{{ $agent->id }})
                                 </option>
                             @endforeach
                         </select>

@@ -29,7 +29,7 @@
             <div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $vendor->commercial_name }}</h2>
                 <p class="text-gray-600">{{ __('vendors.owner') }}: {{ $vendor->owner_name }}</p>
-                <p class="text-sm text-gray-500">{{ __('vendors.vendor_id') }} #{{ str_pad($vendor->id, 3, '0', STR_PAD_LEFT) }} | {{ __('vendors.created') }}: {{ $vendor->created_at->format('M d, Y') }}</p>
+                <p class="text-sm text-gray-500">{{ __('vendors.vendor_id') }} #{{ $vendor->id }} | {{ __('vendors.created') }}: {{ $vendor->created_at->format('M d, Y') }}</p>
             </div>
         </div>
 

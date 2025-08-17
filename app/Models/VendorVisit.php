@@ -29,6 +29,7 @@ class VendorVisit extends Model
         'signature_image',
         'gps_latitude',
         'gps_longitude',
+        'google_maps_url',
         'package_id',
         'visit_end_at',
         'met_person_name',

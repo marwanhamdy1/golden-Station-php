@@ -17,27 +17,35 @@
 
     <!-- Search and Filter -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div class="flex flex-wrap gap-4">
+        <form method="GET" action="{{ route('vendors.index') }}" class="flex flex-wrap gap-4">
             <div class="flex-1 min-w-64">
-                <input type="text" id="search" placeholder="{{ __('vendors.search_vendors') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="البحث بالاسم التجاري..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
             </div>
             <div class="flex gap-2">
-                <select id="filter-activity" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                <select name="activity_type" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
                     <option value="">{{ __('vendors.all_activities') }}</option>
-                    <option value="wholesale">{{ __('vendors.wholesale') }}</option>
-                    <option value="retail">{{ __('vendors.retail') }}</option>
-                    <option value="both">{{ __('vendors.both') }}</option>
+                    <option value="wholesale" {{ request('activity_type') == 'wholesale' ? 'selected' : '' }}>{{ __('vendors.wholesale') }}</option>
+                    <option value="retail" {{ request('activity_type') == 'retail' ? 'selected' : '' }}>{{ __('vendors.retail') }}</option>
+                    <option value="both" {{ request('activity_type') == 'both' ? 'selected' : '' }}>{{ __('vendors.both') }}</option>
                 </select>
-                <select id="filter-city" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                <select name="city" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
                     <option value="">{{ __('vendors.all_cities') }}</option>
                     @forelse($cities as $city)
-                        <option value="{{ $city }}">{{ $city }}</option>
+                        <option value="{{ $city }}" {{ request('city') == $city ? 'selected' : '' }}>{{ $city }}</option>
                     @empty
                         <option value="" disabled>{{ __('vendors.no_cities_available') }}</option>
                     @endforelse
                 </select>
+                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center">
+                    <i class="fas fa-search mr-2"></i> بحث
+                </button>
+                @if(request()->hasAny(['search', 'activity_type', 'city']))
+                    <a href="{{ route('vendors.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-times mr-2"></i> مسح
+                    </a>
+                @endif
             </div>
-        </div>
+        </form>
     </div>
 
 
@@ -172,105 +180,9 @@
 
         <!-- Pagination -->
         <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-            {{ $vendors->links() }}
+            {{ $vendors->appends(request()->query())->links() }}
         </div>
     </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('search');
-    const filterActivity = document.getElementById('filter-activity');
-    const filterCity = document.getElementById('filter-city');
-    const tableBody = document.getElementById('vendors-table-body');
-    const rows = tableBody.querySelectorAll('tr');
-
-    function filterTable() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const activityFilter = filterActivity.value;
-        const cityFilter = filterCity.value;
-
-        console.log('Filtering with:', { searchTerm, activityFilter, cityFilter });
-
-        let visibleCount = 0;
-        
-        rows.forEach(row => {
-            // Column 1: Vendor info (commercial name + owner name)
-            const commercialNameElement = row.querySelector('td:nth-child(1) div:nth-child(2) div:nth-child(1)');
-            const ownerNameElement = row.querySelector('td:nth-child(1) div:nth-child(2) div:nth-child(2)');
-            
-            // Column 2: Contact info (mobile + email)
-            const contactElement = row.querySelector('td:nth-child(2)');
-            
-            // Column 3: Location (city + district)
-            const cityElement = row.querySelector('td:nth-child(3) div:nth-child(1)');
-            
-            // Column 4: Activity type
-            const activityElement = row.querySelector('td:nth-child(4)');
-
-            // Get text content safely
-            const commercialName = commercialNameElement ? commercialNameElement.textContent.toLowerCase() : '';
-            const ownerName = ownerNameElement ? ownerNameElement.textContent.toLowerCase() : '';
-            const contact = contactElement ? contactElement.textContent.toLowerCase() : '';
-            const cityText = cityElement ? cityElement.textContent.trim() : '';
-            const activity = activityElement ? activityElement.textContent.trim() : '';
-
-            console.log('Row data:', { 
-                commercialName, 
-                ownerName, 
-                cityText, 
-                activity,
-                activityRaw: activityElement ? activityElement.textContent : 'NULL'
-            });
-
-            let showRow = commercialName.includes(searchTerm) || ownerName.includes(searchTerm) || contact.includes(searchTerm);
-
-            if (activityFilter && activityFilter !== '') {
-                // For activity filter, we need to map the English filter value to Arabic text
-                const activityMapping = {
-                    'wholesale': 'جملة',
-                    'retail': 'تجزئة',
-                    'both': 'كلاهما'
-                };
-                
-                const activityFilterLower = activityFilter.toLowerCase();
-                const expectedArabicText = activityMapping[activityFilterLower] || activityFilterLower;
-                
-                // Check if the activity text contains the expected Arabic text
-                showRow = showRow && activity.includes(expectedArabicText);
-                
-                console.log('Activity filtering:', { 
-                    activityFilter: activityFilterLower, 
-                    expectedArabicText: expectedArabicText,
-                    activity: activity, 
-                    matches: activity.includes(expectedArabicText) 
-                });
-            }
-
-            if (cityFilter && cityFilter !== '') {
-                const cityFilterLower = cityFilter.toLowerCase();
-                const cityTextLower = cityText.toLowerCase();
-                showRow = showRow && cityTextLower === cityFilterLower;
-                
-                console.log('City filtering:', { 
-                    cityFilter: cityFilterLower, 
-                    cityText: cityTextLower, 
-                    matches: cityTextLower === cityFilterLower 
-                });
-            }
-
-            row.style.display = showRow ? '' : 'none';
-            if (showRow) visibleCount++;
-        });
-        
-        console.log(`Filtering complete. ${visibleCount} rows visible out of ${rows.length} total rows.`);
-    }
-
-    searchInput.addEventListener('input', filterTable);
-    filterActivity.addEventListener('change', filterTable);
-    filterCity.addEventListener('change', filterTable);
-    
-
-});
-</script>
 @endsection

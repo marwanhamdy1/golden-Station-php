@@ -95,24 +95,34 @@
                             @enderror
                         </div>
                     </div>
+
+                    <div>
+                        <label for="location_url" class="block text-sm font-medium text-gray-700 mb-2">{{ __('branches.google_url') }}</label>
+                        <input type="url" id="location_url" name="location_url" value="{{ old('location_url', $branch->location_url) }}"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('location_url') border-red-500 @enderror"
+                               placeholder="{{ __('branches.enter_google_url') }}">
+                        @error('location_url')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
             </div>
 
-            <!-- Vendor Assignment -->
+            <!-- Agent Assignment -->
             <div class="mt-8 border-t pt-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('branches.vendor_assignment') }}</h3>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('branches.agent_assignment') }}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="vendor_id" class="block text-sm font-medium text-gray-700 mb-2">{{ __('branches.assign_to_vendor') }}</label>
-                        <select id="vendor_id" name="vendor_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('vendor_id') border-red-500 @enderror">
-                            <option value="">{{ __('branches.select_vendor') }}</option>
-                            @foreach(\App\Models\Vendor::all() as $vendor)
-                                <option value="{{ $vendor->id }}" {{ old('vendor_id', $branch->vendor_id) == $vendor->id ? 'selected' : '' }}>
-                                    {{ $vendor->name }} ({{ $vendor->company_name ?? 'N/A' }})
+                        <label for="agent_id" class="block text-sm font-medium text-gray-700 mb-2">{{ __('branches.assign_to_agent') }}</label>
+                        <select id="agent_id" name="agent_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('agent_id') border-red-500 @enderror">
+                            <option value="">{{ __('branches.select_agent') }}</option>
+                            @foreach($agents as $agent)
+                                <option value="{{ $agent->id }}" {{ old('agent_id', $branch->agent_id) == $agent->id ? 'selected' : '' }}>
+                                    {{ $agent->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('vendor_id')
+                        @error('agent_id')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>

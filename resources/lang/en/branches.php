@@ -26,6 +26,13 @@ return [
     'branch_details' => 'Branch Details',
     'visits_history' => 'Visits History',
     'photos' => 'Photos',
+    'no_address' => 'No address available',
+    'view_on_google_maps' => 'View on Google Maps',
+    'google_url' => 'Google URL',
+    'enter_google_url' => 'Enter Google URL',
+    'agent_assignment' => 'Agent Assignment',
+    'assign_to_agent' => 'Assign to Agent',
+    'select_agent' => 'Select Agent',
     'added_by' => 'Added By',
     
     // Messages

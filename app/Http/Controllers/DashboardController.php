@@ -80,7 +80,7 @@ class DashboardController extends Controller
             $activities->push([
                 'type' => 'agent_joined',
                 'title' => 'New agent joined',
-                'description' => $agent->name . ' joined as Agent #' . str_pad($agent->id, 3, '0', STR_PAD_LEFT),
+                'description' => $agent->name . ' joined as Agent #' . $agent->id,
                 'time' => $agent->created_at->diffForHumans(),
                 'icon' => 'fas fa-user-plus',
                 'color' => 'yellow'

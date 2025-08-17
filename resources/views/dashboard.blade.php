@@ -154,7 +154,7 @@
                                          alt="{{ $agent->name }}">
                                     <div class="ml-4 flex-1">
                                         <h4 class="text-sm font-semibold text-gray-900">{{ $agent->name }}</h4>
-                                        <p class="text-xs text-gray-500">{{ __('dashboard.agent_id', ['id' => str_pad($agent->id, 3, '0', STR_PAD_LEFT)]) }}</p>
+                                        <p class="text-xs text-gray-500">{{ __('dashboard.agent_id', ['id' => $agent->id]) }}</p>
                                         <div class="flex items-center mt-1">
                                             <div class="flex items-center">
                                                 <i class="fas fa-map-marker-alt text-green-500 text-xs mr-1"></i>

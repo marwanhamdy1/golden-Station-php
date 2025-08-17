@@ -28,7 +28,7 @@
             </div>
             <div>
                 <h2 class="text-2xl font-bold text-gray-900">{{ $branch->name }}</h2>
-                <p class="text-gray-600">{{ __('branches.branch') }} #{{ str_pad($branch->id, 3, '0', STR_PAD_LEFT) }}</p>
+                <p class="text-gray-600">{{ __('branches.branch') }} #{{ $branch->id }}</p>
                 <p class="text-sm text-gray-500">{{ __('branches.created_at', ['date' => $branch->created_at->format('M d, Y')]) }}</p>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 <div class="space-y-3">
                     <div class="flex items-center">
                         <i class="fas fa-phone text-gray-400 mr-3 w-5"></i>
-                        <span class="text-gray-700">{{ $branch->phone }}</span>
+                        <span class="text-gray-700">{{ $branch->mobile ?? __('branches.no_phone') }}</span>
                     </div>
                     <div class="flex items-center">
                         <i class="fas fa-envelope text-gray-400 mr-3 w-5"></i>
@@ -53,12 +53,41 @@
                 <div class="space-y-3">
                     <div class="flex items-start">
                         <i class="fas fa-map-marker-alt text-gray-400 mr-3 w-5 mt-1"></i>
-                        <span class="text-gray-700">{{ $branch->address }}</span>
+                        <span class="text-gray-700">{{ $branch->address ?? __('branches.no_address') }}</span>
                     </div>
+                    @if($branch->city)
+                        <div class="flex items-center">
+                            <i class="fas fa-city text-gray-400 mr-3 w-5"></i>
+                            <span class="text-gray-700">{{ $branch->city }}</span>
+                        </div>
+                    @endif
+                    @if($branch->district)
+                        <div class="flex items-center">
+                            <i class="fas fa-map text-gray-400 mr-3 w-5"></i>
+                            <span class="text-gray-700">{{ $branch->district }}</span>
+                        </div>
+                    @endif
                     @if($branch->latitude && $branch->longitude)
                         <div class="flex items-center">
                             <i class="fas fa-globe text-gray-400 mr-3 w-5"></i>
                             <span class="text-gray-700">{{ __('branches.map_location') }}: {{ number_format($branch->latitude, 4) }}, {{ number_format($branch->longitude, 4) }}</span>
+                        </div>
+                    @endif
+                    @if($branch->location_url)
+                        <div class="flex items-center mt-3">
+                            <i class="fas fa-external-link-alt text-gray-400 mr-3 w-5"></i>
+                            <a href="{{ $branch->location_url }}" target="_blank" class="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                {{ __('branches.view_on_google_maps') }}
+                            </a>
+                        </div>
+                    @elseif($branch->latitude && $branch->longitude)
+                        <div class="flex items-center mt-3">
+                            <i class="fas fa-external-link-alt text-gray-400 mr-3 w-5"></i>
+                            <a href="https://www.google.com/maps?q={{ $branch->latitude }},{{ $branch->longitude }}" target="_blank" class="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                {{ __('branches.view_on_google_maps') }}
+                            </a>
                         </div>
                     @endif
                 </div>
@@ -76,9 +105,9 @@
                     <i class="fas fa-store text-2xl text-blue-600"></i>
                 </div>
                 <div>
-                    <h4 class="text-xl font-semibold text-gray-900">{{ $branch->vendor->name }}</h4>
-                    <p class="text-gray-600">{{ $branch->vendor->company_name ?? 'N/A' }}</p>
-                    <p class="text-sm text-gray-500">{{ $branch->vendor->category ?? __('branches.no_category') }}</p>
+                    <h4 class="text-xl font-semibold text-gray-900">{{ $branch->vendor->commercial_name ?? $branch->vendor->name }}</h4>
+                    <p class="text-gray-600">{{ $branch->vendor->owner_name ?? $branch->vendor->name }}</p>
+                    <p class="text-sm text-gray-500">{{ $branch->vendor->activity_type ?? __('branches.no_category') }}</p>
                 </div>
             </div>
         @else

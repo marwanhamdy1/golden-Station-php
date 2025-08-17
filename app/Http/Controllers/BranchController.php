@@ -86,11 +86,12 @@ class BranchController extends Controller
     public function update(Request $request, Branch $branch)
     {
         $validator = Validator::make($request->all(), [
-            'vendor_id' => 'required|exists:vendors,id',
             'name' => 'required|string|max:255',
-            'mobile' => 'required|string|max:20',
-            'email' => 'nullable|email',
+            'mobile' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
             'address' => 'nullable|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
             'location_url' => 'nullable|url',
             'city' => 'nullable|string|max:255',
             'district' => 'nullable|string|max:255',

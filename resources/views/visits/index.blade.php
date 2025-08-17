@@ -168,7 +168,7 @@
                                         {{ __('visits.visit_number', ['number' => $visit->id]) }}
                                     </div>
                                     <div class="text-sm text-gray-500">
-                                        {{ $visit->visit_date instanceof \Carbon\Carbon ? $visit->visit_date->format('M d, Y H:i') : $visit->visit_date }}
+                                        {{ $visit->created_at->format('M d, Y g:i A') }}
                                     </div>
                                     @if($visit->visit_end_at)
                                     <div class="text-xs text-gray-400">
@@ -225,7 +225,7 @@
                                         {{ $visit->agent->name }}
                                     </div>
                                     <div class="text-sm text-gray-500">
-                                        {{ __('visits.agent_number', ['number' => str_pad($visit->agent->id, 3, '0', STR_PAD_LEFT)]) }}
+                                        {{ __('visits.agent_number', ['number' => $visit->agent->id]) }}
                                     </div>
                                     @if(isset($agentVisitCounts[$visit->agent_id]))
                                     <div class="text-xs text-green-600 font-medium">

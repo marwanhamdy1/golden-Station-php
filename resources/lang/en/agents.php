@@ -35,6 +35,9 @@ return [
     'enter_name' => 'Enter agent\'s full name',
     'enter_email' => 'Enter email address',
     'enter_phone' => 'Enter phone number',
+    'enter_password' => 'Enter password',
+    'last_latitude' => 'Last Latitude',
+    'last_longitude' => 'Last Longitude',
 
     // Show page
     'agent_details' => 'Agent Details',

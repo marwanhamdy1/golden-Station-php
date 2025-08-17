@@ -98,15 +98,15 @@
                     </a>
                     <a href="{{ route('agents.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-users mr-3"></i>
-                        {{ __('dashboard.agent') }}s
+                        {{ __('dashboard.agent') }}
                     </a>
                     <a href="{{ route('vendors.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-store mr-3"></i>
-                        {{ __('dashboard.vendor') }}s
+                        {{ __('dashboard.vendor') }}
                     </a>
                     <a href="{{ route('branches.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-map-marker-alt mr-3"></i>
-                        {{ __('dashboard.branch') }}es
+                        {{ __('dashboard.branch') }}
                     </a>
                     <a href="{{ route('visits.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-calendar-check mr-3"></i>
@@ -114,7 +114,7 @@
                     </a>
                     <a href="{{ route('packages.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-box mr-3"></i>
-                        {{ __('dashboard.package') }}s
+                        {{ __('dashboard.package') }}
                     </a>
                     <a href="{{ route('reports.index') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-chart-bar mr-3"></i>

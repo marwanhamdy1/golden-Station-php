@@ -14,11 +14,27 @@ class VendorController extends Controller
 {
     use ImageUploadTrait;
 
-    public function index()
+    public function index(Request $request)
     {
-        $vendors = Vendor::withCount(['branches', 'vendorVisits'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $query = Vendor::withCount(['branches', 'vendorVisits']);
+
+        // Search by commercial name
+        if ($request->filled('search')) {
+            $searchTerm = $request->get('search');
+            $query->where('commercial_name', 'LIKE', '%' . $searchTerm . '%');
+        }
+
+        // Filter by activity type
+        if ($request->filled('activity_type')) {
+            $query->where('activity_type', $request->get('activity_type'));
+        }
+
+        // Filter by city
+        if ($request->filled('city')) {
+            $query->where('city', $request->get('city'));
+        }
+
+        $vendors = $query->orderBy('created_at', 'desc')->paginate(10);
 
         // Get unique cities for the filter dropdown
         $cities = Vendor::whereNotNull('city')

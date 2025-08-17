@@ -115,7 +115,7 @@
                                  alt="{{ $agent->name }}">
                             <div class="ml-4 flex-1">
                                 <h4 class="text-sm font-semibold text-gray-900">{{ $agent->name }}</h4>
-                                <p class="text-xs text-gray-500">{{ __('reports.agent_number', ['number' => str_pad($agent->id, 3, '0', STR_PAD_LEFT)]) }}</p>
+                                <p class="text-xs text-gray-500">{{ __('reports.agent_number', ['number' => $agent->id]) }}</p>
                             </div>
                             <div class="text-right">
                                 <p class="text-lg font-bold text-blue-600">{{ $agent->vendor_visits_count }}</p>

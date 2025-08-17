@@ -35,6 +35,9 @@ return [
     'enter_name' => 'أدخل اسم المندوب الكامل',
     'enter_email' => 'أدخل البريد الإلكتروني',
     'enter_phone' => 'أدخل رقم الهاتف',
+    'enter_password' => 'أدخل كلمة المرور',
+    'last_latitude' => 'آخر خط عرض',
+    'last_longitude' => 'آخر خط طول',
 
     // Show page
     'agent_details' => 'تفاصيل المندوب',
