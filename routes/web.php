@@ -76,12 +76,11 @@ if (app()->environment('local')) {
 }
 
 Route::get('lang/{locale}', function ($locale) {
+    $redirect = request('redirect') ?: route('dashboard');
     if (in_array($locale, ['en', 'ar'])) {
+        // Store in session and set a long-lived cookie (1 year)
         session(['locale' => $locale]);
+        return redirect($redirect)->cookie('locale', $locale, 60 * 24 * 365);
     }
-    $redirect = request('redirect');
-    if ($redirect) {
-        return redirect($redirect);
-    }
-    return redirect()->route('dashboard');
+    return redirect($redirect);
 })->name('lang.switch');

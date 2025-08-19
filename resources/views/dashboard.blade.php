@@ -13,8 +13,19 @@
         <main class="flex-1 p-8">
             <!-- Page Header -->
             <div class="mb-8">
-                <h2 class="text-3xl font-bold text-gray-900">{{ __('dashboard.dashboard') }}</h2>
-                <p class="text-gray-600 mt-2">{{ __('dashboard.admin_functions') }}</p>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900">{{ __('dashboard.dashboard') }}</h2>
+                        <p class="text-gray-600 mt-2">{{ __('dashboard.admin_functions') }}</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <a href="{{ route('lang.switch', ['locale' => 'ar', 'redirect' => url()->full()]) }}"
+                           class="text-sm {{ app()->getLocale() === 'ar' ? 'font-bold text-blue-600' : 'text-gray-600 hover:text-gray-900' }}">العربية</a>
+                        <span class="text-gray-300">|</span>
+                        <a href="{{ route('lang.switch', ['locale' => 'en', 'redirect' => url()->full()]) }}"
+                           class="text-sm {{ app()->getLocale() === 'en' ? 'font-bold text-blue-600' : 'text-gray-600 hover:text-gray-900' }}">English</a>
+                    </div>
+                </div>
             </div>
 
             <!-- Statistics Cards -->

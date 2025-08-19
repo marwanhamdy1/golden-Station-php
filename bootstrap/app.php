@@ -20,8 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' =>  Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' =>  Spatie\Permission\Middleware\PermissionMiddleware::class,
         ]);
-        // Register SetLocale as global middleware
-        $middleware->append([SetLocale::class]);
+        // Register SetLocale within the 'web' middleware group (after EncryptCookies & StartSession)
+        $middleware->appendToGroup('web', SetLocale::class);
         // Register global CORS middleware
         $middleware->append([\Illuminate\Http\Middleware\HandleCors::class]);
     })

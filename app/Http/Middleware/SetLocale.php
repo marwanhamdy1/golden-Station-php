@@ -10,7 +10,10 @@ class SetLocale
 {
     public function handle(Request $request, Closure $next)
     {
-        $locale = session('locale', config('app.locale'));
+        // Read locale from session if available, otherwise fall back to cookie, then config
+        $candidate = session('locale') ?? $request->cookie('locale') ?? config('app.locale');
+        $allowed = ['en', 'ar'];
+        $locale = in_array($candidate, $allowed, true) ? $candidate : config('app.locale');
         App::setLocale($locale);
         return $next($request);
     }
