@@ -40,7 +40,7 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'confirm_delete' => 'Are you sure you want to delete this vendor?',
-    
+
     // Create/Edit page
     'create_vendor' => 'Create New Vendor',
     'edit_vendor' => 'Edit Vendor',
@@ -68,14 +68,14 @@ return [
     'enter_commercial_name' => 'Enter commercial/business name',
     'enter_city' => 'Enter city name',
     'enter_district' => 'Enter district',
-    
+
     // Social Media
     'social_media' => 'Social Media',
     'snapchat' => 'Snapchat',
     'instagram' => 'Instagram',
     'snapchat_username' => 'snapchat_username',
     'instagram_username' => 'instagram_username',
-    
+
     // Additional Information
     'additional_information' => 'Additional Information',
     'location_url' => 'Location URL',
@@ -85,7 +85,7 @@ return [
     'describe_platform_experience' => 'Describe any previous experience with online platforms...',
     'describe_platform_issues' => 'Describe any issues or problems experienced with previous platforms...',
     'additional_notes' => 'Any additional notes...',
-    
+
     // Vendor Images
     'vendor_images' => 'Vendor Images',
     'shop_front_image' => 'Shop Front Image',
@@ -94,17 +94,17 @@ return [
     'natural_photos' => 'Natural Photos (Multiple)',
     'license_photos' => 'License Photos (Multiple)',
     'other_attachments' => 'Other Attachments',
-    
+
     // Show page
     'vendor_details' => 'Vendor Details',
     'visits_history' => 'Visits History',
     'contact_info' => 'Contact Information',
-    
+
     // Messages
     'vendor_created' => 'Vendor created successfully',
     'vendor_updated' => 'Vendor updated successfully',
     'vendor_deleted' => 'Vendor deleted successfully',
-    
+
     // Buttons
     'save' => 'Save',
     'update' => 'Update',
@@ -148,4 +148,15 @@ return [
     'recent_visits' => 'Recent Visits',
     'branch' => 'Branch',
     'visit_date' => 'Visit Date',
+
+    // Subscription & Visit Status
+    'subscription_visit_status' => 'Subscription & Visit Status',
+    'subscription_status' => 'Subscription Status',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
+    'total_visits' => 'Total Visits',
+    'visit_frequency' => 'Visit Frequency',
+    'days' => 'days',
+    'per_month' => 'per month',
+    'last_subscription' => 'Last Subscription',
 ];

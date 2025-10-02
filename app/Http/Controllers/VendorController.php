@@ -109,13 +109,11 @@ class VendorController extends Controller
         }
 
         if (Auth::check()) {
-            $data['added_by'] = Auth::user()->name;
-            if (is_callable([Auth::user(), 'getRoleNames'])) {
-                $roles = Auth::user()->getRoleNames();
-                $data['added_by_role'] = $roles && $roles->count() > 0 ? $roles->first() : 'user';
-            } else {
-                $data['added_by_role'] = property_exists(Auth::user(), 'role') ? Auth::user()->role : 'user';
-            }
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
+            $data['added_by'] = $user->name;
+            $roles = $user->getRoleNames();
+            $data['added_by_role'] = $roles && $roles->count() > 0 ? $roles->first() : 'user';
         }
 
         Vendor::create($data);
@@ -126,9 +124,18 @@ class VendorController extends Controller
 
     public function show(Vendor $vendor)
     {
-        $vendor->load(['branches', 'vendorVisits' => function($query) {
-            $query->latest()->limit(10);
-        }]);
+        $vendor->load([
+            'branches',
+            'vendorVisits' => function($query) {
+                $query->with('package')->latest()->limit(10);
+            }
+        ]);
+
+        // Add subscription and visit flags for the view
+        $vendor->has_active_subscription = $vendor->hasActiveSubscription();
+        $vendor->latest_package = $vendor->getLatestPackage();
+        $vendor->total_visits = $vendor->vendorVisits()->count();
+        $vendor->recent_visits_count = $vendor->vendorVisits()->where('visit_date', '>=', now()->subDays(30))->count();
 
         return view('vendors.show', compact('vendor'));
     }

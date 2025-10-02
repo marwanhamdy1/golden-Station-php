@@ -61,6 +61,33 @@ class Vendor extends Model
     }
 
     /**
+     * Check if vendor has an active subscription based on ANY visit with packages
+     */
+    public function hasActiveSubscription()
+    {
+        return $this->vendorVisits()
+            ->whereHas('package', function($query) {
+                $query->where('is_active', true);
+            })
+            // ->where('visit_date', '>=', now()->subDays(30)) // Active within last 30 days
+            ->exists();
+    }
+
+    /**
+     * Get the latest package from ANY visit with packages
+     */
+    public function getLatestPackage()
+    {
+        return $this->vendorVisits()
+            ->with('package')
+            ->whereHas('package', function($query) {
+                $query->where('is_active', true);
+            })
+            ->orderBy('visit_date', 'desc')
+            ->first()?->package;
+    }
+
+    /**
      * Get all images related to the vendor (as array of paths).
      */
     public function images()

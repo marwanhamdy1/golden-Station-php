@@ -44,6 +44,8 @@ class VendorResource extends JsonResource
             'natural_photos' => $this->natural_photos,
             'license_photos' => $this->license_photos,
             'license_number' => $this->license_number,
+            'has_active_subscription' => $this->hasActiveSubscription(),
+            'latest_package' => $this->getLatestPackage(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'branches' => $this->branches

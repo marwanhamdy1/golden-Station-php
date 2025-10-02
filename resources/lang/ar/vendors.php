@@ -40,7 +40,7 @@ return [
     'edit' => 'تعديل',
     'delete' => 'حذف',
     'confirm_delete' => 'هل أنت متأكد من حذف هذا التاجر؟',
-    
+
     // Create/Edit page
     'create_vendor' => 'إنشاء تاجر جديد',
     'edit_vendor' => 'تعديل التاجر',
@@ -68,14 +68,14 @@ return [
     'enter_commercial_name' => 'أدخل الاسم التجاري/اسم النشاط',
     'enter_city' => 'أدخل اسم المدينة',
     'enter_district' => 'أدخل اسم الحي',
-    
+
     // Social Media
     'social_media' => 'وسائل التواصل الاجتماعي',
     'snapchat' => 'سناب شات',
     'instagram' => 'انستغرام',
     'snapchat_username' => 'اسم المستخدم في سناب شات',
     'instagram_username' => 'اسم المستخدم في انستغرام',
-    
+
     // Additional Information
     'additional_information' => 'معلومات إضافية',
     'location_url' => 'رابط الموقع',
@@ -85,7 +85,7 @@ return [
     'describe_platform_experience' => 'صف أي خبرة سابقة مع المنصات الإلكترونية...',
     'describe_platform_issues' => 'صف أي مشاكل أو صعوبات واجهتها مع المنصات السابقة...',
     'additional_notes' => 'أي ملاحظات إضافية...',
-    
+
     // Vendor Images
     'vendor_images' => 'صور التاجر',
     'shop_front_image' => 'صورة واجهة المحل',
@@ -94,17 +94,17 @@ return [
     'natural_photos' => 'صور طبيعية (متعددة)',
     'license_photos' => 'صور الرخص (متعددة)',
     'other_attachments' => 'مرفقات أخرى',
-    
+
     // Show page
     'vendor_details' => 'تفاصيل التاجر',
     'visits_history' => 'سجل الزيارات',
     'contact_info' => 'معلومات الاتصال',
-    
+
     // Messages
     'vendor_created' => 'تم إنشاء التاجر بنجاح',
     'vendor_updated' => 'تم تحديث التاجر بنجاح',
     'vendor_deleted' => 'تم حذف التاجر بنجاح',
-    
+
     // Buttons
     'save' => 'حفظ',
     'update' => 'تحديث',
@@ -148,4 +148,15 @@ return [
     'recent_visits' => 'الزيارات الأخيرة',
     'branch' => 'الفرع',
     'visit_date' => 'تاريخ الزيارة',
+
+    // Subscription & Visit Status
+    'subscription_visit_status' => 'حالة الاشتراك والزيارات',
+    'subscription_status' => 'حالة الاشتراك',
+    'active' => 'نشط',
+    'inactive' => 'غير نشط',
+    'total_visits' => 'إجمالي الزيارات',
+    'visit_frequency' => 'تكرار الزيارات',
+    'days' => 'أيام',
+    'per_month' => 'شهرياً',
+    'last_subscription' => 'آخر اشتراك',
 ];

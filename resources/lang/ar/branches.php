@@ -19,7 +19,7 @@ return [
     'phone' => 'رقم الهاتف',
     'email' => 'البريد الإلكتروني',
     'address' => 'العنوان',
-    
+
     // Index page
     'branches_list' => 'قائمة الفروع',
     'add_branch' => 'إضافة فرع',
@@ -34,7 +34,7 @@ return [
     'all_agents' => 'جميع المندوبين',
     'assigned' => 'معين',
     'unassigned' => 'غير معين',
-    
+
     // Create/Edit page
     'create_branch' => 'إنشاء فرع جديد',
     'edit_branch' => 'تعديل الفرع',
@@ -59,7 +59,7 @@ return [
     'enter_longitude' => 'أدخل خط الطول',
     'vendor_assignment' => 'تعيين التاجر',
     'assign_to_vendor' => 'تعيين إلى تاجر',
-    
+
     // Show page
     'branch_details' => 'تفاصيل الفرع',
     'visits_history' => 'سجل الزيارات',
@@ -87,18 +87,27 @@ return [
     'no_vendor_assigned' => 'لا يوجد تاجر معين',
     'branch_photo' => 'صورة الفرع',
     'no_photos' => 'لا توجد صور مرفوعة لهذا الفرع.',
-    
+
     // Messages
     'branch_created' => 'تم إنشاء الفرع بنجاح',
     'branch_updated' => 'تم تحديث الفرع بنجاح',
     'branch_deleted' => 'تم حذف الفرع بنجاح',
     'photos_uploaded' => 'تم رفع الصور بنجاح',
     'confirm_delete' => 'هل أنت متأكد من حذف هذا الفرع؟',
-    
+
     // Cities
     'riyadh' => 'الرياض',
     'jeddah' => 'جدة',
     'dammam' => 'الدمام',
     'mecca' => 'مكة المكرمة',
     'medina' => 'المدينة المنورة',
+
+    // Subscription & Visit Status
+    'vendor_status' => 'حالة التاجر',
+    'subscription' => 'الاشتراك',
+    'total_visits' => 'إجمالي الزيارات',
+    'visit_frequency' => 'تكرار الزيارات',
+    'days' => 'أيام',
+    'per_month' => 'شهرياً',
+    'last_subscription' => 'آخر اشتراك',
 ];

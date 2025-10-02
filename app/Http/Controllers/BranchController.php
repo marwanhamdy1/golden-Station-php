@@ -53,13 +53,11 @@ class BranchController extends Controller
         $data = $request->all();
         // من أضاف الفرع
         if (Auth::check()) {
-            $data['added_by'] = Auth::user()->name;
-            if (is_callable([Auth::user(), 'getRoleNames'])) {
-                $roles = Auth::user()->getRoleNames();
-                $data['added_by_role'] = $roles && $roles->count() > 0 ? $roles->first() : 'user';
-            } else {
-                $data['added_by_role'] = property_exists(Auth::user(), 'role') ? Auth::user()->role : 'user';
-            }
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
+            $data['added_by'] = $user->name;
+            $roles = $user->getRoleNames();
+            $data['added_by_role'] = $roles && $roles->count() > 0 ? $roles->first() : 'user';
         }
         Branch::create($data);
 
@@ -69,9 +67,25 @@ class BranchController extends Controller
 
     public function show(Branch $branch)
     {
-        $branch->load(['vendor', 'agent', 'vendorVisits' => function($query) {
-            $query->latest()->limit(10);
-        }]);
+        $branch->load([
+            'vendor' => function($query) {
+                $query->with(['vendorVisits.package' => function($q) {
+                    $q->where('is_active', true);
+                }]);
+            },
+            'agent',
+            'vendorVisits' => function($query) {
+                $query->latest()->limit(10);
+            }
+        ]);
+
+        // Add vendor subscription data for the view
+        if ($branch->vendor) {
+            $branch->vendor->has_active_subscription = $branch->vendor->hasActiveSubscription();
+            $branch->vendor->latest_package = $branch->vendor->getLatestPackage();
+            $branch->vendor->total_visits = $branch->vendor->vendorVisits()->count();
+            $branch->vendor->recent_visits_count = $branch->vendor->vendorVisits()->where('visit_date', '>=', now()->subDays(30))->count();
+        }
 
         return view('branches.show', compact('branch'));
     }

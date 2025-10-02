@@ -25,7 +25,7 @@ Route::get('/', function () {
 Route::resource('agents', AgentController::class);
 
 // Vendor routes
-Route::resource('vendors', VendorController::class);
+Route::resource('vendors', controller: VendorController::class);
 
 // Branch routes
 Route::resource('branches', BranchController::class);

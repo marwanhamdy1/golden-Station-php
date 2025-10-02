@@ -13,9 +13,30 @@ use App\ImageUploadTrait;
 class VendorController extends Controller
 {
     use ImageUploadTrait;
+
+    /**
+     * Get vendors with subscription status
+     *
+     * Query Parameters:
+     * - has_subscription: boolean - Filter by subscription status (true/false)
+     * - search: string - General search across multiple fields
+     * - per_page: integer - Number of results per page (default: 15)
+     * - All vendor fields for specific field searches
+     *
+     * Response includes:
+     * - has_active_subscription: boolean - Whether vendor has ANY visit with active package
+     * - latest_package: object - Latest package details if subscribed
+     * - total_visits: integer - Total number of visits
+     * - recent_visits_count: integer - Visits in last 30 days
+     */
     public function index(Request $request)
     {
-        $query = Vendor::query();
+        $query = Vendor::with([
+            'branches',
+            'vendorVisits.package' => function($query) {
+                $query->where('is_active', true);
+            }
+        ]);
 
         // Get all searchable fields from the Vendor model
         $searchableFields = [
@@ -42,6 +63,20 @@ class VendorController extends Controller
                     $q->orWhere($field, 'like', "%{$search}%");
                 }
             });
+        }
+
+        // Filter by subscription status
+        if ($request->has('has_subscription')) {
+            $hasSubscription = filter_var($request->input('has_subscription'), FILTER_VALIDATE_BOOLEAN);
+            if ($hasSubscription) {
+                $query->whereHas('vendorVisits.package', function($q) {
+                    $q->where('is_active', true);
+                });
+            } else {
+                $query->whereDoesntHave('vendorVisits.package', function($q) {
+                    $q->where('is_active', true);
+                });
+            }
         }
 
         // Handle pagination
@@ -105,6 +140,13 @@ public function store(CreateVendor $request)
 
     public function show(Vendor $vendor)
     {
+        $vendor->load([
+            'branches',
+            'vendorVisits.package' => function($query) {
+                $query->where('is_active', true);
+            }
+        ]);
+
         return new VendorResource($vendor);
     }
 

@@ -41,10 +41,22 @@ Route::get('/vendors/{vendor}', [VendorController::class, 'show'])->middleware('
 Route::put('/vendors/{vendor}', [VendorController::class, 'update']);
 Route::delete('/vendors/{vendor}', [VendorController::class, 'destroy']);
 // Branch API routes
-Route::apiResource('branches', BranchController::class)->middleware('auth.agent');
+Route::apiResource('branches', BranchController::class)->middleware('auth.agent')->names([
+    'index' => 'api.branches.index',
+    'store' => 'api.branches.store',
+    'show' => 'api.branches.show',
+    'update' => 'api.branches.update',
+    'destroy' => 'api.branches.destroy'
+]);
 
 // VendorVisit API routes
-Route::apiResource('vendor-visits', VendorVisitController::class)->middleware('auth.agent');;
+Route::apiResource('vendor-visits', VendorVisitController::class)->middleware('auth.agent')->names([
+    'index' => 'api.vendor-visits.index',
+    'store' => 'api.vendor-visits.store',
+    'show' => 'api.vendor-visits.show',
+    'update' => 'api.vendor-visits.update',
+    'destroy' => 'api.vendor-visits.destroy'
+]);
 
 // Package API routes
 Route::post('/packages/select', [ApiPackageController::class, 'selectPackages']);

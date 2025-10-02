@@ -100,7 +100,7 @@
         <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('branches.vendor_name') }}</h3>
 
         @if($branch->vendor)
-            <div class="flex items-center">
+            <div class="flex items-center mb-4">
                 <div class="h-16 w-16 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
                     <i class="fas fa-store text-2xl text-blue-600"></i>
                 </div>
@@ -108,6 +108,53 @@
                     <h4 class="text-xl font-semibold text-gray-900">{{ $branch->vendor->commercial_name ?? $branch->vendor->name }}</h4>
                     <p class="text-gray-600">{{ $branch->vendor->owner_name ?? $branch->vendor->name }}</p>
                     <p class="text-sm text-gray-500">{{ $branch->vendor->activity_type ?? __('branches.no_category') }}</p>
+                </div>
+            </div>
+
+            <!-- Vendor Subscription & Visit Status -->
+            <div class="bg-gray-50 rounded-lg p-4">
+                <h4 class="text-md font-semibold text-gray-900 mb-3">{{ __('branches.vendor_status') }}</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="text-center p-3 border rounded-lg {{ $branch->vendor->has_active_subscription ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200' }}">
+                        <i class="fas fa-crown text-lg mb-1 {{ $branch->vendor->has_active_subscription ? 'text-green-600' : 'text-gray-400' }}"></i>
+                        <h5 class="text-sm font-medium text-gray-900">{{ __('branches.subscription') }}</h5>
+                        <p class="text-xs {{ $branch->vendor->has_active_subscription ? 'text-green-600' : 'text-gray-500' }}">
+                            @if($branch->vendor->has_active_subscription)
+                                {{ __('branches.active') }}
+                            @else
+                                {{ __('branches.inactive') }}
+                            @endif
+                        </p>
+                        @if($branch->vendor->latest_package)
+                            <p class="text-xs text-gray-600 mt-1">
+                                <strong>{{ __('branches.last_subscription') }}:</strong> {{ $branch->vendor->latest_package->name }}
+                            </p>
+                        @endif
+                    </div>
+
+                    <div class="text-center p-3 border rounded-lg bg-blue-50 border-blue-200">
+                        <i class="fas fa-calendar-check text-lg mb-1 text-blue-600"></i>
+                        <h5 class="text-sm font-medium text-gray-900">{{ __('branches.total_visits') }}</h5>
+                        <p class="text-xs text-blue-600 font-semibold">{{ $branch->vendor->total_visits }}</p>
+                    </div>
+
+                    <div class="text-center p-3 border rounded-lg bg-purple-50 border-purple-200">
+                        <i class="fas fa-clock text-lg mb-1 text-purple-600"></i>
+                        <h5 class="text-sm font-medium text-gray-900">{{ __('branches.recent_visits') }}</h5>
+                        <p class="text-xs text-purple-600 font-semibold">{{ $branch->vendor->recent_visits_count }} (30 {{ __('branches.days') }})</p>
+                    </div>
+
+                    <div class="text-center p-3 border rounded-lg bg-orange-50 border-orange-200">
+                        <i class="fas fa-chart-line text-lg mb-1 text-orange-600"></i>
+                        <h5 class="text-sm font-medium text-gray-900">{{ __('branches.visit_frequency') }}</h5>
+                        <p class="text-xs text-orange-600 font-semibold">
+                            @if($branch->vendor->total_visits > 0)
+                                {{ number_format($branch->vendor->total_visits / max(1, $branch->vendor->created_at->diffInDays(now())), 1) }} {{ __('branches.per_month') }}
+                            @else
+                                0 {{ __('branches.per_month') }}
+                            @endif
+                        </p>
+                    </div>
                 </div>
             </div>
         @else

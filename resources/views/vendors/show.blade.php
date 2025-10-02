@@ -127,6 +127,53 @@
         </div>
     </div>
 
+    <!-- Subscription & Visit Status -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.subscription_visit_status') }}</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="text-center p-4 border rounded-lg {{ $vendor->has_active_subscription ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200' }}">
+                <i class="fas fa-crown text-2xl mb-2 {{ $vendor->has_active_subscription ? 'text-green-600' : 'text-gray-400' }}"></i>
+                <h4 class="font-medium text-gray-900">{{ __('vendors.subscription_status') }}</h4>
+                <p class="text-sm {{ $vendor->has_active_subscription ? 'text-green-600' : 'text-gray-500' }}">
+                    @if($vendor->has_active_subscription)
+                        <span class="text-green-600">{{ __('vendors.active') }}</span>
+                    @else
+                        <span class="text-gray-500">{{ __('vendors.inactive') }}</span>
+                    @endif
+                </p>
+                @if($vendor->latest_package)
+                    <p class="text-xs text-gray-600 mt-1">
+                        <strong>{{ __('vendors.last_subscription') }}:</strong> {{ $vendor->latest_package->name }}
+                    </p>
+                @endif
+            </div>
+
+            <div class="text-center p-4 border rounded-lg bg-blue-50 border-blue-200">
+                <i class="fas fa-calendar-check text-2xl mb-2 text-blue-600"></i>
+                <h4 class="font-medium text-gray-900">{{ __('vendors.total_visits') }}</h4>
+                <p class="text-sm text-blue-600 font-semibold">{{ $vendor->total_visits }}</p>
+            </div>
+
+            <div class="text-center p-4 border rounded-lg bg-purple-50 border-purple-200">
+                <i class="fas fa-clock text-2xl mb-2 text-purple-600"></i>
+                <h4 class="font-medium text-gray-900">{{ __('vendors.recent_visits') }}</h4>
+                <p class="text-sm text-purple-600 font-semibold">{{ $vendor->recent_visits_count }} (30 {{ __('vendors.days') }})</p>
+            </div>
+
+            <div class="text-center p-4 border rounded-lg bg-orange-50 border-orange-200">
+                <i class="fas fa-chart-line text-2xl mb-2 text-orange-600"></i>
+                <h4 class="font-medium text-gray-900">{{ __('vendors.visit_frequency') }}</h4>
+                <p class="text-sm text-orange-600 font-semibold">
+                    @if($vendor->total_visits > 0)
+                        {{ number_format($vendor->total_visits / max(1, $vendor->created_at->diffInDays(now())), 1) }} {{ __('vendors.per_month') }}
+                    @else
+                        0 {{ __('vendors.per_month') }}
+                    @endif
+                </p>
+            </div>
+        </div>
+    </div>
+
     <!-- Business Status & Documents -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('vendors.business_status_documents') }}</h3>
